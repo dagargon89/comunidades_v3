@@ -149,11 +149,12 @@
             </div>
             <nav class="flex-1">
                 <ul class="space-y-1">
-                    <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
                     <li><a href="#"><i class="fas fa-project-diagram"></i> Proyectos</a></li>
                     <li><a href="#"><i class="fas fa-tasks"></i> Actividades</a></li>
-                    <li><a href="#"><i class="fas fa-users-cog"></i> Usuarios</a></li>
-                    <li><a href="#"><i class="fas fa-user-shield"></i> Roles</a></li>
+                    <li class="mt-6 mb-1 text-xs uppercase tracking-wider text-gray-400 px-2">Administración</li>
+                    <li><a href="/users"><i class="fas fa-users-cog"></i> Usuarios</a></li>
+                    <li><a href="/roles"><i class="fas fa-user-shield"></i> Roles</a></li>
                     <li><a href="#"><i class="fas fa-list"></i> Catálogos</a></li>
                 </ul>
                 <div class="separator"></div>
