@@ -2,193 +2,74 @@
 $title = 'Usuarios';
 ob_start(); ?>
 <div class="flex flex-col gap-6 w-[90%] mx-auto">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div class="flex gap-2 items-center w-full md:w-auto">
-            <input type="text" id="busqueda" class="form-input w-full md:w-64 rounded-lg border-gray-300 focus:ring-primary focus:border-primary" placeholder="Buscar por nombre, email o usuario...">
-            <select id="filtro-rol" class="form-select rounded-lg border-gray-300 focus:ring-primary focus:border-primary">
+    <form method="get" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 bg-white p-4 rounded-xl shadow">
+        <div class="flex flex-col sm:flex-row gap-2 items-center w-full md:w-auto">
+            <input type="text" name="q" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" class="form-input w-full md:w-64 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" placeholder="Buscar por nombre, email o usuario...">
+            <select name="rol" class="form-select w-full md:w-48 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2">
                 <option value="">Todos los roles</option>
+                <?php foreach ($roles as $rol): ?>
+                    <option value="<?= htmlspecialchars($rol['name']) ?>" <?= (($_GET['rol'] ?? '') === $rol['name']) ? 'selected' : '' ?>><?= htmlspecialchars($rol['name']) ?></option>
+                <?php endforeach; ?>
             </select>
-            <select id="filtro-estado" class="form-select rounded-lg border-gray-300 focus:ring-primary focus:border-primary">
+            <select name="estado" class="form-select w-full md:w-32 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2">
                 <option value="">Todos</option>
-                <option value="activo">Activos</option>
-                <option value="inactivo">Inactivos</option>
+                <option value="activo" <?= (($_GET['estado'] ?? '') === 'activo') ? 'selected' : '' ?>>Activos</option>
+                <option value="inactivo" <?= (($_GET['estado'] ?? '') === 'inactivo') ? 'selected' : '' ?>>Inactivos</option>
             </select>
         </div>
-        <button class="btn-secondary px-5 py-2" id="btn-nuevo"><i class="fas fa-user-plus mr-2"></i>Nuevo usuario</button>
+        <div class="flex gap-2 items-center justify-end w-full md:w-auto">
+            <button type="submit" class="btn-secondary px-5 py-2"><i class="fas fa-search mr-2"></i>Filtrar</button>
+            <a href="users/create" class="btn-secondary px-5 py-2"><i class="fas fa-user-plus mr-2"></i>Nuevo usuario</a>
+        </div>
+    </form>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <?php if (empty($usuarios)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-gray-500">No se encontraron usuarios</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($usuarios as $usuario): ?>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($usuario['first_name'] . ' ' . $usuario['last_name']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['email']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['username']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['rol'] ?? '-') ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                                    <?= $usuario['is_active'] ? 'Activo' : 'Inactivo' ?>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
+                                <a href="users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
-    <div id="tabla-usuarios"></div>
-    <div class="flex justify-between items-center mt-4" id="paginacion"></div>
+    <?php if ($total_paginas > 1): ?>
+        <div class="flex justify-between items-center mt-4">
+            <nav class="inline-flex rounded-md shadow-sm" aria-label="Paginación">
+                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="px-3 py-1 border <?= $i === $pagina_actual ? 'bg-primary text-white' : '' ?>"> <?= $i ?> </a>
+                <?php endfor; ?>
+            </nav>
+        </div>
+    <?php endif; ?>
 </div>
-
-<?php
-// Modal de nuevo usuario
-$id = 'modal-nuevo-usuario';
-$title = 'Nuevo usuario';
-$content = "<form id=\"form-nuevo-usuario\" class=\"space-y-4\">
-    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Nombre</label>
-            <input type=\"text\" name=\"first_name\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
-        </div>
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Apellidos</label>
-            <input type=\"text\" name=\"last_name\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
-        </div>
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Email</label>
-            <input type=\"email\" name=\"email\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
-        </div>
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Usuario</label>
-            <input type=\"text\" name=\"username\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
-        </div>
-        <div class=\"relative\">
-            <label class=\"block text-sm font-semibold mb-1\">Contraseña</label>
-            <input type=\"password\" name=\"password\" id=\"nuevo-password\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2 pr-10\" required>
-            <button type=\"button\" tabindex=\"-1\" class=\"absolute right-2 top-8 text-gray-400 hover:text-primary\" onclick=\"togglePassword('nuevo-password', this)\"><i class=\"fas fa-eye\"></i></button>
-        </div>
-        <div class=\"relative\">
-            <label class=\"block text-sm font-semibold mb-1\">Confirmar contraseña</label>
-            <input type=\"password\" name=\"confirm_password\" id=\"nuevo-confirm-password\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2 pr-10\" required>
-            <button type=\"button\" tabindex=\"-1\" class=\"absolute right-2 top-8 text-gray-400 hover:text-primary\" onclick=\"togglePassword('nuevo-confirm-password', this)\"><i class=\"fas fa-eye\"></i></button>
-        </div>
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Rol</label>
-            <select name=\"rol\" class=\"form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required id=\"select-rol-nuevo\">
-                <option value=\"\">Selecciona un rol</option>
-            </select>
-        </div>
-        <div>
-            <label class=\"block text-sm font-semibold mb-1\">Estado</label>
-            <select name=\"is_active\" class=\"form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\">
-                <option value=\"1\">Activo</option>
-                <option value=\"0\">Inactivo</option>
-            </select>
-        </div>
-    </div>
-    <div id=\"nuevo-usuario-error\" class=\"text-danger text-sm mt-2\"></div>
-</form>";
-$footer = '<button type="submit" form="form-nuevo-usuario" class="btn-secondary px-5 py-2">Guardar</button>
-<button type="button" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400" onclick="closeModal(\'modal-nuevo-usuario\')">Cancelar</button>';
-include __DIR__ . '/../components/modal.php';
-?>
-
-<script>
-    const tablaUsuarios = document.getElementById('tabla-usuarios');
-    const paginacion = document.getElementById('paginacion');
-    const busqueda = document.getElementById('busqueda');
-    const filtroRol = document.getElementById('filtro-rol');
-    const filtroEstado = document.getElementById('filtro-estado');
-    let paginaActual = 1;
-    let totalPaginas = 1;
-    let timeoutBusqueda;
-
-    function renderTablaUsuarios(html) {
-        tablaUsuarios.innerHTML = html;
-    }
-
-    function cargarUsuarios(page = 1) {
-        const q = busqueda.value.trim();
-        const rol = filtroRol.value;
-        const estado = filtroEstado.value;
-        fetch(`/users/buscar?q=${encodeURIComponent(q)}&rol=${encodeURIComponent(rol)}&estado=${encodeURIComponent(estado)}&page=${page}`)
-            .then(r => r.text())
-            .then(html => {
-                renderTablaUsuarios(html);
-                // La paginación se mantiene igual, pero si quieres paginación AJAX, deberás ajustarla también
-            });
-    }
-
-    function renderPaginacion() {
-        let html = '';
-        if (totalPaginas <= 1) {
-            paginacion.innerHTML = '';
-            return;
-        }
-        html += `<nav class="inline-flex rounded-md shadow-sm" aria-label="Paginación">`;
-        html += `<button class="px-3 py-1 border rounded-l-md ${paginaActual === 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${paginaActual === 1 ? 'disabled' : ''} onclick="cargarUsuarios(${paginaActual-1})">&laquo;</button>`;
-        for (let i = 1; i <= totalPaginas; i++) {
-            if (i === paginaActual || (i <= 2 || i > totalPaginas - 2 || Math.abs(i - paginaActual) <= 1)) {
-                html += `<button class="px-3 py-1 border-t border-b ${i === paginaActual ? 'bg-primary text-white' : ''}" onclick="cargarUsuarios(${i})">${i}</button>`;
-            } else if (i === 3 && paginaActual > 4) {
-                html += `<span class="px-2">...</span>`;
-            } else if (i === totalPaginas - 2 && paginaActual < totalPaginas - 3) {
-                html += `<span class="px-2">...</span>`;
-            }
-        }
-        html += `<button class="px-3 py-1 border rounded-r-md ${paginaActual === totalPaginas ? 'opacity-50 cursor-not-allowed' : ''}" ${paginaActual === totalPaginas ? 'disabled' : ''} onclick="cargarUsuarios(${paginaActual+1})">&raquo;</button>`;
-        html += `</nav>`;
-        paginacion.innerHTML = html;
-    }
-
-    busqueda.addEventListener('input', () => {
-        clearTimeout(timeoutBusqueda);
-        timeoutBusqueda = setTimeout(() => cargarUsuarios(1), 300);
-    });
-    filtroRol.addEventListener('change', () => cargarUsuarios(1));
-    filtroEstado.addEventListener('change', () => cargarUsuarios(1));
-
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarUsuarios();
-        // Cargar roles para el filtro (AJAX opcional)
-        fetch('/api/roles')
-            .then(r => r.json())
-            .then(roles => {
-                filtroRol.innerHTML = '<option value="">Todos los roles</option>' + roles.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
-            });
-    });
-
-    document.getElementById('btn-nuevo').addEventListener('click', function() {
-        openModal('modal-nuevo-usuario');
-        // Cargar roles en el select del modal
-        fetch('/api/roles')
-            .then(r => r.json())
-            .then(roles => {
-                const select = document.getElementById('select-rol-nuevo');
-                select.innerHTML = '<option value="">Selecciona un rol</option>' + roles.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
-            });
-    });
-
-    document.getElementById('form-nuevo-usuario').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const form = e.target;
-        const data = new FormData(form);
-        const errorDiv = document.getElementById('nuevo-usuario-error');
-        errorDiv.textContent = '';
-        // Validación básica en frontend
-        if (data.get('password') !== data.get('confirm_password')) {
-            errorDiv.textContent = 'Las contraseñas no coinciden.';
-            return;
-        }
-        fetch('/users/store', {
-                method: 'POST',
-                body: data
-            })
-            .then(r => r.json())
-            .then(res => {
-                if (res.success) {
-                    closeModal('modal-nuevo-usuario');
-                    form.reset();
-                    cargarUsuarios(1);
-                } else {
-                    errorDiv.textContent = res.message || 'Error al crear usuario';
-                }
-            })
-            .catch(() => {
-                errorDiv.textContent = 'Error de red o del servidor.';
-            });
-    });
-
-    function togglePassword(id, btn) {
-        const input = document.getElementById(id);
-        if (input.type === 'password') {
-            input.type = 'text';
-            btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-        } else {
-            input.type = 'password';
-            btn.innerHTML = '<i class="fas fa-eye"></i>';
-        }
-    }
-</script>
 <?php $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';

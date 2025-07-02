@@ -86,6 +86,14 @@ $routes = [
 
     // Rutas de API de roles
     'api/roles' => ['controller' => 'RoleController', 'action' => 'apiRoles'],
+
+    // Rutas de API de usuarios
+    'api/users' => ['controller' => 'UserController', 'action' => 'index'],
+    'api/users/buscar' => ['controller' => 'UserController', 'action' => 'buscar'],
+    'api/users/store' => ['controller' => 'UserController', 'action' => 'store'],
+    'api/users/show' => ['controller' => 'UserController', 'action' => 'show'],
+    'api/users/update' => ['controller' => 'UserController', 'action' => 'update'],
+    'api/users/destroy' => ['controller' => 'UserController', 'action' => 'destroy'],
 ];
 
 // Verificar si la ruta existe
@@ -93,13 +101,50 @@ if (!isset($routes[$path])) {
     // Si no existe la ruta exacta, intentar con el patrón controller/action
     $route_key = $controller_name . '/' . $action_name;
     if (!isset($routes[$route_key])) {
-        http_response_code(404);
-        echo '<h1>404 - Página no encontrada</h1>';
-        echo '<p>La ruta solicitada no existe: ' . htmlspecialchars($path) . '</p>';
-        echo '<a href="' . base_url('login') . '">Volver al inicio</a>';
-        exit;
+        // Verificar si es una ruta API con parámetros dinámicos
+        if (strpos($path, 'api/users/') === 0) {
+            $path_parts = explode('/', $path);
+            if (count($path_parts) >= 4) {
+                $action = $path_parts[3]; // show, update, destroy
+                $id = $path_parts[2]; // ID del usuario
+
+                // Mapear acciones API
+                $api_actions = [
+                    'show' => 'show',
+                    'update' => 'update',
+                    'destroy' => 'destroy'
+                ];
+
+                if (isset($api_actions[$action])) {
+                    $route = [
+                        'controller' => 'UserController',
+                        'action' => $api_actions[$action],
+                        'params' => [$id]
+                    ];
+                } else {
+                    http_response_code(404);
+                    echo '<h1>404 - Página no encontrada</h1>';
+                    echo '<p>La ruta solicitada no existe: ' . htmlspecialchars($path) . '</p>';
+                    echo '<a href="' . base_url('login') . '">Volver al inicio</a>';
+                    exit;
+                }
+            } else {
+                http_response_code(404);
+                echo '<h1>404 - Página no encontrada</h1>';
+                echo '<p>La ruta solicitada no existe: ' . htmlspecialchars($path) . '</p>';
+                echo '<a href="' . base_url('login') . '">Volver al inicio</a>';
+                exit;
+            }
+        } else {
+            http_response_code(404);
+            echo '<h1>404 - Página no encontrada</h1>';
+            echo '<p>La ruta solicitada no existe: ' . htmlspecialchars($path) . '</p>';
+            echo '<a href="' . base_url('login') . '">Volver al inicio</a>';
+            exit;
+        }
+    } else {
+        $route = $routes[$route_key];
     }
-    $route = $routes[$route_key];
 } else {
     $route = $routes[$path];
 }
@@ -168,7 +213,11 @@ try {
     }
 
     // Ejecutar la acción
-    $controller->$action();
+    if (isset($route['params'])) {
+        call_user_func_array([$controller, $action], $route['params']);
+    } else {
+        $controller->$action();
+    }
 } catch (Exception $e) {
     http_response_code(500);
     echo '<h1>500 - Error del servidor</h1>';
