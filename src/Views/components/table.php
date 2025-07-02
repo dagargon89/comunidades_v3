@@ -11,7 +11,7 @@
  */
 ?>
 <div class="overflow-x-auto rounded-xl shadow">
-    <table class="min-w-full tabla-app divide-y divide-gray-200 bg-white dark:bg-[#23263a]">
+    <table class="min-w-full tabla-app divide-y divide-gray-200 bg-white">
         <thead>
             <tr class="text-left text-xs font-semibold uppercase tracking-wider bg-primary text-white">
                 <?php foreach ($headers as $header): ?>
@@ -22,16 +22,16 @@
                 <?php endif; ?>
             </tr>
         </thead>
-        <tbody class="bg-white dark:bg-[#23263a] divide-y divide-gray-100 dark:divide-gray-700">
+        <tbody class="bg-white divide-y divide-gray-100">
             <?php if (empty($rows)): ?>
                 <tr>
                     <td colspan="<?= count($headers) + (empty($actions) ? 0 : 1) ?>" class="text-center py-8 text-muted">No hay datos para mostrar.</td>
                 </tr>
             <?php else: ?>
                 <?php foreach ($rows as $idx => $row): ?>
-                    <tr class="<?= $idx % 2 === 0 ? 'bg-gray-50 dark:bg-[#23263a]' : 'bg-white dark:bg-[#181c2a]' ?>">
+                    <tr class="bg-white text-gray-900">
                         <?php foreach ($fields as $field): ?>
-                            <td class="px-4 py-3 whitespace-nowrap">
+                            <td class="px-4 py-3 whitespace-nowrap text-gray-900">
                                 <?= isset($row[$field]) ? htmlspecialchars($row[$field]) : '-' ?>
                             </td>
                         <?php endforeach; ?>

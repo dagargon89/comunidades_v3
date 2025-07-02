@@ -32,19 +32,12 @@
             --color-info: #2a345a;
             --color-success: #00a8a9;
             --color-bg: #f4f8ff;
-            --color-dark-bg: #181c2a;
             --color-sidebar: #222b45;
-            --color-sidebar-dark: #181c2a;
             --color-topbar: #fff;
-            --color-topbar-dark: #23263a;
             --color-card: #fff;
-            --color-card-dark: #23263a;
             --color-text: #222b45;
-            --color-text-dark: #e5e7eb;
             --color-muted: #8f9bb3;
-            --color-muted-dark: #b0b3c6;
             --color-separator: #e4e9f2;
-            --color-separator-dark: #23263a;
         }
 
         body {
@@ -130,44 +123,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        .dark-mode {
-            background: var(--color-dark-bg) !important;
-            color: var(--color-text-dark) !important;
-        }
-
-        .dark-mode .sidebar {
-            background: var(--color-sidebar-dark) !important;
-            color: #fff !important;
-            border-right: 1px solid var(--color-separator-dark);
-        }
-
-        .dark-mode .sidebar a {
-            color: #fff;
-            opacity: 0.8;
-        }
-
-        .dark-mode .sidebar a:hover,
-        .dark-mode .sidebar a.active {
-            background: var(--color-primary);
-            color: #fff !important;
-            opacity: 1;
-        }
-
-        .dark-mode .topbar {
-            background: var(--color-topbar-dark) !important;
-            color: var(--color-text-dark) !important;
-            border-bottom: 1px solid var(--color-separator-dark);
-        }
-
-        .dark-mode .card {
-            background: var(--color-card-dark) !important;
-            color: var(--color-text-dark) !important;
-        }
-
-        .dark-mode .text-muted {
-            color: var(--color-muted-dark) !important;
-        }
-
         .btn-secondary {
             background: var(--color-secondary);
             color: #fff;
@@ -214,9 +169,6 @@
                     </button>
                 </div>
                 <div class="flex items-center gap-4">
-                    <button id="darkModeBtn" class="text-info hover:text-primary focus:outline-none text-xl" title="Modo nocturno">
-                        <i class="fas fa-moon"></i>
-                    </button>
                     <div class="relative group">
                         <button class="user-btn">
                             <i class="fas fa-user-circle text-2xl"></i>
@@ -232,27 +184,13 @@
             </header>
             <!-- Contenido principal -->
             <main class="flex-1 p-8 transition-colors duration-300" style="background: var(--color-bg);" id="main-content">
-                <div class="card max-w-full mx-auto rounded-2xl shadow-xl p-10 text-center">
+                <div class="card w-[90%] max-w-full mx-auto rounded-2xl shadow-xl p-10 text-center">
                     <?= $content ?? '' ?>
                 </div>
             </main>
         </div>
     </div>
     <script>
-        // Modo nocturno
-        const darkModeBtn = document.getElementById('darkModeBtn');
-        const body = document.getElementById('body');
-        const sidebar = document.querySelector('.sidebar');
-        const topbar = document.querySelector('.topbar');
-        const mainContent = document.getElementById('main-content');
-        const card = document.querySelector('.card');
-        darkModeBtn.addEventListener('click', function() {
-            body.classList.toggle('dark-mode');
-            sidebar.classList.toggle('dark-mode');
-            topbar.classList.toggle('dark-mode');
-            mainContent.style.background = body.classList.contains('dark-mode') ? 'var(--color-dark-bg)' : 'var(--color-bg)';
-            if (card) card.classList.toggle('dark-mode');
-        });
         // Sidebar móvil (solo visual, sin funcionalidad real)
         function toggleSidebar() {
             alert('Sidebar móvil (demo visual)');

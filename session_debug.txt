@@ -26,25 +26,24 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 59332
-    [REDIRECT_URL] => /users/buscar
-    [REDIRECT_QUERY_STRING] => q=&rol=&estado=activo&page=1
+    [REMOTE_PORT] => 59684
+    [REDIRECT_URL] => /api/roles
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
-    [QUERY_STRING] => q=&rol=&estado=activo&page=1
-    [REQUEST_URI] => /users/buscar?q=&rol=&estado=activo&page=1
+    [QUERY_STRING] => 
+    [REQUEST_URI] => /api/roles
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751489259.9983
-    [REQUEST_TIME] => 1751489259
+    [REQUEST_TIME_FLOAT] => 1751489749.0288
+    [REQUEST_TIME] => 1751489749
 )
 Array
 (
 )
-PATH: users/buscar
+PATH: api/roles
 METHOD: GET
-URI: /users/buscar?q=&rol=&estado=activo&page=1
+URI: /api/roles
 POST: Array
 (
 )
