@@ -24,8 +24,26 @@ class UserController
         $perPage = isset($_GET['per_page']) ? intval($_GET['per_page']) : 10;
 
         $result = User::buscarUsuarios($query, $rol, $estado, $page, $perPage);
-        header('Content-Type: application/json');
-        echo json_encode($result);
+
+        // Adaptar los datos para el componente
+        $headers = ['Nombre', 'Email', 'Rol(es)', 'Estado', 'Fecha registro', 'Último acceso'];
+        $fields = ['nombre', 'email', 'roles', 'estado', 'fecha_registro', 'ultimo_acceso'];
+        $rows = array_map(function ($u) {
+            return [
+                'nombre' => $u['first_name'] . ' ' . $u['last_name'],
+                'email' => $u['email'],
+                'roles' => (isset($u['roles']) && is_array($u['roles']) && count($u['roles'])) ? implode(', ', array_column($u['roles'], 'name')) : '-',
+                'estado' => $u['estado'],
+                'fecha_registro' => $u['created_at'] ? explode(' ', $u['created_at'])[0] : '-',
+                'ultimo_acceso' => $u['updated_at'] ? explode(' ', $u['updated_at'])[0] : '-',
+                'raw' => $u
+            ];
+        }, $result['usuarios']);
+        $actions = ['ver', 'editar', 'eliminar', 'reset', 'rol', 'correo', 'bloquear'];
+        ob_start();
+        include __DIR__ . '/../Views/components/table.php';
+        $tablaHtml = ob_get_clean();
+        echo $tablaHtml;
         exit;
     }
 }

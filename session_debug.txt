@@ -4,9 +4,7 @@ INDEX: Array
     [HTTP_HOST] => comunidades_v3.test
     [HTTP_CONNECTION] => keep-alive
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
-    [HTTP_SEC_PURPOSE] => prefetch;prerender
     [HTTP_ACCEPT] => */*
-    [HTTP_PURPOSE] => prefetch
     [HTTP_REFERER] => http://comunidades_v3.test/users
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
@@ -28,30 +26,25 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 58687
-    [REDIRECT_URL] => /api/roles
+    [REMOTE_PORT] => 59332
+    [REDIRECT_URL] => /users/buscar
+    [REDIRECT_QUERY_STRING] => q=&rol=&estado=activo&page=1
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
-    [QUERY_STRING] => 
-    [REQUEST_URI] => /api/roles
+    [QUERY_STRING] => q=&rol=&estado=activo&page=1
+    [REQUEST_URI] => /users/buscar?q=&rol=&estado=activo&page=1
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751488492.7554
-    [REQUEST_TIME] => 1751488492
+    [REQUEST_TIME_FLOAT] => 1751489259.9983
+    [REQUEST_TIME] => 1751489259
 )
 Array
 (
 )
-PATH: usuarios/buscar
+PATH: users/buscar
 METHOD: GET
-URI: /usuarios/buscar?q=&rol=&estado=&page=1
-POST: Array
-(
-)
-PATH: api/roles
-METHOD: GET
-URI: /api/roles
+URI: /users/buscar?q=&rol=&estado=activo&page=1
 POST: Array
 (
 )

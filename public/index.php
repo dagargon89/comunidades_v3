@@ -60,6 +60,7 @@ $routes = [
 
     // Rutas de usuarios
     'users' => ['controller' => 'UserController', 'action' => 'index'],
+    'users/buscar' => ['controller' => 'UserController', 'action' => 'buscar'],
     'users/create' => ['controller' => 'UserController', 'action' => 'create'],
     'users/store' => ['controller' => 'UserController', 'action' => 'store'],
     'users/edit' => ['controller' => 'UserController', 'action' => 'edit'],

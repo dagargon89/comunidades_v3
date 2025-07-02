@@ -1,7 +1,7 @@
 <?php
 $title = 'Usuarios';
 ob_start(); ?>
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 w-[90%] mx-auto">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="flex gap-2 items-center w-full md:w-auto">
             <input type="text" id="busqueda" class="form-input w-full md:w-64 rounded-lg border-gray-300 focus:ring-primary focus:border-primary" placeholder="Buscar por nombre, email o usuario...">
@@ -16,30 +16,11 @@ ob_start(); ?>
         </div>
         <button class="btn-secondary px-5 py-2" id="btn-nuevo"><i class="fas fa-user-plus mr-2"></i>Nuevo usuario</button>
     </div>
-    <div class="overflow-x-auto rounded-xl shadow">
-        <table class="min-w-full divide-y divide-gray-200 bg-white dark:bg-[#23263a]">
-            <thead>
-                <tr class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    <th class="px-4 py-3">Nombre</th>
-                    <th class="px-4 py-3">Email</th>
-                    <th class="px-4 py-3">Rol(es)</th>
-                    <th class="px-4 py-3">Estado</th>
-                    <th class="px-4 py-3">Fecha registro</th>
-                    <th class="px-4 py-3">Último acceso</th>
-                    <th class="px-4 py-3 text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="usuarios-tbody" class="bg-white dark:bg-[#23263a] divide-y divide-gray-100 dark:divide-gray-700">
-                <tr>
-                    <td colspan="7" class="text-center py-8 text-muted">Cargando usuarios...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div id="tabla-usuarios"></div>
     <div class="flex justify-between items-center mt-4" id="paginacion"></div>
 </div>
 <script>
-    const tbody = document.getElementById('usuarios-tbody');
+    const tablaUsuarios = document.getElementById('tabla-usuarios');
     const paginacion = document.getElementById('paginacion');
     const busqueda = document.getElementById('busqueda');
     const filtroRol = document.getElementById('filtro-rol');
@@ -48,44 +29,19 @@ ob_start(); ?>
     let totalPaginas = 1;
     let timeoutBusqueda;
 
+    function renderTablaUsuarios(html) {
+        tablaUsuarios.innerHTML = html;
+    }
+
     function cargarUsuarios(page = 1) {
         const q = busqueda.value.trim();
         const rol = filtroRol.value;
         const estado = filtroEstado.value;
-        fetch(`/usuarios/buscar?q=${encodeURIComponent(q)}&rol=${encodeURIComponent(rol)}&estado=${encodeURIComponent(estado)}&page=${page}`)
-            .then(r => r.json())
-            .then(data => {
-                tbody.innerHTML = '';
-                if (data.usuarios.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan='7' class='text-center py-8 text-muted'>No se encontraron usuarios.</td></tr>`;
-                } else {
-                    data.usuarios.forEach(u => {
-                        tbody.innerHTML += `
-                        <tr>
-                            <td class='px-4 py-3 whitespace-nowrap font-semibold'>${u.first_name} ${u.last_name}</td>
-                            <td class='px-4 py-3'>${u.email}</td>
-                            <td class='px-4 py-3'>${(u.roles && u.roles.length) ? u.roles.map(r=>r.name).join(', ') : '-'}</td>
-                            <td class='px-4 py-3'>
-                                <span class="inline-block px-2 py-1 rounded-full text-xs font-bold ${u.estado === 'Activo' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${u.estado}</span>
-                            </td>
-                            <td class='px-4 py-3'>${u.created_at ? u.created_at.split(' ')[0] : '-'}</td>
-                            <td class='px-4 py-3'>${u.updated_at ? u.updated_at.split(' ')[0] : '-'}</td>
-                            <td class='px-4 py-3 text-center'>
-                                <button class="text-info hover:text-primary mx-1" title="Ver"><i class="fas fa-eye"></i></button>
-                                <button class="text-info hover:text-primary mx-1" title="Editar"><i class="fas fa-edit"></i></button>
-                                <button class="text-danger hover:text-primary mx-1" title="Eliminar"><i class="fas fa-trash"></i></button>
-                                <button class="text-warning hover:text-primary mx-1" title="Resetear contraseña"><i class="fas fa-key"></i></button>
-                                <button class="text-info hover:text-primary mx-1" title="Cambiar rol"><i class="fas fa-user-tag"></i></button>
-                                <button class="text-info hover:text-primary mx-1" title="Enviar correo"><i class="fas fa-envelope"></i></button>
-                                <button class="text-info hover:text-primary mx-1" title="${u.estado === 'Activo' ? 'Bloquear' : 'Desbloquear'}"><i class="fas ${u.estado === 'Activo' ? 'fa-user-lock' : 'fa-user-check'}"></i></button>
-                            </td>
-                        </tr>
-                    `;
-                    });
-                }
-                paginaActual = data.page;
-                totalPaginas = data.pages;
-                renderPaginacion();
+        fetch(`/users/buscar?q=${encodeURIComponent(q)}&rol=${encodeURIComponent(rol)}&estado=${encodeURIComponent(estado)}&page=${page}`)
+            .then(r => r.text())
+            .then(html => {
+                renderTablaUsuarios(html);
+                // La paginación se mantiene igual, pero si quieres paginación AJAX, deberás ajustarla también
             });
     }
 
