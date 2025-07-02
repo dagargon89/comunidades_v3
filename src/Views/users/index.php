@@ -19,6 +19,60 @@ ob_start(); ?>
     <div id="tabla-usuarios"></div>
     <div class="flex justify-between items-center mt-4" id="paginacion"></div>
 </div>
+
+<?php
+// Modal de nuevo usuario
+$id = 'modal-nuevo-usuario';
+$title = 'Nuevo usuario';
+$content = "<form id=\"form-nuevo-usuario\" class=\"space-y-4\">
+    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Nombre</label>
+            <input type=\"text\" name=\"first_name\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
+        </div>
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Apellidos</label>
+            <input type=\"text\" name=\"last_name\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
+        </div>
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Email</label>
+            <input type=\"email\" name=\"email\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
+        </div>
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Usuario</label>
+            <input type=\"text\" name=\"username\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required>
+        </div>
+        <div class=\"relative\">
+            <label class=\"block text-sm font-semibold mb-1\">Contraseña</label>
+            <input type=\"password\" name=\"password\" id=\"nuevo-password\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2 pr-10\" required>
+            <button type=\"button\" tabindex=\"-1\" class=\"absolute right-2 top-8 text-gray-400 hover:text-primary\" onclick=\"togglePassword('nuevo-password', this)\"><i class=\"fas fa-eye\"></i></button>
+        </div>
+        <div class=\"relative\">
+            <label class=\"block text-sm font-semibold mb-1\">Confirmar contraseña</label>
+            <input type=\"password\" name=\"confirm_password\" id=\"nuevo-confirm-password\" class=\"form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2 pr-10\" required>
+            <button type=\"button\" tabindex=\"-1\" class=\"absolute right-2 top-8 text-gray-400 hover:text-primary\" onclick=\"togglePassword('nuevo-confirm-password', this)\"><i class=\"fas fa-eye\"></i></button>
+        </div>
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Rol</label>
+            <select name=\"rol\" class=\"form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\" required id=\"select-rol-nuevo\">
+                <option value=\"\">Selecciona un rol</option>
+            </select>
+        </div>
+        <div>
+            <label class=\"block text-sm font-semibold mb-1\">Estado</label>
+            <select name=\"is_active\" class=\"form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2\">
+                <option value=\"1\">Activo</option>
+                <option value=\"0\">Inactivo</option>
+            </select>
+        </div>
+    </div>
+    <div id=\"nuevo-usuario-error\" class=\"text-danger text-sm mt-2\"></div>
+</form>";
+$footer = '<button type="submit" form="form-nuevo-usuario" class="btn-secondary px-5 py-2">Guardar</button>
+<button type="button" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400" onclick="closeModal(\'modal-nuevo-usuario\')">Cancelar</button>';
+include __DIR__ . '/../components/modal.php';
+?>
+
 <script>
     const tablaUsuarios = document.getElementById('tabla-usuarios');
     const paginacion = document.getElementById('paginacion');
@@ -83,6 +137,58 @@ ob_start(); ?>
                 filtroRol.innerHTML = '<option value="">Todos los roles</option>' + roles.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
             });
     });
+
+    document.getElementById('btn-nuevo').addEventListener('click', function() {
+        openModal('modal-nuevo-usuario');
+        // Cargar roles en el select del modal
+        fetch('/api/roles')
+            .then(r => r.json())
+            .then(roles => {
+                const select = document.getElementById('select-rol-nuevo');
+                select.innerHTML = '<option value="">Selecciona un rol</option>' + roles.map(r => `<option value="${r.name}">${r.name}</option>`).join('');
+            });
+    });
+
+    document.getElementById('form-nuevo-usuario').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const errorDiv = document.getElementById('nuevo-usuario-error');
+        errorDiv.textContent = '';
+        // Validación básica en frontend
+        if (data.get('password') !== data.get('confirm_password')) {
+            errorDiv.textContent = 'Las contraseñas no coinciden.';
+            return;
+        }
+        fetch('/users/store', {
+                method: 'POST',
+                body: data
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    closeModal('modal-nuevo-usuario');
+                    form.reset();
+                    cargarUsuarios(1);
+                } else {
+                    errorDiv.textContent = res.message || 'Error al crear usuario';
+                }
+            })
+            .catch(() => {
+                errorDiv.textContent = 'Error de red o del servidor.';
+            });
+    });
+
+    function togglePassword(id, btn) {
+        const input = document.getElementById(id);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+            input.type = 'password';
+            btn.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+    }
 </script>
 <?php $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';

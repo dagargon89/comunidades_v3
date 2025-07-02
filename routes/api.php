@@ -1,0 +1,1 @@
+$router->get('/api/roles', 'RoleController@apiRoles');

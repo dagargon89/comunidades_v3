@@ -83,6 +83,9 @@ $routes = [
     'catalogs/locations/edit' => ['controller' => 'LocationController', 'action' => 'edit'],
     'catalogs/locations/update' => ['controller' => 'LocationController', 'action' => 'update'],
     'catalogs/locations/delete' => ['controller' => 'LocationController', 'action' => 'delete'],
+
+    // Rutas de API de roles
+    'api/roles' => ['controller' => 'RoleController', 'action' => 'apiRoles'],
 ];
 
 // Verificar si la ruta existe

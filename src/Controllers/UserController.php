@@ -46,4 +46,57 @@ class UserController
         echo $tablaHtml;
         exit;
     }
+
+    // Guardar nuevo usuario (AJAX)
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+            exit;
+        }
+        $data = $_POST;
+        $required = ['first_name', 'last_name', 'email', 'username', 'password', 'confirm_password', 'rol'];
+        foreach ($required as $field) {
+            if (empty($data[$field])) {
+                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios']);
+                exit;
+            }
+        }
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['success' => false, 'message' => 'Email no válido']);
+            exit;
+        }
+        if ($data['password'] !== $data['confirm_password']) {
+            echo json_encode(['success' => false, 'message' => 'Las contraseñas no coinciden']);
+            exit;
+        }
+        if (strlen($data['password']) < 6) {
+            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 6 caracteres']);
+            exit;
+        }
+        require_once __DIR__ . '/../Models/User.php';
+        require_once __DIR__ . '/../Models/Role.php';
+        try {
+            $user = \Models\User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'is_active' => isset($data['is_active']) ? (int)$data['is_active'] : 1
+            ]);
+            // Asignar rol
+            $role = $data['rol'];
+            $userId = $user->getId();
+            $roleRow = \Models\Role::getByName($role);
+            if ($roleRow) {
+                \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$userId, $roleRow['id']]);
+            }
+            echo json_encode(['success' => true, 'message' => 'Usuario creado correctamente']);
+        } catch (\Exception $e) {
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+        exit;
+    }
 }
