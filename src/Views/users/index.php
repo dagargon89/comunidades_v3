@@ -59,9 +59,28 @@ ob_start(); ?>
                                     <?= $usuario['is_active'] ? 'Activo' : 'Inactivo' ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-left">
-                                <a href="/users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                <a href="/users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-left flex gap-2 items-center">
+                                <a href="/users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
+                                <a href="/users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
+                                <a href="/users/view?id=<?= $usuario['id'] ?>" class="text-gray-600 hover:text-primary" title="Ver detalles"><i class="fas fa-eye"></i></a>
+                                <?php if (!$usuario['is_active']): ?>
+                                    <a href="/users/reactivate?id=<?= $usuario['id'] ?>" class="text-green-600 hover:text-green-800" title="Reactivar"><i class="fas fa-undo"></i></a>
+                                <?php endif; ?>
+                                <a href="/users/reset-password?id=<?= $usuario['id'] ?>" class="text-yellow-600 hover:text-yellow-800" title="Resetear contraseña"><i class="fas fa-key"></i></a>
+                                <form method="post" action="/users/change-role" class="inline">
+                                    <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
+                                    <select name="rol" class="text-xs border rounded px-1 py-0.5 bg-gray-50" onchange="this.form.submit()" title="Cambiar rol">
+                                        <?php foreach ($roles as $rol): ?>
+                                            <option value="<?= $rol['name'] ?>" <?= ($usuario['rol'] === $rol['name']) ? 'selected' : '' ?>><?= htmlspecialchars($rol['name']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </form>
+                                <?php if ($usuario['is_active']): ?>
+                                    <a href="/users/block?id=<?= $usuario['id'] ?>" class="text-gray-500 hover:text-black" title="Bloquear"><i class="fas fa-ban"></i></a>
+                                <?php else: ?>
+                                    <a href="/users/unblock?id=<?= $usuario['id'] ?>" class="text-gray-500 hover:text-black" title="Desbloquear"><i class="fas fa-unlock"></i></a>
+                                <?php endif; ?>
+                                <a href="mailto:<?= htmlspecialchars($usuario['email']) ?>" class="text-indigo-600 hover:text-indigo-900" title="Enviar correo"><i class="fas fa-envelope"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
