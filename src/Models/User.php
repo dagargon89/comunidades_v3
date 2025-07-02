@@ -81,13 +81,14 @@ class User
     /**
      * Buscar usuario por ID
      */
-    public static function findById($id)
+    public static function findById($id, $incluirInactivos = false)
     {
-        $data = Database::fetch(
-            "SELECT * FROM users WHERE id = ? AND is_active = 1",
-            [$id]
-        );
-
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $params = [$id];
+        if (!$incluirInactivos) {
+            $sql .= " AND is_active = 1";
+        }
+        $data = Database::fetch($sql, $params);
         return $data ? new self($data) : null;
     }
 

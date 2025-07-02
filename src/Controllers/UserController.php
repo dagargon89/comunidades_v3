@@ -200,7 +200,7 @@ class UserController
             header('Location: /users');
             exit;
         }
-        $usuario = \Models\User::findById($id);
+        $usuario = \Models\User::findById($id, true);
         if (!$usuario) {
             $_SESSION['flash_error'] = 'Usuario no encontrado';
             header('Location: /users');
@@ -229,7 +229,7 @@ class UserController
             header('Location: /users');
             exit;
         }
-        $usuario = \Models\User::findById($id);
+        $usuario = \Models\User::findById($id, true);
         if (!$usuario) {
             $_SESSION['flash_error'] = 'Usuario no encontrado';
             header('Location: /users');
@@ -316,6 +316,130 @@ class UserController
                 \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
                 $_SESSION['flash_success'] = 'Usuario desactivado correctamente.';
             }
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: /users');
+        exit;
+    }
+
+    // Ver detalles de usuario
+    public function view()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: /users');
+            exit;
+        }
+        $usuario = \Models\User::findById($id);
+        if (!$usuario) {
+            $_SESSION['flash_error'] = 'Usuario no encontrado';
+            header('Location: /users');
+            exit;
+        }
+        $roles = \Core\Database::fetchAll('SELECT id, name FROM roles ORDER BY name');
+        $rol_actual = null;
+        $roles_usuario = $usuario->getRoles();
+        if (!empty($roles_usuario)) {
+            $rol_actual = $roles_usuario[0]['id'];
+        }
+        require __DIR__ . '/../Views/users/view.php';
+    }
+
+    // Reactivar usuario
+    public function reactivate()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: /users');
+            exit;
+        }
+        try {
+            \Core\Database::query("UPDATE users SET is_active = 1 WHERE id = ?", [$id]);
+            $_SESSION['flash_success'] = 'Usuario reactivado correctamente.';
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: /users');
+        exit;
+    }
+
+    // Resetear contraseña (asigna una temporal y muestra en mensaje flash)
+    public function resetPassword()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: /users');
+            exit;
+        }
+        $usuario = \Models\User::findById($id);
+        if (!$usuario) {
+            $_SESSION['flash_error'] = 'Usuario no encontrado';
+            header('Location: /users');
+            exit;
+        }
+        $tempPass = substr(bin2hex(random_bytes(4)), 0, 8);
+        try {
+            \Core\Database::query("UPDATE users SET password_hash = ? WHERE id = ?", [password_hash($tempPass, PASSWORD_DEFAULT), $id]);
+            $_SESSION['flash_success'] = 'Contraseña temporal: ' . $tempPass;
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: /users');
+        exit;
+    }
+
+    // Cambiar rol
+    public function changeRole()
+    {
+        $id = $_POST['id'] ?? null;
+        $rol = $_POST['rol'] ?? null;
+        if (!$id || !$rol) {
+            header('Location: /users');
+            exit;
+        }
+        try {
+            $rolRow = \Core\Database::fetch("SELECT id FROM roles WHERE name = ?", [$rol]);
+            if (!$rolRow) throw new \Exception('Rol no válido');
+            \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
+            \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$id, $rolRow['id']]);
+            $_SESSION['flash_success'] = 'Rol actualizado correctamente.';
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: /users');
+        exit;
+    }
+
+    // Bloquear usuario (is_active = 0)
+    public function block()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: /users');
+            exit;
+        }
+        try {
+            \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
+            $_SESSION['flash_success'] = 'Usuario bloqueado.';
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: /users');
+        exit;
+    }
+
+    // Desbloquear usuario (is_active = 1)
+    public function unblock()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: /users');
+            exit;
+        }
+        try {
+            \Core\Database::query("UPDATE users SET is_active = 1 WHERE id = ?", [$id]);
+            $_SESSION['flash_success'] = 'Usuario desbloqueado.';
         } catch (\Exception $e) {
             $_SESSION['flash_error'] = $e->getMessage();
         }
