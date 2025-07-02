@@ -34,9 +34,6 @@
                 </div>
             </div>
 
-            <p class="text-xs text-gray-400 mb-2">URL actual: <?= htmlspecialchars($_SERVER['REQUEST_URI']) ?> | Método: <?= htmlspecialchars($_SERVER['REQUEST_METHOD']) ?></p>
-            <p class="text-xs text-blue-400 mb-2">Action generado: <?= base_url('auth/register') ?></p>
-
             <!-- Formulario de registro -->
             <form class="space-y-5" action="<?= base_url('auth/register') ?>" method="POST">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

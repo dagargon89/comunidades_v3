@@ -28,10 +28,6 @@
                 </div>
             </div>
 
-            <!-- Enlaces adicionales -->
-            <p class="text-xs text-gray-400 mb-2">URL actual: <?= htmlspecialchars($_SERVER['REQUEST_URI']) ?> | Método: <?= htmlspecialchars($_SERVER['REQUEST_METHOD']) ?></p>
-            <p class="text-xs text-blue-400 mb-2">Action generado: <?= base_url('auth/login') ?></p>
-
             <!-- Formulario de login -->
             <form class="space-y-5" action="<?= base_url('auth/login') ?>" method="POST">
                 <div class="space-y-4">
