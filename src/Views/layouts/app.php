@@ -155,6 +155,7 @@
                     <li class="mt-6 mb-1 text-xs uppercase tracking-wider text-gray-400 px-2">Administración</li>
                     <li><a href="/users"><i class="fas fa-users-cog"></i> Usuarios</a></li>
                     <li><a href="/roles"><i class="fas fa-user-shield"></i> Roles</a></li>
+                    <li><a href="/permissions"><i class="fas fa-key"></i> Permisos</a></li>
                     <li><a href="#"><i class="fas fa-list"></i> Catálogos</a></li>
                 </ul>
                 <div class="separator"></div>

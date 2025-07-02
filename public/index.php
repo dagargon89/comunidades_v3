@@ -75,6 +75,14 @@ $routes = [
     'roles/update' => ['controller' => 'RoleController', 'action' => 'update'],
     'roles/delete' => ['controller' => 'RoleController', 'action' => 'delete'],
 
+    // Rutas de permisos
+    'permissions' => ['controller' => 'PermissionController', 'action' => 'index'],
+    'permissions/create' => ['controller' => 'PermissionController', 'action' => 'create'],
+    'permissions/store' => ['controller' => 'PermissionController', 'action' => 'store'],
+    'permissions/edit' => ['controller' => 'PermissionController', 'action' => 'edit'],
+    'permissions/update' => ['controller' => 'PermissionController', 'action' => 'update'],
+    'permissions/delete' => ['controller' => 'PermissionController', 'action' => 'delete'],
+
     // Rutas de catálogos
     'catalogs' => ['controller' => 'CatalogController', 'action' => 'index'],
     'catalogs/locations' => ['controller' => 'LocationController', 'action' => 'index'],
