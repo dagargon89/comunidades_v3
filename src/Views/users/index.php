@@ -35,6 +35,7 @@ ob_start(); ?>
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellidos</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
@@ -50,16 +51,17 @@ ob_start(); ?>
                 <?php else: ?>
                     <?php foreach ($usuarios as $usuario): ?>
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-left"><?= htmlspecialchars($usuario['first_name'] . ' ' . $usuario['last_name']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['email']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['username']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['rol'] ?? '-') ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['first_name']) ?> </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['last_name']) ?> </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['email']) ?> </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['username']) ?> </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['rol']) ?> </td>
                             <td class="px-6 py-4 whitespace-nowrap text-left">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
                                     <?= $usuario['is_active'] ? 'Activo' : 'Inactivo' ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-left flex gap-2 items-center">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
                                 <a href="users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
                                 <a href="users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
                                 <!-- Acciones rápidas ocultas temporalmente -->

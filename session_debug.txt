@@ -6,7 +6,7 @@ INDEX: Array
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/roles/edit?id=1
+    [HTTP_REFERER] => http://comunidades_v3.test/roles
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=2p2diarv7vp5qin2g24v1utlie
@@ -27,7 +27,7 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 51029
+    [REMOTE_PORT] => 51132
     [REDIRECT_URL] => /roles
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
@@ -36,8 +36,8 @@ INDEX: Array
     [REQUEST_URI] => /roles
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751495946.0447
-    [REQUEST_TIME] => 1751495946
+    [REQUEST_TIME_FLOAT] => 1751496090.0551
+    [REQUEST_TIME] => 1751496090
 )
 Array
 (

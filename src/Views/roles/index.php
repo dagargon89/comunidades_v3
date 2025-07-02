@@ -20,15 +20,15 @@ ob_start();
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                <th class="px-6 py-3"></th>
+                <th class="px-6 py-3 text-left"></th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             <?php foreach ($roles as $rol): ?>
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm"> <?= htmlspecialchars($rol['name']) ?> </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm"> <?= htmlspecialchars($rol['description']) ?> </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['name']) ?> </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['description']) ?> </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
                         <a href="/roles/edit?id=<?= $rol['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
                         <a href="/roles/delete?id=<?= $rol['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este rol?')"><i class="fas fa-trash"></i></a>
                     </td>
