@@ -12,7 +12,7 @@ ob_start();
         <div class="mb-4 p-3 bg-green-100 text-green-700 rounded"> <?= $_SESSION['flash_success'];
                                                                     unset($_SESSION['flash_success']); ?> </div>
     <?php endif; ?>
-    <form method="post" action="users/store" class="space-y-4">
+    <form method="post" action="/users/store" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-semibold mb-1">Nombre</label>
@@ -57,7 +57,7 @@ ob_start();
         </div>
         <div class="flex gap-2 mt-6">
             <button type="submit" class="btn-secondary px-5 py-2">Guardar</button>
-            <a href="users" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400">Cancelar</a>
+            <a href="/users" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400">Cancelar</a>
         </div>
     </form>
 </div>

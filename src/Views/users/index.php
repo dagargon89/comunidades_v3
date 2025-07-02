@@ -27,7 +27,7 @@ ob_start(); ?>
         </div>
         <div class="flex gap-2 items-center justify-end w-full md:w-auto">
             <button type="submit" class="btn-secondary px-5 py-2"><i class="fas fa-search mr-2"></i>Filtrar</button>
-            <a href="users/create" class="btn-secondary px-5 py-2"><i class="fas fa-user-plus mr-2"></i>Nuevo usuario</a>
+            <a href="/users/create" class="btn-secondary px-5 py-2"><i class="fas fa-user-plus mr-2"></i>Nuevo usuario</a>
         </div>
     </form>
     <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -60,8 +60,8 @@ ob_start(); ?>
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-left">
-                                <a href="users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
-                                <a href="users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
+                                <a href="/users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
+                                <a href="/users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -132,7 +132,7 @@ class UserController
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $data = $_POST;
@@ -140,23 +140,23 @@ class UserController
         foreach ($required as $field) {
             if (empty($data[$field])) {
                 $_SESSION['flash_error'] = 'Todos los campos son obligatorios';
-                header('Location: users/create');
+                header('Location: /users/create');
                 exit;
             }
         }
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION['flash_error'] = 'Email no válido';
-            header('Location: users/create');
+            header('Location: /users/create');
             exit;
         }
         if ($data['password'] !== $data['confirm_password']) {
             $_SESSION['flash_error'] = 'Las contraseñas no coinciden';
-            header('Location: users/create');
+            header('Location: /users/create');
             exit;
         }
         if (strlen($data['password']) < 6) {
             $_SESSION['flash_error'] = 'La contraseña debe tener al menos 6 caracteres';
-            header('Location: users/create');
+            header('Location: /users/create');
             exit;
         }
         try {
@@ -172,11 +172,11 @@ class UserController
             $userId = $user->getId();
             \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$userId, $roleId]);
             $_SESSION['flash_success'] = 'Usuario creado correctamente';
-            header('Location: users');
+            header('Location: /users');
             exit;
         } catch (\Exception $e) {
             $_SESSION['flash_error'] = $e->getMessage();
-            header('Location: users/create');
+            header('Location: /users/create');
             exit;
         }
     }
@@ -186,13 +186,13 @@ class UserController
     {
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $usuario = \Models\User::findById($id);
         if (!$usuario) {
             $_SESSION['flash_error'] = 'Usuario no encontrado';
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $roles = \Core\Database::fetchAll('SELECT id, name FROM roles ORDER BY name');
@@ -209,19 +209,19 @@ class UserController
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $id = $_POST['id'] ?? null;
         if (!$id) {
             $_SESSION['flash_error'] = 'ID de usuario faltante';
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $usuario = \Models\User::findById($id);
         if (!$usuario) {
             $_SESSION['flash_error'] = 'Usuario no encontrado';
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $data = $_POST;
@@ -229,24 +229,24 @@ class UserController
         foreach ($required as $field) {
             if (empty($data[$field])) {
                 $_SESSION['flash_error'] = 'Todos los campos son obligatorios';
-                header('Location: users/edit?id=' . $id);
+                header('Location: /users/edit?id=' . $id);
                 exit;
             }
         }
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION['flash_error'] = 'Email no válido';
-            header('Location: users/edit?id=' . $id);
+            header('Location: /users/edit?id=' . $id);
             exit;
         }
         if (!empty($data['password'])) {
             if ($data['password'] !== $data['confirm_password']) {
                 $_SESSION['flash_error'] = 'Las contraseñas no coinciden';
-                header('Location: users/edit?id=' . $id);
+                header('Location: /users/edit?id=' . $id);
                 exit;
             }
             if (strlen($data['password']) < 6) {
                 $_SESSION['flash_error'] = 'La contraseña debe tener al menos 6 caracteres';
-                header('Location: users/edit?id=' . $id);
+                header('Location: /users/edit?id=' . $id);
                 exit;
             }
         }
@@ -267,11 +267,11 @@ class UserController
             \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
             \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$id, $roleId]);
             $_SESSION['flash_success'] = 'Usuario actualizado correctamente';
-            header('Location: users');
+            header('Location: /users');
             exit;
         } catch (\Exception $e) {
             $_SESSION['flash_error'] = $e->getMessage();
-            header('Location: users/edit?id=' . $id);
+            header('Location: /users/edit?id=' . $id);
             exit;
         }
     }
@@ -281,13 +281,13 @@ class UserController
     {
         $id = $_GET['id'] ?? null;
         if (!$id) {
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         $usuario = \Models\User::findById($id);
         if (!$usuario) {
             $_SESSION['flash_error'] = 'Usuario no encontrado';
-            header('Location: users');
+            header('Location: /users');
             exit;
         }
         try {
@@ -297,7 +297,7 @@ class UserController
         } catch (\Exception $e) {
             $_SESSION['flash_error'] = $e->getMessage();
         }
-        header('Location: users');
+        header('Location: /users');
         exit;
     }
 }
