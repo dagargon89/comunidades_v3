@@ -149,7 +149,7 @@ if ($is_protected_route && !is_authenticated()) {
 }
 
 // Cargar el controlador
-$controller_class = 'Controllers\\' . $route['controller'];
+$controller_class = 'Src\\Controllers\\' . $route['controller'];
 $action = $route['action'];
 
 try {

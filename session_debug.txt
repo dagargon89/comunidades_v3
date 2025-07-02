@@ -3,11 +3,9 @@ INDEX: Array
     [REDIRECT_STATUS] => 200
     [HTTP_HOST] => comunidades_v3.test
     [HTTP_CONNECTION] => keep-alive
-    [HTTP_CACHE_CONTROL] => max-age=0
-    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
-    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/auth/login
+    [HTTP_ACCEPT] => */*
+    [HTTP_REFERER] => http://comunidades_v3.test/users
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=pdv868u5maj6vnm0cv013kibee
@@ -28,24 +26,37 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 56739
-    [REDIRECT_URL] => /dashboard
+    [REMOTE_PORT] => 57431
+    [REDIRECT_URL] => /api/roles
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
     [QUERY_STRING] => 
-    [REQUEST_URI] => /dashboard
+    [REQUEST_URI] => /api/roles
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751481214.2641
-    [REQUEST_TIME] => 1751481214
+    [REQUEST_TIME_FLOAT] => 1751482300.2485
+    [REQUEST_TIME] => 1751482300
 )
 Array
 (
 )
-PATH: dashboard
+P_SELF] => /index.php
+    [REQUEST_TIME_FLOAT] => 1751482300.2485
+    [REQUEST_TIME] => 1751482300
+)
+Array
+(
+)
+PATH: api/roles
 METHOD: GET
-URI: /dashboard
+URI: /api/roles
+POST: Array
+(
+)
+PATH: usuarios/buscar
+METHOD: GET
+URI: /usuarios/buscar?q=&rol=&estado=&page=1
 POST: Array
 (
 )

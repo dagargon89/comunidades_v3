@@ -314,4 +314,54 @@ class User
             return new self($userData);
         }, $data);
     }
+
+    /**
+     * Buscar usuarios con filtros y paginación
+     */
+    public static function buscarUsuarios($query = '', $rol = '', $estado = '', $page = 1, $perPage = 10)
+    {
+        $where = [];
+        $params = [];
+
+        if ($query) {
+            $where[] = "(first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR username LIKE ?)";
+            $params[] = "%$query%";
+            $params[] = "%$query%";
+            $params[] = "%$query%";
+            $params[] = "%$query%";
+        }
+        if ($rol) {
+            $where[] = "id IN (SELECT user_id FROM user_roles ur JOIN roles r ON ur.role_id = r.id WHERE r.name = ?)";
+            $params[] = $rol;
+        }
+        if ($estado !== '') {
+            $where[] = "is_active = ?";
+            $params[] = $estado === 'activo' ? 1 : 0;
+        }
+        $whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+        // Total
+        $total = Database::fetch("SELECT COUNT(*) as total FROM users $whereSql", $params);
+        $total = $total ? (int)$total['total'] : 0;
+
+        // Paginación
+        $offset = ($page - 1) * $perPage;
+        $sql = "SELECT * FROM users $whereSql ORDER BY created_at DESC LIMIT $perPage OFFSET $offset";
+        $rows = Database::fetchAll($sql, $params);
+        $usuarios = [];
+        foreach ($rows as $row) {
+            $user = new self($row);
+            $userArr = $user->toArray();
+            $userArr['roles'] = $user->getRoles();
+            $userArr['estado'] = $user->isActive() ? 'Activo' : 'Inactivo';
+            $usuarios[] = $userArr;
+        }
+        return [
+            'usuarios' => $usuarios,
+            'total' => $total,
+            'page' => $page,
+            'per_page' => $perPage,
+            'pages' => ceil($total / $perPage)
+        ];
+    }
 }
