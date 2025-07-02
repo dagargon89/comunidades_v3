@@ -2,6 +2,14 @@
 $title = 'Usuarios';
 ob_start(); ?>
 <div class="flex flex-col gap-6 w-[90%] mx-auto">
+    <?php if (!empty($_SESSION['flash_error'])): ?>
+        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded"> <?= $_SESSION['flash_error'];
+                                                                unset($_SESSION['flash_error']); ?> </div>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION['flash_success'])): ?>
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded"> <?= $_SESSION['flash_success'];
+                                                                    unset($_SESSION['flash_success']); ?> </div>
+    <?php endif; ?>
     <form method="get" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 bg-white p-4 rounded-xl shadow">
         <div class="flex flex-col sm:flex-row gap-2 items-center w-full md:w-auto">
             <input type="text" name="q" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" class="form-input w-full md:w-64 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" placeholder="Buscar por nombre, email o usuario...">

@@ -121,169 +121,183 @@ class UserController
         }
     }
 
-    // Guardar nuevo usuario (AJAX)
+    // Mostrar formulario de alta
+    public function create()
+    {
+        $roles = \Core\Database::fetchAll('SELECT id, name FROM roles ORDER BY name');
+        require __DIR__ . '/../Views/users/create.php';
+    }
+
+    // Guardar usuario (POST)
     public function store()
     {
-        header('Content-Type: application/json');
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            http_response_code(405);
-            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+            header('Location: users');
             exit;
         }
-
-        // Obtener datos JSON
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (!$input) {
-            $input = $_POST; // Fallback para datos de formulario
-        }
-
+        $data = $_POST;
         $required = ['first_name', 'last_name', 'email', 'username', 'password', 'confirm_password', 'rol'];
         foreach ($required as $field) {
-            if (empty($input[$field])) {
-                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios']);
+            if (empty($data[$field])) {
+                $_SESSION['flash_error'] = 'Todos los campos son obligatorios';
+                header('Location: users/create');
                 exit;
             }
         }
-
-        if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'Email no válido']);
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['flash_error'] = 'Email no válido';
+            header('Location: users/create');
             exit;
         }
-
-        if ($input['password'] !== $input['confirm_password']) {
-            echo json_encode(['success' => false, 'message' => 'Las contraseñas no coinciden']);
+        if ($data['password'] !== $data['confirm_password']) {
+            $_SESSION['flash_error'] = 'Las contraseñas no coinciden';
+            header('Location: users/create');
             exit;
         }
-
-        if (strlen($input['password']) < 6) {
-            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 6 caracteres']);
+        if (strlen($data['password']) < 6) {
+            $_SESSION['flash_error'] = 'La contraseña debe tener al menos 6 caracteres';
+            header('Location: users/create');
             exit;
         }
-
         try {
-            $user = User::create([
-                'username' => $input['username'],
-                'email' => $input['email'],
-                'password' => $input['password'],
-                'first_name' => $input['first_name'],
-                'last_name' => $input['last_name'],
-                'is_active' => isset($input['is_active']) ? (int)$input['is_active'] : 1
+            $user = \Models\User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'is_active' => isset($data['is_active']) ? (int)$data['is_active'] : 1
             ]);
-
-            // Asignar rol
-            $roleId = $input['rol'];
+            $roleId = $data['rol'];
             $userId = $user->getId();
             \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$userId, $roleId]);
-
-            echo json_encode(['success' => true, 'message' => 'Usuario creado correctamente']);
+            $_SESSION['flash_success'] = 'Usuario creado correctamente';
+            header('Location: users');
+            exit;
         } catch (\Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            $_SESSION['flash_error'] = $e->getMessage();
+            header('Location: users/create');
+            exit;
         }
     }
 
-    // Actualizar usuario
-    public function update($id)
+    // Mostrar formulario de edición
+    public function edit()
     {
-        header('Content-Type: application/json');
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-            http_response_code(405);
-            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: users');
             exit;
         }
+        $usuario = \Models\User::findById($id);
+        if (!$usuario) {
+            $_SESSION['flash_error'] = 'Usuario no encontrado';
+            header('Location: users');
+            exit;
+        }
+        $roles = \Core\Database::fetchAll('SELECT id, name FROM roles ORDER BY name');
+        // Obtener rol actual
+        $rol_actual = null;
+        $roles_usuario = $usuario->getRoles();
+        if (!empty($roles_usuario)) {
+            $rol_actual = $roles_usuario[0]['id'];
+        }
+        require __DIR__ . '/../Views/users/edit.php';
+    }
 
-        // Obtener datos JSON
-        $input = json_decode(file_get_contents('php://input'), true);
-
+    // Actualizar usuario (POST)
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: users');
+            exit;
+        }
+        $id = $_POST['id'] ?? null;
+        if (!$id) {
+            $_SESSION['flash_error'] = 'ID de usuario faltante';
+            header('Location: users');
+            exit;
+        }
+        $usuario = \Models\User::findById($id);
+        if (!$usuario) {
+            $_SESSION['flash_error'] = 'Usuario no encontrado';
+            header('Location: users');
+            exit;
+        }
+        $data = $_POST;
         $required = ['first_name', 'last_name', 'email', 'username', 'rol'];
         foreach ($required as $field) {
-            if (empty($input[$field])) {
-                echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios']);
+            if (empty($data[$field])) {
+                $_SESSION['flash_error'] = 'Todos los campos son obligatorios';
+                header('Location: users/edit?id=' . $id);
                 exit;
             }
         }
-
-        if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'Email no válido']);
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['flash_error'] = 'Email no válido';
+            header('Location: users/edit?id=' . $id);
             exit;
         }
-
-        // Validar contraseña si se proporciona
-        if (!empty($input['password'])) {
-            if ($input['password'] !== $input['confirm_password']) {
-                echo json_encode(['success' => false, 'message' => 'Las contraseñas no coinciden']);
+        if (!empty($data['password'])) {
+            if ($data['password'] !== $data['confirm_password']) {
+                $_SESSION['flash_error'] = 'Las contraseñas no coinciden';
+                header('Location: users/edit?id=' . $id);
                 exit;
             }
-            if (strlen($input['password']) < 6) {
-                echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 6 caracteres']);
+            if (strlen($data['password']) < 6) {
+                $_SESSION['flash_error'] = 'La contraseña debe tener al menos 6 caracteres';
+                header('Location: users/edit?id=' . $id);
                 exit;
             }
         }
-
         try {
-            $user = User::findById($id);
-            if (!$user) {
-                http_response_code(404);
-                echo json_encode(['success' => false, 'message' => 'Usuario no encontrado']);
-                exit;
-            }
-
-            // Actualizar datos básicos
             $updateData = [
-                'first_name' => $input['first_name'],
-                'last_name' => $input['last_name'],
-                'email' => $input['email'],
-                'username' => $input['username'],
-                'is_active' => (int)$input['is_active']
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'username' => $data['username'],
+                'is_active' => isset($data['is_active']) ? (int)$data['is_active'] : 1
             ];
-
-            // Actualizar contraseña si se proporciona
-            if (!empty($input['password'])) {
-                $updateData['password'] = $input['password'];
+            if (!empty($data['password'])) {
+                $updateData['password'] = $data['password'];
             }
-
-            $user->update($updateData);
-
+            $usuario->update($updateData);
             // Actualizar rol
-            $roleId = $input['rol'];
+            $roleId = $data['rol'];
             \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
             \Core\Database::query("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", [$id, $roleId]);
-
-            echo json_encode(['success' => true, 'message' => 'Usuario actualizado correctamente']);
+            $_SESSION['flash_success'] = 'Usuario actualizado correctamente';
+            header('Location: users');
+            exit;
         } catch (\Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            $_SESSION['flash_error'] = $e->getMessage();
+            header('Location: users/edit?id=' . $id);
+            exit;
         }
     }
 
-    // Eliminar usuario
-    public function destroy($id)
+    // Eliminar usuario (GET o POST)
+    public function delete()
     {
-        header('Content-Type: application/json');
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
-            http_response_code(405);
-            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: users');
             exit;
         }
-
-        try {
-            $user = User::findById($id);
-            if (!$user) {
-                http_response_code(404);
-                echo json_encode(['success' => false, 'message' => 'Usuario no encontrado']);
-                exit;
-            }
-
-            // Eliminar roles del usuario
-            \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
-
-            // Eliminar usuario (marcar como inactivo en lugar de eliminar físicamente)
-            \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
-
-            echo json_encode(['success' => true, 'message' => 'Usuario eliminado correctamente']);
-        } catch (\Exception $e) {
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        $usuario = \Models\User::findById($id);
+        if (!$usuario) {
+            $_SESSION['flash_error'] = 'Usuario no encontrado';
+            header('Location: users');
+            exit;
         }
+        try {
+            \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
+            \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
+            $_SESSION['flash_success'] = 'Usuario eliminado correctamente';
+        } catch (\Exception $e) {
+            $_SESSION['flash_error'] = $e->getMessage();
+        }
+        header('Location: users');
+        exit;
     }
 }
