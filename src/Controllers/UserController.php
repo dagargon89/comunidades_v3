@@ -159,6 +159,17 @@ class UserController
             header('Location: /users/create');
             exit;
         }
+        // Validar unicidad de username y email antes de crear
+        if (\Models\User::findByUsername($data['username'])) {
+            $_SESSION['flash_error'] = 'El nombre de usuario ya está en uso.';
+            header('Location: /users/create');
+            exit;
+        }
+        if (\Models\User::findByEmail($data['email'])) {
+            $_SESSION['flash_error'] = 'El email ya está en uso.';
+            header('Location: /users/create');
+            exit;
+        }
         try {
             $user = \Models\User::create([
                 'username' => $data['username'],
@@ -175,7 +186,7 @@ class UserController
             header('Location: /users');
             exit;
         } catch (\Exception $e) {
-            $_SESSION['flash_error'] = $e->getMessage();
+            $_SESSION['flash_error'] = 'Ocurrió un error al guardar el usuario. Por favor, revisa los datos ingresados.';
             header('Location: /users/create');
             exit;
         }
@@ -280,6 +291,7 @@ class UserController
     public function delete()
     {
         $id = $_GET['id'] ?? null;
+        $force = isset($_GET['force']) && $_GET['force'] == 1;
         if (!$id) {
             header('Location: /users');
             exit;
@@ -290,10 +302,20 @@ class UserController
             header('Location: /users');
             exit;
         }
+        // Verificar si el usuario actual es admin para eliminación física
+        $esAdmin = (isset($_SESSION['user']) && isset($_SESSION['user']['rol']) && $_SESSION['user']['rol'] === 'admin');
         try {
-            \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
-            \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
-            $_SESSION['flash_success'] = 'Usuario eliminado correctamente';
+            if ($force && $esAdmin) {
+                // Eliminación física
+                \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
+                \Core\Database::query("DELETE FROM users WHERE id = ?", [$id]);
+                $_SESSION['flash_success'] = 'Usuario eliminado definitivamente.';
+            } else {
+                // Eliminación lógica
+                \Core\Database::query("DELETE FROM user_roles WHERE user_id = ?", [$id]);
+                \Core\Database::query("UPDATE users SET is_active = 0 WHERE id = ?", [$id]);
+                $_SESSION['flash_success'] = 'Usuario desactivado correctamente.';
+            }
         } catch (\Exception $e) {
             $_SESSION['flash_error'] = $e->getMessage();
         }

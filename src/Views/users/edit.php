@@ -59,6 +59,11 @@ ob_start();
         <div class="flex gap-2 mt-6">
             <button type="submit" class="btn-secondary px-5 py-2">Actualizar</button>
             <a href="/users" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400">Cancelar</a>
+            <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['rol']) && $_SESSION['user']['rol'] === 'admin'): ?>
+                <a href="/users/delete?id=<?= $usuario->getId() ?>&force=1" class="btn-secondary bg-red-600 text-white hover:bg-red-700 ml-auto" onclick="return confirm('¿Estás seguro de que deseas eliminar DEFINITIVAMENTE este usuario? Esta acción no se puede deshacer.');">
+                    <i class="fas fa-trash mr-1"></i> Eliminar definitivamente
+                </a>
+            <?php endif; ?>
         </div>
     </form>
 </div>
