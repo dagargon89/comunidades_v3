@@ -1,5 +1,7 @@
 <?php
 
+file_put_contents(__DIR__ . '/../session_debug.txt', 'INDEX: ' . print_r($_SERVER, true) . print_r($_POST, true));
+
 // Incluir el bootstrap
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -11,6 +13,9 @@ $base_path = dirname($_SERVER['SCRIPT_NAME']);
 $path = str_replace($base_path, '', $request_uri);
 $path = parse_url($path, PHP_URL_PATH);
 $path = trim($path, '/');
+
+// Log para depuración de rutas
+file_put_contents(__DIR__ . '/../session_debug.txt', "PATH: $path\nMETHOD: {$_SERVER['REQUEST_METHOD']}\nURI: $request_uri\nPOST: " . print_r($_POST, true), FILE_APPEND);
 
 // Si no hay path, usar 'login' como default
 if (empty($path)) {
@@ -83,20 +88,40 @@ $routes = [
 if (!isset($routes[$path])) {
     // Si no existe la ruta exacta, intentar con el patrón controller/action
     $route_key = $controller_name . '/' . $action_name;
-
     if (!isset($routes[$route_key])) {
-        // Ruta no encontrada
         http_response_code(404);
         echo '<h1>404 - Página no encontrada</h1>';
         echo '<p>La ruta solicitada no existe: ' . htmlspecialchars($path) . '</p>';
         echo '<a href="' . base_url('login') . '">Volver al inicio</a>';
         exit;
     }
-
     $route = $routes[$route_key];
 } else {
     $route = $routes[$path];
 }
+
+// --- MANEJO ESPECIAL PARA LOGIN Y REGISTER ---
+if ($path === 'auth/login') {
+    $controller_class = 'Controllers\\AuthController';
+    $controller = new $controller_class();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller->login();
+    } else {
+        $controller->showLogin();
+    }
+    exit;
+}
+if ($path === 'auth/register') {
+    $controller_class = 'Controllers\\AuthController';
+    $controller = new $controller_class();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller->register();
+    } else {
+        $controller->showRegister();
+    }
+    exit;
+}
+// --- FIN MANEJO ESPECIAL ---
 
 // Verificar autenticación para rutas protegidas
 $protected_routes = [

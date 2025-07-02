@@ -18,6 +18,20 @@
                 </div>
             <?php endif; ?>
 
+            <!-- Enlaces adicionales -->
+            <div class="flex items-center justify-between mt-4">
+                <div class="text-sm">
+                    <a href="<?= base_url('auth/register') ?>"
+                        class="font-medium text-primary hover:text-secondary transition-colors duration-200">
+                        ¿No tienes cuenta? Regístrate
+                    </a>
+                </div>
+            </div>
+
+            <!-- Enlaces adicionales -->
+            <p class="text-xs text-gray-400 mb-2">URL actual: <?= htmlspecialchars($_SERVER['REQUEST_URI']) ?> | Método: <?= htmlspecialchars($_SERVER['REQUEST_METHOD']) ?></p>
+            <p class="text-xs text-blue-400 mb-2">Action generado: <?= base_url('auth/login') ?></p>
+
             <!-- Formulario de login -->
             <form class="space-y-5" action="<?= base_url('auth/login') ?>" method="POST">
                 <div class="space-y-4">
@@ -58,16 +72,6 @@
                     </button>
                 </div>
             </form>
-
-            <!-- Enlaces adicionales -->
-            <div class="flex items-center justify-between mt-4">
-                <div class="text-sm">
-                    <a href="<?= base_url('auth/register') ?>"
-                        class="font-medium text-primary hover:text-secondary transition-colors duration-200">
-                        ¿No tienes cuenta? Regístrate
-                    </a>
-                </div>
-            </div>
         </div>
         <!-- Footer -->
         <div class="text-center mt-8">

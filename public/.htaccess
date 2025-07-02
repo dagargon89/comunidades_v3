@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteBase /
 
 # Redirigir todas las peticiones a index.php excepto archivos y directorios existentes
 RewriteCond %{REQUEST_FILENAME} !-f

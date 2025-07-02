@@ -32,6 +32,9 @@ class AuthController
      */
     public function login()
     {
+        file_put_contents(__DIR__ . '/../../session_debug.txt', 'LOGIN METHOD: ' . $_SERVER['REQUEST_METHOD'] . PHP_EOL, FILE_APPEND);
+        // Log de depuración para ver si el POST llega y en qué URL/método
+        file_put_contents(__DIR__ . '/../../session_debug.txt', 'POST: ' . print_r($_POST, true) . PHP_EOL . 'URL: ' . $_SERVER['REQUEST_URI'] . ' | Método: ' . $_SERVER['REQUEST_METHOD']);
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             redirect('login');
         }
@@ -63,6 +66,8 @@ class AuthController
             // Guardar en sesión
             $_SESSION['user_id'] = $user->getId();
             $_SESSION['user'] = $user->toArray();
+            // Log de depuración
+            file_put_contents(__DIR__ . '/../../session_debug.txt', print_r($_SESSION, true));
 
             // Limpiar errores de autenticación
             unset($_SESSION['auth_error']);

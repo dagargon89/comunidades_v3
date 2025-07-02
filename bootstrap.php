@@ -15,13 +15,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Configuración de sesiones
 $appConfig = require_once __DIR__ . '/config/app.php';
-session_set_cookie_params(
-    $appConfig['session']['lifetime'],
-    $appConfig['session']['path'],
-    $appConfig['session']['domain'],
-    $appConfig['session']['secure'],
-    $appConfig['session']['httponly']
-);
+session_set_cookie_params([
+    'lifetime' => $appConfig['session']['lifetime'],
+    'path' => $appConfig['session']['path'],
+    'domain' => $_SERVER['HTTP_HOST'],
+    'secure' => false,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 
 // Iniciar sesión
 if (session_status() === PHP_SESSION_NONE) {
@@ -43,6 +44,9 @@ function config($key, $default = null)
 // Función helper para redireccionar
 function redirect($url)
 {
+    if (strpos($url, 'http') !== 0) {
+        $url = base_url($url);
+    }
     header("Location: $url");
     exit;
 }
