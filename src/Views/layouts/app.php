@@ -232,7 +232,7 @@
             </header>
             <!-- Contenido principal -->
             <main class="flex-1 p-8 transition-colors duration-300" style="background: var(--color-bg);" id="main-content">
-                <div class="card max-w-2xl mx-auto rounded-2xl shadow-xl p-10 text-center">
+                <div class="card max-w-full mx-auto rounded-2xl shadow-xl p-10 text-center">
                     <?= $content ?? '' ?>
                 </div>
             </main>
