@@ -102,7 +102,7 @@ if (!isset($routes[$path])) {
 
 // --- MANEJO ESPECIAL PARA LOGIN Y REGISTER ---
 if ($path === 'auth/login') {
-    $controller_class = 'Controllers\\AuthController';
+    $controller_class = 'Src\\Controllers\\AuthController';
     $controller = new $controller_class();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller->login();
@@ -112,7 +112,7 @@ if ($path === 'auth/login') {
     exit;
 }
 if ($path === 'auth/register') {
-    $controller_class = 'Controllers\\AuthController';
+    $controller_class = 'Src\\Controllers\\AuthController';
     $controller = new $controller_class();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller->register();
