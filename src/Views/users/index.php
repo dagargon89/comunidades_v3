@@ -42,16 +42,16 @@ ob_start(); ?>
                 <?php else: ?>
                     <?php foreach ($usuarios as $usuario): ?>
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($usuario['first_name'] . ' ' . $usuario['last_name']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['email']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['username']) ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($usuario['rol'] ?? '-') ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-left"><?= htmlspecialchars($usuario['first_name'] . ' ' . $usuario['last_name']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['email']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['username']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left"><?= htmlspecialchars($usuario['rol'] ?? '-') ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-left">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
                                     <?= $usuario['is_active'] ? 'Activo' : 'Inactivo' ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-left">
                                 <a href="users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></a>
                                 <a href="users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
                             </td>
