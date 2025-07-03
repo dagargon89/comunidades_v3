@@ -67,12 +67,29 @@ ob_start(); ?>
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                                <?php if (current_user() && current_user()->hasPermission('user.edit')): ?>
-                                    <a href="users/edit?id=<?= $usuario['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
-                                <?php endif; ?>
-                                <?php if (current_user() && current_user()->hasPermission('user.delete')): ?>
-                                    <a href="users/delete?id=<?= $usuario['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash"></i></a>
-                                <?php endif; ?>
+                                <?php
+                                $actions = [];
+                                if (current_user() && current_user()->hasPermission('user.edit')) {
+                                    $actions[] = [
+                                        'type' => 'edit',
+                                        'url' => "users/edit?id={$usuario['id']}",
+                                        'permission' => 'user.edit',
+                                        'title' => 'Editar',
+                                        'class' => 'text-blue-600 hover:text-blue-900',
+                                    ];
+                                }
+                                if (current_user() && current_user()->hasPermission('user.delete')) {
+                                    $actions[] = [
+                                        'type' => 'delete',
+                                        'url' => "users/delete?id={$usuario['id']}",
+                                        'permission' => 'user.delete',
+                                        'title' => 'Eliminar',
+                                        'class' => 'text-red-600 hover:text-red-900',
+                                        'onclick' => "return confirm('¿Seguro que deseas eliminar este usuario?')",
+                                    ];
+                                }
+                                include __DIR__ . '/../components/action_buttons.php';
+                                ?>
                                 <!-- Acciones rápidas ocultas temporalmente -->
                                 <!--
                                 <a href="users/view?id=<?= $usuario['id'] ?>" class="text-gray-600 hover:text-primary" title="Ver detalles"><i class="fas fa-eye"></i></a>

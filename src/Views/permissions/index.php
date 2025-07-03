@@ -32,12 +32,29 @@ ob_start();
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($perm['name']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($perm['description']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                        <?php if (current_user() && current_user()->hasPermission('permission.edit')): ?>
-                            <a href="/permissions/edit?id=<?= $perm['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
-                        <?php endif; ?>
-                        <?php if (current_user() && current_user()->hasPermission('permission.delete')): ?>
-                            <a href="/permissions/delete?id=<?= $perm['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este permiso?')"><i class="fas fa-trash"></i></a>
-                        <?php endif; ?>
+                        <?php
+                        $actions = [];
+                        if (current_user() && current_user()->hasPermission('permission.edit')) {
+                            $actions[] = [
+                                'type' => 'edit',
+                                'url' => "/permissions/edit?id={$perm['id']}",
+                                'permission' => 'permission.edit',
+                                'title' => 'Editar',
+                                'class' => 'text-blue-600 hover:text-blue-900',
+                            ];
+                        }
+                        if (current_user() && current_user()->hasPermission('permission.delete')) {
+                            $actions[] = [
+                                'type' => 'delete',
+                                'url' => "/permissions/delete?id={$perm['id']}",
+                                'permission' => 'permission.delete',
+                                'title' => 'Eliminar',
+                                'class' => 'text-red-600 hover:text-red-900',
+                                'onclick' => "return confirm('¿Seguro que deseas eliminar este permiso?')",
+                            ];
+                        }
+                        include __DIR__ . '/../components/action_buttons.php';
+                        ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

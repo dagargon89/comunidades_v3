@@ -32,12 +32,29 @@ ob_start();
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['name']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['description']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                        <?php if (current_user() && current_user()->hasPermission('role.edit')): ?>
-                            <a href="/roles/edit?id=<?= $rol['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
-                        <?php endif; ?>
-                        <?php if (current_user() && current_user()->hasPermission('role.delete')): ?>
-                            <a href="/roles/delete?id=<?= $rol['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este rol?')"><i class="fas fa-trash"></i></a>
-                        <?php endif; ?>
+                        <?php
+                        $actions = [];
+                        if (current_user() && current_user()->hasPermission('role.edit')) {
+                            $actions[] = [
+                                'type' => 'edit',
+                                'url' => "/roles/edit?id={$rol['id']}",
+                                'permission' => 'role.edit',
+                                'title' => 'Editar',
+                                'class' => 'text-blue-600 hover:text-blue-900',
+                            ];
+                        }
+                        if (current_user() && current_user()->hasPermission('role.delete')) {
+                            $actions[] = [
+                                'type' => 'delete',
+                                'url' => "/roles/delete?id={$rol['id']}",
+                                'permission' => 'role.delete',
+                                'title' => 'Eliminar',
+                                'class' => 'text-red-600 hover:text-red-900',
+                                'onclick' => "return confirm('¿Seguro que deseas eliminar este rol?')",
+                            ];
+                        }
+                        include __DIR__ . '/../components/action_buttons.php';
+                        ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
