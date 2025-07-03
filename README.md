@@ -225,67 +225,148 @@ Para soporte técnico o preguntas, contacta al equipo de desarrollo.
 
 ## 🧩 Componentes reutilizables
 
-### Componente de Botón (`src/Views/components/button.php`)
+### Flash (`src/Views/components/flash.php`)
 
-Permite crear botones y enlaces uniformes en todo el sistema, con soporte para íconos, tooltips, atributos extra y clases personalizadas.
-
-**Uso básico:**
+Muestra mensajes de éxito o error en cualquier vista. Solo incluye el archivo y usa las variables de sesión `flash_success` o `flash_error`.
 
 ```php
-$btn = [
-    'type' => 'submit' | 'button' | 'reset' | 'link',
-    'label' => 'Texto',
-    'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900', // Solo color, el resto es uniforme
-    'icon' => 'fa-save', // opcional, FontAwesome
-    'href' => '/ruta',   // solo para type=link
-    'title' => 'Tooltip', // opcional
-    'attrs' => 'data-extra="1"', // opcional
-];
-include __DIR__ . '/../components/button.php';
+<?php include __DIR__ . '/../components/flash.php'; ?>
 ```
 
-**Ejemplo en formulario:**
+### Formulario (`src/Views/components/form.php`)
+
+Genera formularios dinámicos a partir de un array de campos y botones. Soporta inputs, selects, textarea, validaciones y botones personalizados.
 
 ```php
+$fields = [
+    ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => '', 'required' => true],
+    ['name' => 'rol', 'label' => 'Rol', 'type' => 'select', 'options' => ['admin' => 'Admin', 'user' => 'Usuario'], 'value' => 'user'],
+];
 $buttons = [
-    [
-        'type' => 'submit',
-        'label' => 'Guardar',
-        'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'
-    ],
-    [
-        'type' => 'link',
-        'label' => 'Cancelar',
-        'href' => '/usuarios',
-        'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-    ],
+    ['type' => 'submit', 'label' => 'Guardar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/ruta', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
 ];
+include __DIR__ . '/../components/form.php';
 ```
 
-**Características:**
+### Tabla (`src/Views/components/table.php`)
 
-- Clase base uniforme: padding, borde, fuente, transición, etc.
-- Solo necesitas definir el color y hover.
-- Soporta íconos FontAwesome.
-- Soporta tooltips y atributos extra.
-- Compatible con formularios y acciones generales.
+Componente para mostrar listados de datos con alineación y acciones flexibles. Personalizable por columnas y acciones.
 
-**Ejemplo de botón con ícono y confirmación:**
+### Botón (`src/Views/components/button.php`)
+
+Permite crear botones y enlaces uniformes, con íconos, tooltips, atributos extra y clases personalizadas. (Ver ejemplos en sección anterior)
+
+### Botones de acción (`src/Views/components/action_buttons.php`)
+
+Botones rápidos para acciones por fila en tablas (editar, eliminar, etc.), con control de permisos y estilos consistentes.
+
+### Badge/Etiqueta (`src/Views/components/badge.php`)
+
+Permite mostrar estados (Activo/Inactivo, etc.) o etiquetas visuales en tablas y vistas de detalle.
 
 ```php
-$btn = [
-    'type' => 'link',
-    'label' => 'Eliminar',
-    'href' => '/ruta/eliminar',
-    'class' => 'bg-red-600 text-white hover:bg-red-700',
-    'icon' => 'fa-trash',
-    'attrs' => 'onclick="return confirm(\'¿Seguro?\');"'
+$badge = [
+    'text' => $usuario['is_active'] ? 'Activo' : 'Inactivo',
+    'color' => $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
 ];
-include __DIR__ . '/../components/button.php';
+include __DIR__ . '/../components/badge.php';
 ```
 
-**Recomendación:**
-Define una clase base de color para cada tipo de acción (guardar, cancelar, eliminar, etc.) y reutilízala en todos los botones para mantener la coherencia visual.
+### Paginación (`src/Views/components/pagination.php`)
+
+Navegación entre páginas de listados largos. Integrado en usuarios, roles y permisos.
+
+```php
+$pagination = [
+    'current' => $pagina_actual,
+    'total' => $total_paginas,
+    'base_url' => '?' . http_build_query(array_merge($_GET, ['page' => '']))
+];
+include __DIR__ . '/../components/pagination.php';
+```
+
+### Tooltip (`src/Views/components/tooltip.php`)
+
+Muestra información adicional al pasar el mouse sobre un elemento.
+
+```php
+$tooltip = [
+    'text' => 'Crear un nuevo usuario',
+    'content' => '<i class="fas fa-plus"></i>',
+];
+include __DIR__ . '/../components/tooltip.php';
+```
+
+### Loader/Spinner (`src/Views/components/loader.php`)
+
+Indicador de carga para procesos o peticiones.
+
+```php
+$loader = [
+    'size' => 'w-8 h-8',
+    'color' => 'text-primary',
+];
+include __DIR__ . '/../components/loader.php';
+```
+
+### Toast/Notificación (`src/Views/components/toast.php`)
+
+Mensajes flotantes temporales para feedback rápido.
+
+```php
+$toast = [
+    'message' => 'Operación exitosa',
+    'type' => 'success',
+    'duration' => 3000,
+];
+include __DIR__ . '/../components/toast.php';
+```
+
+### Dropdown (`src/Views/components/dropdown.php`)
+
+Menú desplegable reutilizable para acciones o filtros.
+
+```php
+$dropdown = [
+    'trigger' => '<button>Opciones</button>',
+    'content' => '<a href="#">Acción 1</a><a href="#">Acción 2</a>',
+];
+include __DIR__ . '/../components/dropdown.php';
+```
+
+### Tabs (`src/Views/components/tabs.php`)
+
+Navegación por pestañas dentro de una vista.
+
+```php
+$tabs = [
+    'tabs' => [
+        ['id' => 'tab1', 'label' => 'Tab 1', 'active' => true],
+        ['id' => 'tab2', 'label' => 'Tab 2'],
+    ],
+    'contents' => [
+        'tab1' => '<div>Contenido 1</div>',
+        'tab2' => '<div>Contenido 2</div>',
+    ],
+];
+include __DIR__ . '/../components/tabs.php';
+```
+
+## 🗄️ Vistas SQL
+
+- `vw_activity_summary`: Resumen de actividades por proyecto
+- `vw_planned_population`: Población planificada por actividad
+- `vw_planned_products`: Productos planificados por actividad
+
+## 👨‍💻 Buenas prácticas y recomendaciones
+
+- Usa siempre los componentes reutilizables para mantener coherencia visual y funcional.
+- Implementa control de permisos en controladores, vistas y menú para toda nueva funcionalidad.
+- Documenta cada nuevo componente o helper en este README.
+- Mantén los mensajes flash claros y visibles para el usuario.
+- Usa try/catch y logs para facilitar el debugging.
+- Personaliza solo los colores de los botones, el resto del estilo es uniforme.
 
 ---
 
@@ -350,6 +431,98 @@ Permite crear botones y enlaces uniformes, con íconos, tooltips, atributos extr
 ### Botones de acción (`src/Views/components/action_buttons.php`)
 
 Botones rápidos para acciones por fila en tablas (editar, eliminar, etc.), con control de permisos y estilos consistentes.
+
+### Badge/Etiqueta (`src/Views/components/badge.php`)
+
+Permite mostrar estados (Activo/Inactivo, etc.) o etiquetas visuales en tablas y vistas de detalle.
+
+```php
+$badge = [
+    'text' => $usuario['is_active'] ? 'Activo' : 'Inactivo',
+    'color' => $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+];
+include __DIR__ . '/../components/badge.php';
+```
+
+### Paginación (`src/Views/components/pagination.php`)
+
+Navegación entre páginas de listados largos. Integrado en usuarios, roles y permisos.
+
+```php
+$pagination = [
+    'current' => $pagina_actual,
+    'total' => $total_paginas,
+    'base_url' => '?' . http_build_query(array_merge($_GET, ['page' => '']))
+];
+include __DIR__ . '/../components/pagination.php';
+```
+
+### Tooltip (`src/Views/components/tooltip.php`)
+
+Muestra información adicional al pasar el mouse sobre un elemento.
+
+```php
+$tooltip = [
+    'text' => 'Crear un nuevo usuario',
+    'content' => '<i class="fas fa-plus"></i>',
+];
+include __DIR__ . '/../components/tooltip.php';
+```
+
+### Loader/Spinner (`src/Views/components/loader.php`)
+
+Indicador de carga para procesos o peticiones.
+
+```php
+$loader = [
+    'size' => 'w-8 h-8',
+    'color' => 'text-primary',
+];
+include __DIR__ . '/../components/loader.php';
+```
+
+### Toast/Notificación (`src/Views/components/toast.php`)
+
+Mensajes flotantes temporales para feedback rápido.
+
+```php
+$toast = [
+    'message' => 'Operación exitosa',
+    'type' => 'success',
+    'duration' => 3000,
+];
+include __DIR__ . '/../components/toast.php';
+```
+
+### Dropdown (`src/Views/components/dropdown.php`)
+
+Menú desplegable reutilizable para acciones o filtros.
+
+```php
+$dropdown = [
+    'trigger' => '<button>Opciones</button>',
+    'content' => '<a href="#">Acción 1</a><a href="#">Acción 2</a>',
+];
+include __DIR__ . '/../components/dropdown.php';
+```
+
+### Tabs (`src/Views/components/tabs.php`)
+
+Navegación por pestañas dentro de una vista.
+
+```php
+$tabs = [
+    'tabs' => [
+        ['id' => 'tab1', 'label' => 'Tab 1', 'active' => true],
+        ['id' => 'tab2', 'label' => 'Tab 2'],
+    ],
+    'contents' => [
+        'tab1' => '<div>Contenido 1</div>',
+        'tab2' => '<div>Contenido 2</div>',
+    ],
+];
+include __DIR__ . '/../components/tabs.php';
+```
 
 ## 🗄️ Vistas SQL
 
