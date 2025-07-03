@@ -2,6 +2,15 @@
 // ... existing code ...
 use function current_user;
 ?>
+<pre>
+<?php
+var_dump(current_user());
+if (current_user()) {
+    var_dump(current_user()->getPermissions());
+}
+var_dump($_SESSION);
+?>
+</pre>
 <?php include __DIR__ . '/../layouts/app.php'; ?>
 <div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
     <h1 class="text-2xl font-bold mb-4">Ejes</h1>

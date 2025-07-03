@@ -92,31 +92,6 @@ ob_start(); ?>
                                 }
                                 include __DIR__ . '/../components/action_buttons.php';
                                 ?>
-                                <!-- Acciones rápidas ocultas temporalmente -->
-                                <!--
-                                <a href="users/view?id=<?= $usuario['id'] ?>" class="text-gray-600 hover:text-primary" title="Ver detalles"><i class="fas fa-eye"></i></a>
-                                <?php if (!$usuario['is_active']): ?>
-                                    <a href="users/reactivate?id=<?= $usuario['id'] ?>" class="text-green-600 hover:text-green-800" title="Reactivar"><i class="fas fa-undo"></i></a>
-                                <?php endif; ?>
-                                <a href="users/reset-password?id=<?= $usuario['id'] ?>" class="text-yellow-600 hover:text-yellow-800" title="Resetear contraseña"><i class="fas fa-key"></i></a>
-                                <span class="relative">
-                                    <a href="#" class="text-purple-600 hover:text-purple-800" title="Cambiar rol" onclick="event.preventDefault(); document.getElementById('select-rol-<?= $usuario['id'] ?>').classList.toggle('hidden');"><i class="fas fa-user-shield"></i></a>
-                                    <form method="post" action="users/change-role" class="absolute left-0 mt-2 z-10 hidden" id="select-rol-<?= $usuario['id'] ?>" style="min-width:120px;">
-                                        <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
-                                        <select name="rol" class="text-xs border rounded px-1 py-0.5 bg-white shadow" onchange="this.form.submit()">
-                                            <?php foreach ($roles as $rol): ?>
-                                                <option value="<?= $rol['name'] ?>" <?= ($usuario['rol'] === $rol['name']) ? 'selected' : '' ?>><?= htmlspecialchars($rol['name']) ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </form>
-                                </span>
-                                <?php if ($usuario['is_active']): ?>
-                                    <a href="users/block?id=<?= $usuario['id'] ?>" class="text-gray-500 hover:text-black" title="Bloquear"><i class="fas fa-ban"></i></a>
-                                <?php else: ?>
-                                    <a href="users/unblock?id=<?= $usuario['id'] ?>" class="text-gray-500 hover:text-black" title="Desbloquear"><i class="fas fa-unlock"></i></a>
-                                <?php endif; ?>
-                                <a href="mailto:<?= htmlspecialchars($usuario['email']) ?>" class="text-indigo-600 hover:text-indigo-900" title="Enviar correo"><i class="fas fa-envelope"></i></a>
-                                -->
                             </td>
                         </tr>
                     <?php endforeach; ?>

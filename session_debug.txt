@@ -6,10 +6,10 @@ INDEX: Array
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/roles
+    [HTTP_REFERER] => http://comunidades_v3.test/users
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
-    [HTTP_COOKIE] => PHPSESSID=3tsltuhhk1mm6i28d9uj4hvih6
+    [HTTP_COOKIE] => PHPSESSID=rr68rjj0moik1c0hai9tmthjt3
     [PATH] => C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Git\cmd;C:\laragon\bin\php\php-8.3.16-Win32-vs16-x64;C:\laragon\bin\composer;C:\laragon\bin\git\bin;C:\laragon\bin\git\cmd;C:\laragon\bin\git\mingw64\bin;C:\laragon\bin\git\usr\bin;C:\laragon\bin\mysql\mysql-8.4.3-winx64\bin;C:\laragon\bin\ngrok;C:\laragon\bin\nodejs\node-v22;C:\laragon\bin\php\php-8.3.16-Win32-vs16-x64;C:\laragon\bin\python\python-3.13;C:\laragon\bin\python\python-3.13\Scripts;C:\laragon\usr\bin;C:\Users\David\AppData\Local\Yarn\config\global\node_modules\.bin;C:\Users\David\AppData\Roaming\Composer\vendor\bin;C:\Users\David\AppData\Roaming\npm;C:\Users\David\AppData\Local\Microsoft\WindowsApps;C:\Users\David\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\David\AppData\Local\Programs\cursor\resources\app\bin
     [SystemRoot] => C:\WINDOWS
     [COMSPEC] => C:\WINDOWS\system32\cmd.exe
@@ -27,24 +27,50 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 60566
-    [REDIRECT_URL] => /axes
+    [REMOTE_PORT] => 61739
+    [REDIRECT_URL] => /dashboard
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
     [QUERY_STRING] => 
-    [REQUEST_URI] => /axes
+    [REQUEST_URI] => /dashboard
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751565743.0453
-    [REQUEST_TIME] => 1751565743
+    [REQUEST_TIME_FLOAT] => 1751568934.1051
+    [REQUEST_TIME] => 1751568934
 )
 Array
 (
 )
-PATH: axes
+PATH: dashboard
 METHOD: GET
-URI: /axes
+URI: /dashboard
 POST: Array
 (
+)
+DASHBOARD current_user: \Models\User::__set_state(array(
+   'id' => 6,
+   'username' => 'David',
+   'email' => 'dgarcia@planjuarez.org',
+   'password_hash' => '$2y$10$vmDGXvZR0oh5VbPH8FjMye6I0dxtaeSFE3.5UTrigVe64cuhwe0Vq',
+   'first_name' => 'David',
+   'last_name' => 'García',
+   'is_active' => 1,
+   'created_at' => '2025-07-02 12:03:06',
+   'updated_at' => '2025-07-02 12:03:06',
+))
+SESSION: array (
+  'user_id' => 6,
+  'user' => 
+  array (
+    'id' => 6,
+    'username' => 'David',
+    'email' => 'dgarcia@planjuarez.org',
+    'first_name' => 'David',
+    'last_name' => 'García',
+    'full_name' => 'David García',
+    'is_active' => 1,
+    'created_at' => '2025-07-02 12:03:06',
+    'updated_at' => '2025-07-02 12:03:06',
+  ),
 )
