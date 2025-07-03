@@ -18,6 +18,17 @@ ob_start();
             <label class="block text-sm font-semibold mb-1">Descripción</label>
             <input type="text" name="description" value="<?= htmlspecialchars($role['description']) ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2">
         </div>
+        <div>
+            <label class="block text-sm font-semibold mb-1">Permisos</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50 rounded p-3 border border-gray-200 max-h-64 overflow-y-auto">
+                <?php foreach ($all_permissions as $perm): ?>
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="checkbox" name="permissions[]" value="<?= $perm['id'] ?>" <?= in_array($perm['id'], $role_permissions) ? 'checked' : '' ?>>
+                        <span><?= htmlspecialchars($perm['name']) ?> <span class="text-gray-400">(<?= htmlspecialchars($perm['description']) ?>)</span></span>
+                    </label>
+                <?php endforeach; ?>
+            </div>
+        </div>
         <div class="flex gap-2 mt-6">
             <button type="submit" class="btn-secondary px-5 py-2">Actualizar</button>
             <a href="/roles" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400">Cancelar</a>

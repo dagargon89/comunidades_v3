@@ -52,6 +52,8 @@ class RoleController
             header('Location: /roles');
             exit;
         }
+        $all_permissions = \Models\Permission::getAll();
+        $role_permissions = array_column(\Models\Role::getPermissions($id), 'id');
         require __DIR__ . '/../Views/roles/edit.php';
     }
 
@@ -64,6 +66,7 @@ class RoleController
         $id = $_POST['id'] ?? null;
         $name = trim($_POST['name'] ?? '');
         $description = trim($_POST['description'] ?? '');
+        $permissions = $_POST['permissions'] ?? [];
         if (!$id || $name === '') {
             $_SESSION['flash_error'] = 'Datos incompletos';
             header('Location: /roles/edit?id=' . $id);
@@ -76,6 +79,7 @@ class RoleController
             exit;
         }
         \Core\Database::query("UPDATE roles SET name = ?, description = ? WHERE id = ?", [$name, $description, $id]);
+        \Models\Role::setPermissions($id, $permissions);
         $_SESSION['flash_success'] = 'Rol actualizado correctamente';
         header('Location: /roles');
         exit;
