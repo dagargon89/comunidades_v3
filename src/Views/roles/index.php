@@ -13,20 +13,30 @@ ob_start();
         <div class="mb-4 p-3 bg-green-100 text-green-700 rounded"> <?= $_SESSION['flash_success'];
                                                                     unset($_SESSION['flash_success']); ?> </div>
     <?php endif; ?>
-    <div class="mb-4 flex justify-end">
-        <?php if (current_user() && current_user()->hasPermission('role.create')): ?>
-            <?php
-            $btn = [
-                'type' => 'link',
-                'label' => 'Nuevo rol',
-                'href' => '/roles/create',
-                'class' => 'btn-secondary px-4 py-2',
-                'icon' => 'fa-plus'
-            ];
-            include __DIR__ . '/../components/button.php';
-            ?>
-        <?php endif; ?>
-    </div>
+    <?php
+    $filters = [
+        ['type' => 'text', 'name' => 'q', 'placeholder' => 'Buscar por nombre o descripción...', 'value' => htmlspecialchars($_GET['q'] ?? '')],
+    ];
+    $buttons = [
+        [
+            'type' => 'submit',
+            'label' => 'Filtrar',
+            'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+            'icon' => 'fa-search'
+        ]
+    ];
+    if (current_user() && current_user()->hasPermission('role.create')) {
+        $buttons[] = [
+            'type' => 'link',
+            'label' => 'Nuevo rol',
+            'href' => '/roles/create',
+            'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+            'icon' => 'fa-plus',
+            'title' => 'Crear un nuevo rol'
+        ];
+    }
+    include __DIR__ . '/../components/filter_bar.php';
+    ?>
     <table class="min-w-full divide-y divide-gray-200">
         <thead>
             <tr>

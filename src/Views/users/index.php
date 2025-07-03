@@ -11,48 +11,32 @@ ob_start(); ?>
         <div class="mb-4 p-3 bg-green-100 text-green-700 rounded"> <?= $_SESSION['flash_success'];
                                                                     unset($_SESSION['flash_success']); ?> </div>
     <?php endif; ?>
-    <form method="get" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 bg-white p-4 rounded-xl shadow">
-        <div class="flex flex-col sm:flex-row gap-2 items-center w-full md:w-auto">
-            <input type="text" name="q" value="<?= htmlspecialchars($_GET['q'] ?? '') ?>" class="form-input w-full md:w-64 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" placeholder="Buscar por nombre, email o usuario...">
-            <select name="rol" class="form-select w-full md:w-48 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2">
-                <option value="">Todos los roles</option>
-                <?php foreach ($roles as $rol): ?>
-                    <option value="<?= htmlspecialchars($rol['name']) ?>" <?= (($_GET['rol'] ?? '') === $rol['name']) ? 'selected' : '' ?>><?= htmlspecialchars($rol['name']) ?></option>
-                <?php endforeach; ?>
-            </select>
-            <select name="estado" class="form-select w-full md:w-32 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2">
-                <option value="">Todos</option>
-                <option value="activo" <?= (($_GET['estado'] ?? '') === 'activo') ? 'selected' : '' ?>>Activos</option>
-                <option value="inactivo" <?= (($_GET['estado'] ?? '') === 'inactivo') ? 'selected' : '' ?>>Inactivos</option>
-            </select>
-        </div>
-        <div class="flex gap-2 items-center justify-end w-full md:w-auto">
-            <?php
-            $btn = [
-                'type' => 'submit',
-                'label' => 'Filtrar',
-                'class' => 'btn-secondary px-5 py-2',
-                'icon' => 'fa-search'
-            ];
-            include __DIR__ . '/../components/button.php';
-            ?>
-            <div class="mb-4 flex justify-end">
-                <?php if (current_user() && current_user()->hasPermission('user.create')): ?>
-                    <?php
-                    $btn = [
-                        'type' => 'link',
-                        'label' => 'Nuevo usuario',
-                        'href' => '/users/create',
-                        'class' => 'btn-secondary px-4 py-2',
-                        'icon' => 'fa-plus',
-                        'title' => 'Crear un nuevo usuario'
-                    ];
-                    include __DIR__ . '/../components/button.php';
-                    ?>
-                <?php endif; ?>
-            </div>
-        </div>
-    </form>
+    <?php
+    $filters = [
+        ['type' => 'text', 'name' => 'q', 'placeholder' => 'Buscar por nombre, email o usuario...', 'value' => htmlspecialchars($_GET['q'] ?? '')],
+        ['type' => 'select', 'name' => 'rol', 'options' => array_merge(['' => 'Todos los roles'], array_column($roles, 'name', 'name')), 'value' => $_GET['rol'] ?? ''],
+        ['type' => 'select', 'name' => 'estado', 'options' => ['' => 'Todos', 'activo' => 'Activos', 'inactivo' => 'Inactivos'], 'value' => $_GET['estado'] ?? ''],
+    ];
+    $buttons = [
+        [
+            'type' => 'submit',
+            'label' => 'Filtrar',
+            'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+            'icon' => 'fa-search'
+        ]
+    ];
+    if (current_user() && current_user()->hasPermission('user.create')) {
+        $buttons[] = [
+            'type' => 'link',
+            'label' => 'Nuevo usuario',
+            'href' => '/users/create',
+            'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+            'icon' => 'fa-plus',
+            'title' => 'Crear un nuevo usuario'
+        ];
+    }
+    include __DIR__ . '/../components/filter_bar.php';
+    ?>
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
