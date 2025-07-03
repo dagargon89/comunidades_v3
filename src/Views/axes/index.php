@@ -1,4 +1,5 @@
 <?php
+ob_start();
 // ... existing code ...
 use function current_user;
 ?>
@@ -11,7 +12,6 @@ if (current_user()) {
 var_dump($_SESSION);
 ?>
 </pre>
-<?php include __DIR__ . '/../layouts/app.php'; ?>
 <div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
     <h1 class="text-2xl font-bold mb-4">Ejes</h1>
     <?php include __DIR__ . '/../components/filter_bar.php'; ?>
@@ -31,17 +31,26 @@ var_dump($_SESSION);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($axes as $axis): ?>
+                <?php if (empty($axes)): ?>
                     <tr>
-                        <td class="border px-4 py-2"><?= htmlspecialchars($axis['id']) ?></td>
-                        <td class="border px-4 py-2"><?= htmlspecialchars($axis['name']) ?></td>
-                        <td class="border px-4 py-2">
-                            <?php include __DIR__ . '/../components/action_buttons.php'; ?>
-                        </td>
+                        <td colspan="3" class="text-center py-8 text-gray-500">No hay ejes registrados.</td>
                     </tr>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($axes as $axis): ?>
+                        <tr>
+                            <td class="border px-4 py-2"><?= htmlspecialchars($axis['id']) ?></td>
+                            <td class="border px-4 py-2"><?= htmlspecialchars($axis['name']) ?></td>
+                            <td class="border px-4 py-2">
+                                <?php include __DIR__ . '/../components/action_buttons.php'; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
     <?php include __DIR__ . '/../components/pagination.php'; ?>
 </div>
+<?php
+$content = ob_get_clean();
+require_once __DIR__ . '/../layouts/app.php';

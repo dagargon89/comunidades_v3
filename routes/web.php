@@ -19,10 +19,10 @@ $router->get('permissions/edit', 'PermissionController@edit');
 $router->post('permissions/update', 'PermissionController@update');
 $router->get('permissions/delete', 'PermissionController@delete');
 // Ejes (Axes)
-$router->get('/axes', 'AxisController@index');
-$router->get('/axes/view', 'AxisController@view');
-$router->get('/axes/create', 'AxisController@create');
-$router->post('/axes/store', 'AxisController@store');
-$router->get('/axes/edit', 'AxisController@edit');
-$router->post('/axes/update', 'AxisController@update');
-$router->get('/axes/delete', 'AxisController@delete');
+$router->get('axes', 'AxisController@index');
+$router->get('axes/view', 'AxisController@view');
+$router->get('axes/create', 'AxisController@create');
+$router->post('axes/store', 'AxisController@store');
+$router->get('axes/edit', 'AxisController@edit');
+$router->post('axes/update', 'AxisController@update');
+$router->get('axes/delete', 'AxisController@delete');

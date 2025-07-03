@@ -1,8 +1,8 @@
 <?php
+ob_start();
 // ... existing code ...
 use function current_user;
 ?>
-<?php include __DIR__ . '/../layouts/app.php'; ?>
 <div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
     <h1 class="text-2xl font-bold mb-4">Nuevo Eje</h1>
     <?php include __DIR__ . '/../components/flash.php'; ?>
@@ -17,3 +17,6 @@ use function current_user;
         </div>
     </form>
 </div>
+<?php
+$content = ob_get_clean();
+require_once __DIR__ . '/../layouts/app.php';

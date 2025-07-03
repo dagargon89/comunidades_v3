@@ -17,6 +17,16 @@ $path = trim($path, '/');
 // Log para depuración de rutas
 file_put_contents(__DIR__ . '/../session_debug.txt', "PATH: $path\nMETHOD: {$_SERVER['REQUEST_METHOD']}\nURI: $request_uri\nPOST: " . print_r($_POST, true), FILE_APPEND);
 
+// DEPURACIÓN EXTRA PARA AXES
+if (strpos($path, 'axes') === 0) {
+    file_put_contents(__DIR__ . '/../session_debug.txt', "[DEBUG AXES] path: $path\n", FILE_APPEND);
+    if (isset($routes[$path])) {
+        file_put_contents(__DIR__ . '/../session_debug.txt', "[DEBUG AXES] Ruta encontrada en routes: $path\n", FILE_APPEND);
+    } else {
+        file_put_contents(__DIR__ . '/../session_debug.txt', "[DEBUG AXES] Ruta NO encontrada en routes: $path\n", FILE_APPEND);
+    }
+}
+
 // Si no hay path, usar 'login' como default
 if (empty($path)) {
     $path = 'login';
@@ -66,6 +76,15 @@ $routes = [
     'users/edit' => ['controller' => 'UserController', 'action' => 'edit'],
     'users/update' => ['controller' => 'UserController', 'action' => 'update'],
     'users/delete' => ['controller' => 'UserController', 'action' => 'delete'],
+
+    // Rutas de ejes (axes)
+    'axes' => ['controller' => 'AxisController', 'action' => 'index'],
+    'axes/create' => ['controller' => 'AxisController', 'action' => 'create'],
+    'axes/store' => ['controller' => 'AxisController', 'action' => 'store'],
+    'axes/edit' => ['controller' => 'AxisController', 'action' => 'edit'],
+    'axes/update' => ['controller' => 'AxisController', 'action' => 'update'],
+    'axes/delete' => ['controller' => 'AxisController', 'action' => 'delete'],
+    'axes/view' => ['controller' => 'AxisController', 'action' => 'view'],
 
     // Rutas de roles
     'roles' => ['controller' => 'RoleController', 'action' => 'index'],
