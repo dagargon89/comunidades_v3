@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Componente de formulario reutilizable
+ *
+ * Uso:
+ * $fields = [
+ *   ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => '', 'required' => true],
+ *   ['name' => 'rol', 'label' => 'Rol', 'type' => 'select', 'options' => ['admin' => 'Admin', 'user' => 'Usuario'], 'value' => 'user'],
+ *   ...
+ * ];
+ * $action = '/ruta/guardar';
+ * $method = 'post';
+ * $buttons = [
+ *   ['type' => 'submit', 'label' => 'Guardar', 'class' => 'btn-secondary'],
+ *   ['type' => 'link', 'label' => 'Cancelar', 'href' => '/ruta', 'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400']
+ * ];
+ */
+?>
+<form method="<?= $method ?? 'post' ?>" action="<?= $action ?? '' ?>" class="space-y-4">
+    <?php foreach ($fields as $field): ?>
+        <div>
+            <label class="block text-sm font-semibold mb-1" for="<?= $field['name'] ?>"> <?= $field['label'] ?> </label>
+            <?php if (($field['type'] ?? 'text') === 'select'): ?>
+                <select name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
+                    <?php foreach ($field['options'] as $val => $text): ?>
+                        <option value="<?= htmlspecialchars($val) ?>" <?= (isset($field['value']) && $field['value'] == $val) ? 'selected' : '' ?>><?= htmlspecialchars($text) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            <?php elseif (($field['type'] ?? 'text') === 'textarea'): ?>
+                <textarea name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>><?= htmlspecialchars($field['value'] ?? '') ?></textarea>
+            <?php else: ?>
+                <input type="<?= $field['type'] ?? 'text' ?>" name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" value="<?= htmlspecialchars($field['value'] ?? '') ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    <div class="flex gap-2 mt-6">
+        <?php foreach ($buttons as $btn): ?>
+            <?php if ($btn['type'] === 'submit'): ?>
+                <button type="submit" class="<?= $btn['class'] ?? 'btn-secondary' ?>"> <?= $btn['label'] ?> </button>
+            <?php elseif ($btn['type'] === 'link'): ?>
+                <a href="<?= $btn['href'] ?>" class="<?= $btn['class'] ?? 'btn-secondary' ?>"> <?= $btn['label'] ?> </a>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+</form>
