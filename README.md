@@ -223,6 +223,145 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 Para soporte técnico o preguntas, contacta al equipo de desarrollo.
 
+## 🧩 Componentes reutilizables
+
+### Componente de Botón (`src/Views/components/button.php`)
+
+Permite crear botones y enlaces uniformes en todo el sistema, con soporte para íconos, tooltips, atributos extra y clases personalizadas.
+
+**Uso básico:**
+
+```php
+$btn = [
+    'type' => 'submit' | 'button' | 'reset' | 'link',
+    'label' => 'Texto',
+    'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900', // Solo color, el resto es uniforme
+    'icon' => 'fa-save', // opcional, FontAwesome
+    'href' => '/ruta',   // solo para type=link
+    'title' => 'Tooltip', // opcional
+    'attrs' => 'data-extra="1"', // opcional
+];
+include __DIR__ . '/../components/button.php';
+```
+
+**Ejemplo en formulario:**
+
+```php
+$buttons = [
+    [
+        'type' => 'submit',
+        'label' => 'Guardar',
+        'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'
+    ],
+    [
+        'type' => 'link',
+        'label' => 'Cancelar',
+        'href' => '/usuarios',
+        'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+    ],
+];
+```
+
+**Características:**
+
+- Clase base uniforme: padding, borde, fuente, transición, etc.
+- Solo necesitas definir el color y hover.
+- Soporta íconos FontAwesome.
+- Soporta tooltips y atributos extra.
+- Compatible con formularios y acciones generales.
+
+**Ejemplo de botón con ícono y confirmación:**
+
+```php
+$btn = [
+    'type' => 'link',
+    'label' => 'Eliminar',
+    'href' => '/ruta/eliminar',
+    'class' => 'bg-red-600 text-white hover:bg-red-700',
+    'icon' => 'fa-trash',
+    'attrs' => 'onclick="return confirm(\'¿Seguro?\');"'
+];
+include __DIR__ . '/../components/button.php';
+```
+
+**Recomendación:**
+Define una clase base de color para cada tipo de acción (guardar, cancelar, eliminar, etc.) y reutilízala en todos los botones para mantener la coherencia visual.
+
 ---
 
 **Comunidades V3** - Construyendo comunidades más fuertes juntos.
+
+## 🏆 Funcionalidades implementadas
+
+| Módulo             | Descripción                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| Autenticación      | Login, registro, cierre de sesión, control de sesión seguro                                   |
+| Usuarios           | CRUD completo, filtro, validaciones, control de estado, roles y permisos                      |
+| Roles              | CRUD completo, asignación de permisos, integración con control de acceso                      |
+| Permisos           | CRUD completo, asignación a roles, integración en menú y controladores                        |
+| Dashboard          | Vista de bienvenida, estadísticas, acceso rápido, control de errores                          |
+| Menú de navegación | Agrupación por secciones, visibilidad según permisos, diseño moderno y responsive             |
+| Componentes        | Flash, tabla, formulario, botones de acción y generales, reutilizables y personalizables      |
+| Seguridad          | Control de acceso centralizado, validación, sanitización, hashing de contraseñas              |
+| Vistas SQL         | Vistas para reportes y dashboards: resumen de actividades, población y productos planificados |
+| Debugging          | Manejo de errores, logs, try/catch, mensajes claros                                           |
+
+## 🛡️ Política de permisos
+
+- Toda nueva sección, controlador o funcionalidad debe implementar control de permisos en controladores, vistas y menú.
+- El menú y los botones solo se muestran si el usuario tiene el permiso correspondiente.
+- Permisos gestionados desde las tablas `permissions` y `role_permissions`.
+- Métodos clave: `User::hasPermission()`, función global `current_user()`.
+
+## 🧩 Componentes reutilizables
+
+### Flash (`src/Views/components/flash.php`)
+
+Muestra mensajes de éxito o error en cualquier vista. Solo incluye el archivo y usa las variables de sesión `flash_success` o `flash_error`.
+
+```php
+<?php include __DIR__ . '/../components/flash.php'; ?>
+```
+
+### Formulario (`src/Views/components/form.php`)
+
+Genera formularios dinámicos a partir de un array de campos y botones. Soporta inputs, selects, textarea, validaciones y botones personalizados.
+
+```php
+$fields = [
+    ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'value' => '', 'required' => true],
+    ['name' => 'rol', 'label' => 'Rol', 'type' => 'select', 'options' => ['admin' => 'Admin', 'user' => 'Usuario'], 'value' => 'user'],
+];
+$buttons = [
+    ['type' => 'submit', 'label' => 'Guardar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/ruta', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
+];
+include __DIR__ . '/../components/form.php';
+```
+
+### Tabla (`src/Views/components/table.php`)
+
+Componente para mostrar listados de datos con alineación y acciones flexibles. Personalizable por columnas y acciones.
+
+### Botón (`src/Views/components/button.php`)
+
+Permite crear botones y enlaces uniformes, con íconos, tooltips, atributos extra y clases personalizadas. (Ver ejemplos en sección anterior)
+
+### Botones de acción (`src/Views/components/action_buttons.php`)
+
+Botones rápidos para acciones por fila en tablas (editar, eliminar, etc.), con control de permisos y estilos consistentes.
+
+## 🗄️ Vistas SQL
+
+- `vw_activity_summary`: Resumen de actividades por proyecto
+- `vw_planned_population`: Población planificada por actividad
+- `vw_planned_products`: Productos planificados por actividad
+
+## 👨‍💻 Buenas prácticas y recomendaciones
+
+- Usa siempre los componentes reutilizables para mantener coherencia visual y funcional.
+- Implementa control de permisos en controladores, vistas y menú para toda nueva funcionalidad.
+- Documenta cada nuevo componente o helper en este README.
+- Mantén los mensajes flash claros y visibles para el usuario.
+- Usa try/catch y logs para facilitar el debugging.
+- Personaliza solo los colores de los botones, el resto del estilo es uniforme.
