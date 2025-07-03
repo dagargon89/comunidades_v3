@@ -40,6 +40,29 @@ VALUES ('user.view', 'Ver usuarios'),
         'user.delete',
         'Eliminar usuarios'
     ),
+    ('role.view', 'Ver roles'),
+    ('role.create', 'Crear roles'),
+    ('role.edit', 'Editar roles'),
+    (
+        'role.delete',
+        'Eliminar roles'
+    ),
+    (
+        'permission.view',
+        'Ver permisos'
+    ),
+    (
+        'permission.create',
+        'Crear permisos'
+    ),
+    (
+        'permission.edit',
+        'Editar permisos'
+    ),
+    (
+        'permission.delete',
+        'Eliminar permisos'
+    ),
     (
         'project.view',
         'Ver proyectos'
@@ -83,6 +106,175 @@ VALUES ('user.view', 'Ver usuarios'),
     (
         'catalog.edit',
         'Editar catálogos'
+    ),
+    -- Permisos para Ejes (Axes)
+    ('axis.view', 'Ver ejes'),
+    ('axis.create', 'Crear ejes'),
+    ('axis.edit', 'Editar ejes'),
+    (
+        'axis.delete',
+        'Eliminar ejes'
+    ),
+    -- Permisos para Responsables
+    (
+        'responsible.view',
+        'Ver responsables'
+    ),
+    (
+        'responsible.create',
+        'Crear responsables'
+    ),
+    (
+        'responsible.edit',
+        'Editar responsables'
+    ),
+    (
+        'responsible.delete',
+        'Eliminar responsables'
+    ),
+    -- Permisos para Polígonos
+    (
+        'polygon.view',
+        'Ver polígonos'
+    ),
+    (
+        'polygon.create',
+        'Crear polígonos'
+    ),
+    (
+        'polygon.edit',
+        'Editar polígonos'
+    ),
+    (
+        'polygon.delete',
+        'Eliminar polígonos'
+    ),
+    -- Permisos para Recolectores de Datos
+    (
+        'data_collector.view',
+        'Ver recolectores de datos'
+    ),
+    (
+        'data_collector.create',
+        'Crear recolectores de datos'
+    ),
+    (
+        'data_collector.edit',
+        'Editar recolectores de datos'
+    ),
+    (
+        'data_collector.delete',
+        'Eliminar recolectores de datos'
+    ),
+    -- Permisos para Ubicaciones
+    (
+        'location.view',
+        'Ver ubicaciones'
+    ),
+    (
+        'location.create',
+        'Crear ubicaciones'
+    ),
+    (
+        'location.edit',
+        'Editar ubicaciones'
+    ),
+    (
+        'location.delete',
+        'Eliminar ubicaciones'
+    ),
+    -- Permisos para Objetivos Específicos
+    (
+        'specific_objective.view',
+        'Ver objetivos específicos'
+    ),
+    (
+        'specific_objective.create',
+        'Crear objetivos específicos'
+    ),
+    (
+        'specific_objective.edit',
+        'Editar objetivos específicos'
+    ),
+    (
+        'specific_objective.delete',
+        'Eliminar objetivos específicos'
+    ),
+    -- Permisos para Metas
+    ('goal.view', 'Ver metas'),
+    ('goal.create', 'Crear metas'),
+    ('goal.edit', 'Editar metas'),
+    (
+        'goal.delete',
+        'Eliminar metas'
+    ),
+    -- Permisos para Calendario de Actividades
+    (
+        'activity_calendar.view',
+        'Ver calendario de actividades'
+    ),
+    (
+        'activity_calendar.create',
+        'Crear eventos en calendario'
+    ),
+    (
+        'activity_calendar.edit',
+        'Editar eventos del calendario'
+    ),
+    (
+        'activity_calendar.delete',
+        'Eliminar eventos del calendario'
+    ),
+    -- Permisos para Archivos de Actividades
+    (
+        'activity_file.view',
+        'Ver archivos de actividades'
+    ),
+    (
+        'activity_file.create',
+        'Subir archivos de actividades'
+    ),
+    (
+        'activity_file.edit',
+        'Editar archivos de actividades'
+    ),
+    (
+        'activity_file.delete',
+        'Eliminar archivos de actividades'
+    ),
+    -- Permisos para Registro de Beneficiarios
+    (
+        'beneficiary.view',
+        'Ver beneficiarios'
+    ),
+    (
+        'beneficiary.create',
+        'Registrar beneficiarios'
+    ),
+    (
+        'beneficiary.edit',
+        'Editar beneficiarios'
+    ),
+    (
+        'beneficiary.delete',
+        'Eliminar beneficiarios'
+    ),
+    -- Permisos para Métricas Planificadas
+    (
+        'planned_metric.view',
+        'Ver métricas planificadas'
+    ),
+    (
+        'planned_metric.create',
+        'Crear métricas planificadas'
+    ),
+    (
+        'planned_metric.edit',
+        'Editar métricas planificadas'
+    ),
+    (
+        'planned_metric.delete',
+        'Eliminar métricas planificadas'
     );
 
 -- Asignar permisos a roles
@@ -109,7 +301,25 @@ WHERE
         'activity.create',
         'activity.edit',
         'dashboard.view',
-        'catalog.view'
+        'catalog.view',
+        'axis.view',
+        'responsible.view',
+        'polygon.view',
+        'data_collector.view',
+        'location.view',
+        'specific_objective.view',
+        'goal.view',
+        'activity_calendar.view',
+        'activity_calendar.create',
+        'activity_calendar.edit',
+        'activity_file.view',
+        'activity_file.create',
+        'beneficiary.view',
+        'beneficiary.create',
+        'beneficiary.edit',
+        'planned_metric.view',
+        'planned_metric.create',
+        'planned_metric.edit'
     );
 
 -- Coordinator tiene permisos de actividad
@@ -124,7 +334,25 @@ WHERE
         'activity.create',
         'activity.edit',
         'dashboard.view',
-        'catalog.view'
+        'catalog.view',
+        'axis.view',
+        'responsible.view',
+        'polygon.view',
+        'data_collector.view',
+        'location.view',
+        'specific_objective.view',
+        'goal.view',
+        'activity_calendar.view',
+        'activity_calendar.create',
+        'activity_calendar.edit',
+        'activity_file.view',
+        'activity_file.create',
+        'beneficiary.view',
+        'beneficiary.create',
+        'beneficiary.edit',
+        'planned_metric.view',
+        'planned_metric.create',
+        'planned_metric.edit'
     );
 
 -- Collector tiene permisos limitados
@@ -137,7 +365,21 @@ WHERE
     AND p.name IN (
         'activity.view',
         'activity.edit',
-        'dashboard.view'
+        'dashboard.view',
+        'axis.view',
+        'responsible.view',
+        'polygon.view',
+        'data_collector.view',
+        'location.view',
+        'activity_calendar.view',
+        'activity_calendar.edit',
+        'activity_file.view',
+        'activity_file.create',
+        'beneficiary.view',
+        'beneficiary.create',
+        'beneficiary.edit',
+        'planned_metric.view',
+        'planned_metric.edit'
     );
 
 -- Viewer solo puede ver
@@ -151,7 +393,18 @@ WHERE
         'project.view',
         'activity.view',
         'dashboard.view',
-        'catalog.view'
+        'catalog.view',
+        'axis.view',
+        'responsible.view',
+        'polygon.view',
+        'data_collector.view',
+        'location.view',
+        'specific_objective.view',
+        'goal.view',
+        'activity_calendar.view',
+        'activity_file.view',
+        'beneficiary.view',
+        'planned_metric.view'
     );
 
 -- Insertar usuarios de prueba

@@ -538,3 +538,142 @@ include __DIR__ . '/../components/tabs.php';
 - Mantén los mensajes flash claros y visibles para el usuario.
 - Usa try/catch y logs para facilitar el debugging.
 - Personaliza solo los colores de los botones, el resto del estilo es uniforme.
+
+## CRUD de Ejes (Axes)
+
+### Descripción
+
+Sistema completo de gestión de ejes con control de permisos granular.
+
+### Permisos Requeridos
+
+- `axis.view` - Ver listado y detalles de ejes
+- `axis.create` - Crear nuevos ejes
+- `axis.edit` - Editar ejes existentes
+- `axis.delete` - Eliminar ejes
+
+### Rutas
+
+- `GET /axes` - Listado de ejes
+- `GET /axes/view` - Vista detallada de un eje
+- `GET /axes/create` - Formulario de creación
+- `POST /axes/store` - Guardar nuevo eje
+- `GET /axes/edit` - Formulario de edición
+- `POST /axes/update` - Actualizar eje
+- `GET /axes/delete` - Eliminar eje
+
+### Características
+
+- **Búsqueda**: Filtrado por nombre
+- **Paginación**: 20 elementos por página
+- **Validaciones**: Nombre obligatorio, máximo 500 caracteres
+- **Control de acceso**: Verificación de permisos en cada acción
+- **Mensajes flash**: Feedback al usuario
+- **Confirmación**: Para acciones destructivas
+
+### Uso en el Menú
+
+El enlace "Ejes" aparece en el menú lateral solo si el usuario tiene el permiso `axis.view`.
+
+## Sistema de Permisos
+
+### Estructura
+
+El sistema utiliza un modelo de permisos granular donde cada acción requiere un permiso específico:
+
+```
+[recurso].[acción]
+```
+
+### Permisos Disponibles
+
+- **Usuarios**: `user.view`, `user.create`, `user.edit`, `user.delete`
+- **Roles**: `role.view`, `role.create`, `role.edit`, `role.delete`
+- **Permisos**: `permission.view`, `permission.create`, `permission.edit`, `permission.delete`
+- **Ejes**: `axis.view`, `axis.create`, `axis.edit`, `axis.delete`
+- **Responsables**: `responsible.view`, `responsible.create`, `responsible.edit`, `responsible.delete`
+- **Polígonos**: `polygon.view`, `polygon.create`, `polygon.edit`, `polygon.delete`
+- **Recolectores**: `data_collector.view`, `data_collector.create`, `data_collector.edit`, `data_collector.delete`
+- **Ubicaciones**: `location.view`, `location.create`, `location.edit`, `location.delete`
+- **Objetivos**: `specific_objective.view`, `specific_objective.create`, `specific_objective.edit`, `specific_objective.delete`
+- **Metas**: `goal.view`, `goal.create`, `goal.edit`, `goal.delete`
+- **Calendario**: `activity_calendar.view`, `activity_calendar.create`, `activity_calendar.edit`, `activity_calendar.delete`
+- **Archivos**: `activity_file.view`, `activity_file.create`, `activity_file.edit`, `activity_file.delete`
+- **Beneficiarios**: `beneficiary.view`, `beneficiary.create`, `beneficiary.edit`, `beneficiary.delete`
+- **Métricas**: `planned_metric.view`, `planned_metric.create`, `planned_metric.edit`, `planned_metric.delete`
+
+### Roles Predefinidos
+
+- **Admin**: Todos los permisos
+- **Manager**: Gestión de proyectos y actividades
+- **Coordinator**: Coordinación de actividades
+- **Collector**: Recolección de datos
+- **Viewer**: Solo visualización
+
+### Implementación en Controladores
+
+```php
+private function checkPermission($perm) {
+    if (!current_user() || !current_user()->hasPermission($perm)) {
+        $_SESSION['flash_error'] = 'No tienes permiso para realizar esta acción.';
+        header('Location: /');
+        exit;
+    }
+}
+
+public function index() {
+    $this->checkPermission('axis.view');
+    // ... resto del código
+}
+```
+
+### Verificación en Vistas
+
+```php
+<?php if (current_user() && current_user()->hasPermission('axis.create')): ?>
+    <a href="/axes/create" class="btn btn-primary">Nuevo Eje</a>
+<?php endif; ?>
+```
+
+## Estándar Visual
+
+### Contenedores
+
+- Fondo blanco (`bg-white`)
+- Bordes redondeados (`rounded`)
+- Sombra (`shadow`)
+- Ancho: `w-[90%] max-w-full mx-auto`
+- Padding: `p-6`
+- Margen superior: `mt-8`
+
+### Tablas
+
+- Encabezados en mayúsculas (`uppercase`)
+- Bordes en todas las celdas
+- Overflow horizontal para responsividad
+
+### Filtros
+
+- Centrados y alineados
+- Barra de búsqueda con botón
+- Botones de acción alineados a la derecha
+
+## Próximos Pasos
+
+1. **CRUD de Responsables** - Siguiente en el orden lógico
+2. **CRUD de Polígonos** - Gestión de áreas geográficas
+3. **CRUD de Recolectores** - Gestión de personal de campo
+4. **CRUD de Ubicaciones** - Gestión de sitios de actividades
+5. **CRUD de Proyectos** - Gestión principal de proyectos
+
+## Contribución
+
+1. Seguir el estándar de código establecido
+2. Documentar nuevas funcionalidades
+3. Implementar control de permisos en todas las nuevas secciones
+4. Usar los componentes reutilizables existentes
+5. Mantener la consistencia visual
+
+## Licencia
+
+Este proyecto es de uso interno para la gestión de comunidades.
