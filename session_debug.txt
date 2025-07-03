@@ -6,7 +6,7 @@ INDEX: Array
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/permissions
+    [HTTP_REFERER] => http://comunidades_v3.test/roles
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=3tsltuhhk1mm6i28d9uj4hvih6
@@ -27,50 +27,24 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 58921
-    [REDIRECT_URL] => /dashboard
+    [REMOTE_PORT] => 59436
+    [REDIRECT_URL] => /permissions
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
     [QUERY_STRING] => 
-    [REQUEST_URI] => /dashboard
+    [REQUEST_URI] => /permissions
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751562800.3965
-    [REQUEST_TIME] => 1751562800
+    [REQUEST_TIME_FLOAT] => 1751563893.1089
+    [REQUEST_TIME] => 1751563893
 )
 Array
 (
 )
-PATH: dashboard
+PATH: permissions
 METHOD: GET
-URI: /dashboard
+URI: /permissions
 POST: Array
 (
-)
-DASHBOARD current_user: \Models\User::__set_state(array(
-   'id' => 6,
-   'username' => 'David',
-   'email' => 'dgarcia@planjuarez.org',
-   'password_hash' => '$2y$10$vmDGXvZR0oh5VbPH8FjMye6I0dxtaeSFE3.5UTrigVe64cuhwe0Vq',
-   'first_name' => 'David',
-   'last_name' => 'García',
-   'is_active' => 1,
-   'created_at' => '2025-07-02 12:03:06',
-   'updated_at' => '2025-07-02 12:03:06',
-))
-SESSION: array (
-  'user_id' => 6,
-  'user' => 
-  array (
-    'id' => 6,
-    'username' => 'David',
-    'email' => 'dgarcia@planjuarez.org',
-    'first_name' => 'David',
-    'last_name' => 'García',
-    'full_name' => 'David García',
-    'is_active' => 1,
-    'created_at' => '2025-07-02 12:03:06',
-    'updated_at' => '2025-07-02 12:03:06',
-  ),
 )

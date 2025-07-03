@@ -3,16 +3,8 @@ $title = 'Permisos';
 ob_start();
 ?>
 <?php include __DIR__ . '/../components/flash.php'; ?>
-<div class="max-w-3xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
-    <h2 class="text-2xl font-bold mb-6">Permisos</h2>
-    <?php if (!empty($_SESSION['flash_error'])): ?>
-        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded"> <?= $_SESSION['flash_error'];
-                                                                unset($_SESSION['flash_error']); ?> </div>
-    <?php endif; ?>
-    <?php if (!empty($_SESSION['flash_success'])): ?>
-        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded"> <?= $_SESSION['flash_success'];
-                                                                    unset($_SESSION['flash_success']); ?> </div>
-    <?php endif; ?>
+<h2 class="text-2xl font-bold mb-6">Permisos</h2>
+<div class="w-[90%] max-w-full mx-auto mt-4">
     <?php
     $filters = [
         ['type' => 'text', 'name' => 'q', 'placeholder' => 'Buscar por nombre o descripción...', 'value' => htmlspecialchars($_GET['q'] ?? '')],
@@ -37,12 +29,14 @@ ob_start();
     }
     include __DIR__ . '/../components/filter_bar.php';
     ?>
+</div>
+<div class="bg-white rounded-lg shadow overflow-hidden w-[90%] max-w-full mx-auto mt-4">
     <table class="min-w-full divide-y divide-gray-200">
-        <thead>
+        <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                <th class="px-6 py-3 text-left"></th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">

@@ -12,9 +12,9 @@
             <?php include_once __DIR__ . '/partials/topbar.php'; ?>
             <!-- Contenido principal -->
             <main class="flex-1 p-8 transition-colors duration-300" style="background: var(--color-bg);" id="main-content">
-                <div class="card w-[90%] max-w-full mx-auto rounded-2xl shadow-xl p-10 text-center">
-                    <?= $content ?? '' ?>
-                </div>
+                <!-- <div class="card w-[100%] max-w-full mx-auto rounded-2xl shadow-xl p-10 text-center"> -->
+                <?= $content ?? '' ?>
+                <!--</div>-->
             </main>
             <?php include_once __DIR__ . '/partials/footer.php'; ?>
         </div>
