@@ -44,7 +44,8 @@ ob_start(); ?>
                         'label' => 'Nuevo usuario',
                         'href' => '/users/create',
                         'class' => 'btn-secondary px-4 py-2',
-                        'icon' => 'fa-plus'
+                        'icon' => 'fa-plus',
+                        'title' => 'Crear un nuevo usuario'
                     ];
                     include __DIR__ . '/../components/button.php';
                     ?>

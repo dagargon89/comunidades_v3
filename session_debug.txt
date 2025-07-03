@@ -27,25 +27,24 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 56970
-    [REDIRECT_URL] => /users/edit
-    [REDIRECT_QUERY_STRING] => id=13
+    [REMOTE_PORT] => 57700
+    [REDIRECT_URL] => /permissions
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
-    [QUERY_STRING] => id=13
-    [REQUEST_URI] => /users/edit?id=13
+    [QUERY_STRING] => 
+    [REQUEST_URI] => /permissions
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751559391.4794
-    [REQUEST_TIME] => 1751559391
+    [REQUEST_TIME_FLOAT] => 1751560880.722
+    [REQUEST_TIME] => 1751560880
 )
 Array
 (
 )
-PATH: users/edit
+PATH: permissions
 METHOD: GET
-URI: /users/edit?id=13
+URI: /permissions
 POST: Array
 (
 )

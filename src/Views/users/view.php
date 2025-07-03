@@ -23,9 +23,13 @@ ob_start();
         </div>
         <div>
             <span class="block text-xs text-gray-500">Estado</span>
-            <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold <?= $usuario->isActive() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                <?= $usuario->isActive() ? 'Activo' : 'Inactivo' ?>
-            </span>
+            <?php
+            $badge = [
+                'text' => $usuario->isActive() ? 'Activo' : 'Inactivo',
+                'color' => $usuario->isActive() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+            ];
+            include __DIR__ . '/../components/badge.php';
+            ?>
         </div>
         <div>
             <span class="block text-xs text-gray-500">Fecha de registro</span>

@@ -16,6 +16,15 @@ $buttons = [
 <div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
     <h2 class="text-2xl font-bold mb-6">Editar permiso</h2>
     <?php include __DIR__ . '/../components/flash.php'; ?>
+    <?php if (isset($permission['is_active'])): ?>
+        <?php
+        $badge = [
+            'text' => $permission['is_active'] ? 'Activo' : 'Inactivo',
+            'color' => $permission['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+        ];
+        include __DIR__ . '/../components/badge.php';
+        ?>
+    <?php endif; ?>
     <?php include __DIR__ . '/../components/form.php'; ?>
 </div>
 <?php $content = ob_get_clean();

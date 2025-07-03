@@ -17,6 +17,15 @@ $buttons = [
     <h2 class="text-2xl font-bold mb-6">Editar rol</h2>
     <?php include __DIR__ . '/../components/flash.php'; ?>
     <?php include __DIR__ . '/../components/form.php'; ?>
+    <?php if (isset($role['is_active'])): ?>
+        <?php
+        $badge = [
+            'text' => $role['is_active'] ? 'Activo' : 'Inactivo',
+            'color' => $role['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+        ];
+        include __DIR__ . '/../components/badge.php';
+        ?>
+    <?php endif; ?>
     <div class="mt-8">
         <label class="block text-sm font-semibold mb-1">Permisos</label>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50 rounded p-3 border border-gray-200 max-h-64 overflow-y-auto">

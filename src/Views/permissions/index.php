@@ -41,6 +41,15 @@ ob_start();
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($perm['name']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($perm['description']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
+                        <?php if (isset($perm['is_active'])): ?>
+                            <?php
+                            $badge = [
+                                'text' => $perm['is_active'] ? 'Activo' : 'Inactivo',
+                                'color' => $perm['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
+                            ];
+                            include __DIR__ . '/../components/badge.php';
+                            ?>
+                        <?php endif; ?>
                         <?php
                         $actions = [];
                         if (current_user() && current_user()->hasPermission('permission.edit')) {
@@ -69,6 +78,18 @@ ob_start();
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php if (isset($total_paginas) && $total_paginas > 1): ?>
+        <div class="flex justify-between items-center mt-4">
+            <?php
+            $pagination = [
+                'current' => $pagina_actual,
+                'total' => $total_paginas,
+                'base_url' => '?' . http_build_query(array_merge($_GET, ['page' => '']))
+            ];
+            include __DIR__ . '/../components/pagination.php';
+            ?>
+        </div>
+    <?php endif; ?>
 </div>
 <?php $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';
