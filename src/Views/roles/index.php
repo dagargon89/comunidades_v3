@@ -2,6 +2,7 @@
 $title = 'Roles';
 ob_start();
 ?>
+<?php include __DIR__ . '/../components/flash.php'; ?>
 <div class="max-w-3xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
     <h2 class="text-2xl font-bold mb-6">Roles</h2>
     <?php if (!empty($_SESSION['flash_error'])): ?>

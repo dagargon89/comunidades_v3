@@ -2,6 +2,7 @@
 $title = 'Dashboard';
 ob_start();
 ?>
+<?php include __DIR__ . '/../components/flash.php'; ?>
 <div class="max-w-2xl mx-auto mt-16 bg-white rounded-2xl shadow-xl p-10 text-center">
     <h1 class="text-3xl font-bold text-info mb-4">¡Bienvenido al Dashboard!</h1>
     <p class="text-lg text-gray-600 mb-6">Hola, <span class="font-semibold text-primary">

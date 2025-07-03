@@ -1,6 +1,7 @@
 <?php
 $title = 'Usuarios';
 ob_start(); ?>
+<?php include __DIR__ . '/../components/flash.php'; ?>
 <div class="flex flex-col gap-6 w-[90%] mx-auto">
     <?php if (!empty($_SESSION['flash_error'])): ?>
         <div class="mb-4 p-3 bg-red-100 text-red-700 rounded"> <?= $_SESSION['flash_error'];
