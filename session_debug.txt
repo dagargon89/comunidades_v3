@@ -27,7 +27,7 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 58668
+    [REMOTE_PORT] => 58921
     [REDIRECT_URL] => /dashboard
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
@@ -36,8 +36,8 @@ INDEX: Array
     [REQUEST_URI] => /dashboard
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751562339.3749
-    [REQUEST_TIME] => 1751562339
+    [REQUEST_TIME_FLOAT] => 1751562800.3965
+    [REQUEST_TIME] => 1751562800
 )
 Array
 (
