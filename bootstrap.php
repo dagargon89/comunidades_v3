@@ -76,5 +76,12 @@ function is_authenticated()
 // Función helper para obtener el usuario actual
 function current_user()
 {
-    return $_SESSION['user'] ?? null;
+    if (!isset($_SESSION['user_id'])) {
+        return null;
+    }
+    static $user = null;
+    if ($user === null || ($user && $user->getId() != $_SESSION['user_id'])) {
+        $user = \Models\User::findById($_SESSION['user_id'], true);
+    }
+    return $user;
 }

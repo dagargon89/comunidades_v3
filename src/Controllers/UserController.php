@@ -124,6 +124,11 @@ class UserController
     // Mostrar formulario de alta
     public function create()
     {
+        if (!current_user() || !current_user()->hasPermission('user.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear usuarios.';
+            header('Location: /users');
+            exit;
+        }
         $roles = \Core\Database::fetchAll('SELECT id, name FROM roles ORDER BY name');
         require __DIR__ . '/../Views/users/create.php';
     }
@@ -131,6 +136,11 @@ class UserController
     // Guardar usuario (POST)
     public function store()
     {
+        if (!current_user() || !current_user()->hasPermission('user.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear usuarios.';
+            header('Location: /users');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /users');
             exit;
@@ -195,6 +205,11 @@ class UserController
     // Mostrar formulario de edición
     public function edit()
     {
+        if (!current_user() || !current_user()->hasPermission('user.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar usuarios.';
+            header('Location: /users');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /users');
@@ -219,6 +234,11 @@ class UserController
     // Actualizar usuario (POST)
     public function update()
     {
+        if (!current_user() || !current_user()->hasPermission('user.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar usuarios.';
+            header('Location: /users');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /users');
             exit;
@@ -290,6 +310,11 @@ class UserController
     // Eliminar usuario (GET o POST)
     public function delete()
     {
+        if (!current_user() || !current_user()->hasPermission('user.delete')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para eliminar usuarios.';
+            header('Location: /users');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         $force = isset($_GET['force']) && $_GET['force'] == 1;
         if (!$id) {
