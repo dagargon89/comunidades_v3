@@ -13,7 +13,9 @@ ob_start();
                                                                     unset($_SESSION['flash_success']); ?> </div>
     <?php endif; ?>
     <div class="mb-4 flex justify-end">
-        <a href="/roles/create" class="btn-secondary px-4 py-2"><i class="fas fa-plus mr-1"></i>Nuevo rol</a>
+        <?php if (current_user() && current_user()->hasPermission('role.create')): ?>
+            <a href="/roles/create" class="btn-secondary px-4 py-2"><i class="fas fa-plus mr-1"></i>Nuevo rol</a>
+        <?php endif; ?>
     </div>
     <table class="min-w-full divide-y divide-gray-200">
         <thead>
@@ -29,8 +31,12 @@ ob_start();
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['name']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($rol['description']) ?> </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                        <a href="/roles/edit?id=<?= $rol['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
-                        <a href="/roles/delete?id=<?= $rol['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este rol?')"><i class="fas fa-trash"></i></a>
+                        <?php if (current_user() && current_user()->hasPermission('role.edit')): ?>
+                            <a href="/roles/edit?id=<?= $rol['id'] ?>" class="text-blue-600 hover:text-blue-900" title="Editar"><i class="fas fa-edit"></i></a>
+                        <?php endif; ?>
+                        <?php if (current_user() && current_user()->hasPermission('role.delete')): ?>
+                            <a href="/roles/delete?id=<?= $rol['id'] ?>" class="text-red-600 hover:text-red-900" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este rol?')"><i class="fas fa-trash"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

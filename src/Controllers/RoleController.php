@@ -12,11 +12,21 @@ class RoleController
 
     public function create()
     {
+        if (!current_user() || !current_user()->hasPermission('role.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear roles.';
+            header('Location: /roles');
+            exit;
+        }
         require __DIR__ . '/../Views/roles/create.php';
     }
 
     public function store()
     {
+        if (!current_user() || !current_user()->hasPermission('role.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear roles.';
+            header('Location: /roles');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /roles');
             exit;
@@ -41,6 +51,11 @@ class RoleController
 
     public function edit()
     {
+        if (!current_user() || !current_user()->hasPermission('role.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar roles.';
+            header('Location: /roles');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /roles');
@@ -59,6 +74,11 @@ class RoleController
 
     public function update()
     {
+        if (!current_user() || !current_user()->hasPermission('role.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar roles.';
+            header('Location: /roles');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /roles');
             exit;
@@ -87,6 +107,11 @@ class RoleController
 
     public function delete()
     {
+        if (!current_user() || !current_user()->hasPermission('role.delete')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para eliminar roles.';
+            header('Location: /roles');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /roles');

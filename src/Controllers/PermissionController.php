@@ -12,11 +12,21 @@ class PermissionController
 
     public function create()
     {
+        if (!current_user() || !current_user()->hasPermission('permission.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear permisos.';
+            header('Location: /permissions');
+            exit;
+        }
         require __DIR__ . '/../Views/permissions/create.php';
     }
 
     public function store()
     {
+        if (!current_user() || !current_user()->hasPermission('permission.create')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para crear permisos.';
+            header('Location: /permissions');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /permissions');
             exit;
@@ -41,6 +51,11 @@ class PermissionController
 
     public function edit()
     {
+        if (!current_user() || !current_user()->hasPermission('permission.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar permisos.';
+            header('Location: /permissions');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /permissions');
@@ -57,6 +72,11 @@ class PermissionController
 
     public function update()
     {
+        if (!current_user() || !current_user()->hasPermission('permission.edit')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para editar permisos.';
+            header('Location: /permissions');
+            exit;
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /permissions');
             exit;
@@ -83,6 +103,11 @@ class PermissionController
 
     public function delete()
     {
+        if (!current_user() || !current_user()->hasPermission('permission.delete')) {
+            $_SESSION['flash_error'] = 'No tienes permiso para eliminar permisos.';
+            header('Location: /permissions');
+            exit;
+        }
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /permissions');
