@@ -5,6 +5,9 @@ file_put_contents(__DIR__ . '/../session_debug.txt', 'INDEX: ' . print_r($_SERVE
 // Incluir el bootstrap
 require_once __DIR__ . '/../bootstrap.php';
 
+// Definir la conexión PDO global para los controladores
+$db = \Core\Database::getConnection();
+
 // Obtener la URL solicitada
 $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = dirname($_SERVER['SCRIPT_NAME']);
@@ -233,7 +236,13 @@ try {
         throw new Exception("Controlador no encontrado: $controller_class");
     }
 
-    $controller = new $controller_class();
+    $reflection = new ReflectionClass($controller_class);
+    $constructor = $reflection->getConstructor();
+    if ($constructor && $constructor->getNumberOfParameters() > 0) {
+        $controller = $reflection->newInstance($db);
+    } else {
+        $controller = $reflection->newInstance();
+    }
 
     if (!method_exists($controller, $action)) {
         throw new Exception("Método no encontrado: $action en $controller_class");

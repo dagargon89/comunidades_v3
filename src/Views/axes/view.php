@@ -1,10 +1,10 @@
 <?php
+$title = 'Detalle del Eje';
 ob_start();
 // ... existing code ...
-use function current_user;
 ?>
-<div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
-    <h1 class="text-2xl font-bold mb-4">Detalle del Eje</h1>
+<div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
+    <h2 class="text-2xl font-bold mb-6">Detalle del Eje</h2>
     <?php include __DIR__ . '/../components/flash.php'; ?>
     <div class="mb-4">
         <strong>ID:</strong> <?= htmlspecialchars($axis['id']) ?><br>

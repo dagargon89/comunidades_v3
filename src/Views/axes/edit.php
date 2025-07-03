@@ -1,7 +1,6 @@
 <?php
 ob_start();
 // ... existing code ...
-use function current_user;
 ?>
 <div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
     <h1 class="text-2xl font-bold mb-4">Editar Eje</h1>
