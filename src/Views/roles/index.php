@@ -15,7 +15,16 @@ ob_start();
     <?php endif; ?>
     <div class="mb-4 flex justify-end">
         <?php if (current_user() && current_user()->hasPermission('role.create')): ?>
-            <a href="/roles/create" class="btn-secondary px-4 py-2"><i class="fas fa-plus mr-1"></i>Nuevo rol</a>
+            <?php
+            $btn = [
+                'type' => 'link',
+                'label' => 'Nuevo rol',
+                'href' => '/roles/create',
+                'class' => 'btn-secondary px-4 py-2',
+                'icon' => 'fa-plus'
+            ];
+            include __DIR__ . '/../components/button.php';
+            ?>
         <?php endif; ?>
     </div>
     <table class="min-w-full divide-y divide-gray-200">

@@ -37,19 +37,85 @@ ob_start();
         </div>
     </div>
     <div class="flex flex-wrap gap-2 mt-6">
-        <a href="/users" class="btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400">Volver al listado</a>
+        <?php
+        $btn = [
+            'type' => 'link',
+            'label' => 'Volver al listado',
+            'href' => '/users',
+            'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400'
+        ];
+        include __DIR__ . '/../components/button.php';
+        ?>
         <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['rol']) && $_SESSION['user']['rol'] === 'admin'): ?>
-            <a href="/users/edit?id=<?= $usuario->getId() ?>" class="btn-secondary px-4 py-2"><i class="fas fa-edit mr-1"></i>Editar</a>
-            <a href="/users/delete?id=<?= $usuario->getId() ?>" class="btn-secondary bg-red-600 text-white hover:bg-red-700 px-4 py-2" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><i class="fas fa-trash mr-1"></i>Eliminar</a>
-            <?php if ($usuario->isActive()): ?>
-                <a href="/users/block?id=<?= $usuario->getId() ?>" class="btn-secondary bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2"><i class="fas fa-ban mr-1"></i>Bloquear</a>
-            <?php else: ?>
-                <a href="/users/unblock?id=<?= $usuario->getId() ?>" class="btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2"><i class="fas fa-unlock mr-1"></i>Desbloquear</a>
-                <a href="/users/reactivate?id=<?= $usuario->getId() ?>" class="btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2"><i class="fas fa-undo mr-1"></i>Reactivar</a>
-            <?php endif; ?>
-            <a href="/users/reset-password?id=<?= $usuario->getId() ?>" class="btn-secondary bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2"><i class="fas fa-key mr-1"></i>Resetear contraseña</a>
+            <?php
+            $btn = [
+                'type' => 'link',
+                'label' => 'Editar',
+                'href' => "/users/edit?id={$usuario->getId()}",
+                'class' => 'btn-secondary px-4 py-2',
+                'icon' => 'fa-edit'
+            ];
+            include __DIR__ . '/../components/button.php';
+
+            $btn = [
+                'type' => 'link',
+                'label' => 'Eliminar',
+                'href' => "/users/delete?id={$usuario->getId()}",
+                'class' => 'btn-secondary bg-red-600 text-white hover:bg-red-700 px-4 py-2',
+                'icon' => 'fa-trash',
+                'attrs' => 'onclick="return confirm(\'¿Seguro que deseas eliminar este usuario?\');"'
+            ];
+            include __DIR__ . '/../components/button.php';
+
+            if ($usuario->isActive()):
+                $btn = [
+                    'type' => 'link',
+                    'label' => 'Bloquear',
+                    'href' => "/users/block?id={$usuario->getId()}",
+                    'class' => 'btn-secondary bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2',
+                    'icon' => 'fa-ban'
+                ];
+                include __DIR__ . '/../components/button.php';
+            else:
+                $btn = [
+                    'type' => 'link',
+                    'label' => 'Desbloquear',
+                    'href' => "/users/unblock?id={$usuario->getId()}",
+                    'class' => 'btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2',
+                    'icon' => 'fa-unlock'
+                ];
+                include __DIR__ . '/../components/button.php';
+
+                $btn = [
+                    'type' => 'link',
+                    'label' => 'Reactivar',
+                    'href' => "/users/reactivate?id={$usuario->getId()}",
+                    'class' => 'btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2',
+                    'icon' => 'fa-undo'
+                ];
+                include __DIR__ . '/../components/button.php';
+            endif;
+
+            $btn = [
+                'type' => 'link',
+                'label' => 'Resetear contraseña',
+                'href' => "/users/reset-password?id={$usuario->getId()}",
+                'class' => 'btn-secondary bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2',
+                'icon' => 'fa-key'
+            ];
+            include __DIR__ . '/../components/button.php';
+            ?>
         <?php endif; ?>
-        <a href="mailto:<?= htmlspecialchars($usuario->getEmail()) ?>" class="btn-secondary bg-blue-600 text-white hover:bg-blue-700 px-4 py-2"><i class="fas fa-envelope mr-1"></i>Enviar correo</a>
+        <?php
+        $btn = [
+            'type' => 'link',
+            'label' => 'Enviar correo',
+            'href' => "mailto:" . htmlspecialchars($usuario->getEmail()),
+            'class' => 'btn-secondary bg-blue-600 text-white hover:bg-blue-700 px-4 py-2',
+            'icon' => 'fa-envelope'
+        ];
+        include __DIR__ . '/../components/button.php';
+        ?>
     </div>
 </div>
 <?php $content = ob_get_clean();

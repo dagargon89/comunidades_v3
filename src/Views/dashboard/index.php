@@ -8,7 +8,16 @@ ob_start();
     <p class="text-lg text-gray-600 mb-6">Hola, <span class="font-semibold text-primary">
             <?= htmlspecialchars(current_user() ? current_user()->getFullName() : '') ?>
         </span></p>
-    <a href="<?= base_url('auth/logout') ?>" class="btn-secondary inline-block px-6 py-2 rounded-lg font-semibold mt-4">Cerrar sesión</a>
+    <?php
+    $btn = [
+        'type' => 'link',
+        'label' => 'Cerrar sesión',
+        'href' => base_url('auth/logout'),
+        'class' => 'btn-secondary inline-block px-6 py-2 rounded-lg font-semibold mt-4',
+        'icon' => 'fa-sign-out-alt'
+    ];
+    include __DIR__ . '/../components/button.php';
+    ?>
 </div>
 <?php
 $content = ob_get_clean();

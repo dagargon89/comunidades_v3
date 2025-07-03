@@ -9,8 +9,8 @@ $fields = [
 $action = '/permissions/update';
 $method = 'post';
 $buttons = [
-    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'btn-secondary px-5 py-2'],
-    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/permissions', 'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400'],
+    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/permissions', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
 ];
 ?>
 <div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">

@@ -15,8 +15,8 @@ $fields = [
 $action = '/users/update';
 $method = 'post';
 $buttons = [
-    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'btn-secondary px-5 py-2'],
-    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/users', 'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400'],
+    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/users', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
 ];
 ?>
 <div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
@@ -24,9 +24,17 @@ $buttons = [
     <?php include __DIR__ . '/../components/flash.php'; ?>
     <?php include __DIR__ . '/../components/form.php'; ?>
     <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['rol']) && $_SESSION['user']['rol'] === 'admin'): ?>
-        <a href="/users/delete?id=<?= $usuario->getId() ?>&force=1" class="btn-secondary bg-red-600 text-white hover:bg-red-700 ml-auto" onclick="return confirm('¿Estás seguro de que deseas eliminar DEFINITIVAMENTE este usuario? Esta acción no se puede deshacer.');">
-            <i class="fas fa-trash mr-1"></i> Eliminar definitivamente
-        </a>
+        <?php
+        $btn = [
+            'type' => 'link',
+            'label' => 'Eliminar definitivamente',
+            'href' => "/users/delete?id={$usuario->getId()}&force=1",
+            'class' => 'btn-secondary bg-red-600 text-white hover:bg-red-700 ml-auto',
+            'icon' => 'fa-trash',
+            'attrs' => 'onclick="return confirm(\'¿Estás seguro de que deseas eliminar DEFINITIVAMENTE este usuario? Esta acción no se puede deshacer.\');"'
+        ];
+        include __DIR__ . '/../components/button.php';
+        ?>
     <?php endif; ?>
 </div>
 <?php $content = ob_get_clean();

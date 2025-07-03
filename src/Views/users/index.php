@@ -27,10 +27,27 @@ ob_start(); ?>
             </select>
         </div>
         <div class="flex gap-2 items-center justify-end w-full md:w-auto">
-            <button type="submit" class="btn-secondary px-5 py-2"><i class="fas fa-search mr-2"></i>Filtrar</button>
+            <?php
+            $btn = [
+                'type' => 'submit',
+                'label' => 'Filtrar',
+                'class' => 'btn-secondary px-5 py-2',
+                'icon' => 'fa-search'
+            ];
+            include __DIR__ . '/../components/button.php';
+            ?>
             <div class="mb-4 flex justify-end">
                 <?php if (current_user() && current_user()->hasPermission('user.create')): ?>
-                    <a href="/users/create" class="btn-secondary px-4 py-2"><i class="fas fa-plus mr-1"></i>Nuevo usuario</a>
+                    <?php
+                    $btn = [
+                        'type' => 'link',
+                        'label' => 'Nuevo usuario',
+                        'href' => '/users/create',
+                        'class' => 'btn-secondary px-4 py-2',
+                        'icon' => 'fa-plus'
+                    ];
+                    include __DIR__ . '/../components/button.php';
+                    ?>
                 <?php endif; ?>
             </div>
         </div>

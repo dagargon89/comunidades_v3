@@ -36,11 +36,7 @@
     <?php endforeach; ?>
     <div class="flex gap-2 mt-6">
         <?php foreach ($buttons as $btn): ?>
-            <?php if ($btn['type'] === 'submit'): ?>
-                <button type="submit" class="<?= $btn['class'] ?? 'btn-secondary' ?>"> <?= $btn['label'] ?> </button>
-            <?php elseif ($btn['type'] === 'link'): ?>
-                <a href="<?= $btn['href'] ?>" class="<?= $btn['class'] ?? 'btn-secondary' ?>"> <?= $btn['label'] ?> </a>
-            <?php endif; ?>
+            <?php include __DIR__ . '/button.php'; ?>
         <?php endforeach; ?>
     </div>
 </form>
