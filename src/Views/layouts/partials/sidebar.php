@@ -32,7 +32,11 @@ function is_active($route)
             <?php if (current_user() && current_user()->hasPermission('permission.view')): ?>
                 <li><a href="/permissions" class="<?= is_active('/permissions') ? 'active' : '' ?>"><i class="fas fa-key"></i> Permisos</a></li>
             <?php endif; ?>
-            <li><a href="#" class="<?= is_active('/catalogos') ? 'active' : '' ?>"><i class="fas fa-list"></i> Catálogos</a></li>
+            <li class="mt-6 mb-1 text-xs uppercase tracking-wider text-gray-400 px-2">Catálogos</li>
+            <?php if (current_user() && current_user()->hasPermission('axis.view')): ?>
+                <li><a href="/axes" class="<?= is_active('/axes') ? 'active' : '' ?>"><i class="fas fa-chart-line"></i> Ejes</a></li>
+            <?php endif; ?>
+            <li><a href="#" class="<?= is_active('/catalogos') ? 'active' : '' ?>"><i class="fas fa-list"></i> Otros Catálogos</a></li>
         </ul>
         <div class="separator"></div>
     </nav>
