@@ -15,7 +15,7 @@
         <thead>
             <tr class="text-left text-xs font-semibold uppercase tracking-wider bg-primary text-white">
                 <?php foreach ($headers as $header): ?>
-                    <th class="px-4 py-3"><?= htmlspecialchars($header) ?></th>
+                    <th class="px-4 py-3 text-left"><?= htmlspecialchars($header) ?></th>
                 <?php endforeach; ?>
                 <?php if (!empty($actions)): ?>
                     <th class="px-4 py-3 text-center">Acciones</th>
@@ -31,7 +31,7 @@
                 <?php foreach ($rows as $idx => $row): ?>
                     <tr class="bg-white text-gray-900">
                         <?php foreach ($fields as $field): ?>
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-900">
+                            <td class="px-4 py-3 whitespace-nowrap text-gray-900 text-left">
                                 <?= isset($row[$field]) ? htmlspecialchars($row[$field]) : '-' ?>
                             </td>
                         <?php endforeach; ?>

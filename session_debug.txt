@@ -6,7 +6,7 @@ INDEX: Array
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/users
+    [HTTP_REFERER] => http://comunidades_v3.test/permissions
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=7k4c3bbq6ser6d8kiuqpbvm8ik
@@ -27,7 +27,7 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 55536
+    [REMOTE_PORT] => 55655
     [REDIRECT_URL] => /users
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
@@ -36,8 +36,8 @@ INDEX: Array
     [REQUEST_URI] => /users
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751556926.5132
-    [REQUEST_TIME] => 1751556926
+    [REQUEST_TIME_FLOAT] => 1751557164.9486
+    [REQUEST_TIME] => 1751557164
 )
 Array
 (
