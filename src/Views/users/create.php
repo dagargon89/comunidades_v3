@@ -1,5 +1,6 @@
 <?php
 $title = 'Nuevo usuario';
+$useCard = true;
 $fields = [
     ['name' => 'first_name', 'label' => 'Nombre', 'type' => 'text', 'value' => '', 'required' => true],
     ['name' => 'last_name', 'label' => 'Apellidos', 'type' => 'text', 'value' => '', 'required' => true],

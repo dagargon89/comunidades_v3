@@ -1,5 +1,6 @@
 <?php
 $title = 'Editar rol';
+$useCard = true;
 $fields = [
     ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $role['id']],
     ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => $role['name'], 'required' => true],

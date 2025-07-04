@@ -1,5 +1,6 @@
 <?php
 $title = 'Nuevo Programa';
+$useCard = true;
 $fields = [
     ['name' => 'name', 'label' => 'Nombre del Programa', 'type' => 'text', 'value' => isset($_POST['name']) ? $_POST['name'] : '', 'required' => true],
     ['name' => 'axes_id', 'label' => 'Eje', 'type' => 'select', 'options' => array_column($axes, 'name', 'id'), 'value' => isset($_POST['axes_id']) ? $_POST['axes_id'] : '', 'required' => true],

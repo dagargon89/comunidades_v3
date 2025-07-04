@@ -1,5 +1,6 @@
 <?php
 $title = 'Editar Eje';
+$useCard = true;
 $fields = [
     ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $axis['id']],
     ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => $axis['name'], 'required' => true],

@@ -1,5 +1,6 @@
 <?php
 $title = 'Editar usuario';
+$useCard = true;
 $fields = [
     ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $usuario->getId()],
     ['name' => 'first_name', 'label' => 'Nombre', 'type' => 'text', 'value' => $usuario->getFirstName(), 'required' => true],

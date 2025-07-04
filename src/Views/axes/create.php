@@ -1,5 +1,6 @@
 <?php
 $title = 'Nuevo Eje';
+$useCard = true;
 $fields = [
     ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => '', 'required' => true],
 ];

@@ -1,5 +1,6 @@
 <?php
 $title = 'Editar Programa';
+$useCard = true;
 $fields = [
     ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $program['id']],
     ['name' => 'name', 'label' => 'Nombre del Programa', 'type' => 'text', 'value' => $program['name'], 'required' => true],

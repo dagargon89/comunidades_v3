@@ -1,5 +1,6 @@
 <?php
 $title = 'Nuevo rol';
+$useCard = true;
 $fields = [
     ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => '', 'required' => true],
     ['name' => 'description', 'label' => 'Descripción', 'type' => 'text', 'value' => ''],
