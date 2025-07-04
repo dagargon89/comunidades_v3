@@ -22,17 +22,31 @@
         <form method="<?= $method ?? 'post' ?>" action="<?= $action ?? '' ?>" class="space-y-4">
             <?php foreach ($fields as $field): ?>
                 <div>
-                    <label class="block text-sm font-semibold mb-1" for="<?= $field['name'] ?>"> <?= $field['label'] ?> </label>
-                    <?php if (($field['type'] ?? 'text') === 'select'): ?>
-                        <select name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
-                            <?php foreach ($field['options'] as $val => $text): ?>
-                                <option value="<?= htmlspecialchars($val) ?>" <?= (isset($field['value']) && $field['value'] == $val) ? 'selected' : '' ?>><?= htmlspecialchars($text) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    <?php elseif (($field['type'] ?? 'text') === 'textarea'): ?>
-                        <textarea name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>><?= htmlspecialchars($field['value'] ?? '') ?></textarea>
+                    <?php
+                    $type = $field['type'] ?? 'text';
+                    // Solo mostrar el label si el campo NO es hidden
+                    if ($type !== 'hidden') {
+                        $label = $field['label'] ?? '';
+                        if ($label !== '') {
+                            // Renderizar el label normalmente
+                            echo "<label for='" . htmlspecialchars($field['name']) . "' class='form-label'>" . htmlspecialchars($label) . "</label>";
+                        }
+                    }
+                    ?>
+                    <?php if (($type === 'select') || ($type === 'textarea')): ?>
+                        <div class="mt-2">
+                            <?php if ($type === 'select'): ?>
+                                <select name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-select w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
+                                    <?php foreach ($field['options'] as $val => $text): ?>
+                                        <option value="<?= htmlspecialchars($val) ?>" <?= (isset($field['value']) && $field['value'] == $val) ? 'selected' : '' ?>><?= htmlspecialchars($text) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php elseif ($type === 'textarea'): ?>
+                                <textarea name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>><?= htmlspecialchars($field['value'] ?? '') ?></textarea>
+                            <?php endif; ?>
+                        </div>
                     <?php else: ?>
-                        <input type="<?= $field['type'] ?? 'text' ?>" name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" value="<?= htmlspecialchars($field['value'] ?? '') ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
+                        <input type="<?= $type ?>" name="<?= $field['name'] ?>" id="<?= $field['name'] ?>" value="<?= htmlspecialchars($field['value'] ?? '') ?>" class="form-input w-full rounded-lg border border-gray-300 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary px-4 py-2" <?= !empty($field['required']) ? 'required' : '' ?>>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
