@@ -18,13 +18,6 @@ function is_active($route)
         border-radius: 0.5rem;
     }
 
-    .sidebar .accordion-header:hover,
-    .sidebar .accordion-header:focus {
-        background: #06b6d4;
-        /* Color activo (ejemplo: tailwind cyan-500) */
-        color: #fff;
-    }
-
     .sidebar .accordion-header .accordion-icon {
         transition: transform 0.2s;
     }
@@ -33,19 +26,44 @@ function is_active($route)
         transform: rotate(180deg);
     }
 
+    .sidebar .accordion-content ul {
+        list-style: none;
+        padding-left: 0.5rem;
+        margin: 0;
+    }
+
     .sidebar .accordion-content ul>li {
-        margin-bottom: 0.15rem;
-        margin-top: 0.15rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.05rem;
+        margin-top: 0.05rem;
+        min-height: 2rem;
+    }
+
+    .sidebar .accordion-content ul>li::before {
+        content: '';
+        display: inline-block;
+        width: 0.4em;
+        height: 0.4em;
+        background: #06b6d4;
+        border-radius: 50%;
+        margin-right: 0.7em;
+        margin-left: 0.2em;
+        opacity: 0.7;
     }
 
     .sidebar .accordion-content ul>li>a {
-        padding-left: 0.5rem;
+        padding-left: 0.1rem;
         border-radius: 0.375rem;
         font-size: 0.97rem;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        min-height: 2rem;
+        transition: background 0.2s, color 0.2s;
     }
 
-    .sidebar .accordion-content ul>li>a.active,
-    .sidebar .accordion-content ul>li>a:hover {
+    .sidebar .accordion-content ul>li>a.active {
         background: #06b6d4;
         color: #fff;
     }
@@ -59,8 +77,8 @@ function is_active($route)
     }
 
     .sidebar ul.space-y-1>li {
-        margin-bottom: 0.1rem;
-        margin-top: 0.1rem;
+        margin-bottom: 0.05rem;
+        margin-top: 0.05rem;
     }
 
     .sidebar .sidebar-group-label {
@@ -95,7 +113,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/projects" class="<?= is_active('/projects') ? 'active' : '' ?>"><i class="fas fa-folder"></i> Proyectos</a></li>
                         <li><a href="/specific_objectives" class="<?= is_active('/specific_objectives') ? 'active' : '' ?>"><i class="fas fa-bullseye"></i> Objetivos Específicos</a></li>
                     </ul>
@@ -112,7 +130,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/axes" class="<?= is_active('/axes') ? 'active' : '' ?>"><i class="fas fa-chart-line"></i> Ejes</a></li>
                         <li><a href="/programs" class="<?= is_active('/programs') ? 'active' : '' ?>"><i class="fas fa-project-diagram"></i> Programas</a></li>
                         <li><a href="/action_lines" class="<?= is_active('/action_lines') ? 'active' : '' ?>"><i class="fas fa-stream"></i> Líneas de Acción</a></li>
@@ -132,7 +150,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/activities" class="<?= is_active('/activities') ? 'active' : '' ?>"><i class="fas fa-clipboard-list"></i> Actividades</a></li>
                         <li><a href="/activity_calendar" class="<?= is_active('/activity_calendar') ? 'active' : '' ?>"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
                         <li><a href="/activity_files" class="<?= is_active('/activity_files') ? 'active' : '' ?>"><i class="fas fa-file-alt"></i> Archivos</a></li>
@@ -150,7 +168,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/responsibles" class="<?= is_active('/responsibles') ? 'active' : '' ?>"><i class="fas fa-user-tie"></i> Responsables</a></li>
                         <li><a href="/data_collectors" class="<?= is_active('/data_collectors') ? 'active' : '' ?>"><i class="fas fa-user-graduate"></i> Recolectores</a></li>
                         <li><a href="/organizations" class="<?= is_active('/organizations') ? 'active' : '' ?>"><i class="fas fa-building"></i> Organizaciones</a></li>
@@ -169,7 +187,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/locations" class="<?= is_active('/locations') ? 'active' : '' ?>"><i class="fas fa-map-pin"></i> Ubicaciones</a></li>
                         <li><a href="/polygons" class="<?= is_active('/polygons') ? 'active' : '' ?>"><i class="fas fa-draw-polygon"></i> Polígonos</a></li>
                     </ul>
@@ -186,7 +204,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <li><a href="/planned_metrics" class="<?= is_active('/planned_metrics') ? 'active' : '' ?>"><i class="fas fa-chart-line"></i> Métricas Planificadas</a></li>
                         <li><a href="/beneficiary_registry" class="<?= is_active('/beneficiary_registry') ? 'active' : '' ?>"><i class="fas fa-user-friends"></i> Registro de Beneficiarios</a></li>
                     </ul>
@@ -203,7 +221,7 @@ function is_active($route)
                     <i class="fas fa-chevron-down accordion-icon transition-transform"></i>
                 </button>
                 <div class="accordion-content hidden">
-                    <ul class="ml-4 mt-1">
+                    <ul class="ml-2 mt-1">
                         <?php if (current_user() && current_user()->hasPermission('user.view')): ?>
                             <li><a href="/users" class="<?= is_active('/users') ? 'active' : '' ?>"><i class="fas fa-users-cog"></i> Usuarios</a></li>
                         <?php endif; ?>
