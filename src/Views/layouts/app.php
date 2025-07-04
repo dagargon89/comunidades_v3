@@ -22,15 +22,7 @@
                         include __DIR__ . '/../components/filter_bar.php';
                     }
                     ?>
-                    <?php
-                    if (!isset($useCard) || $useCard !== false) {
-                        echo '<div class="bg-white rounded-lg shadow overflow-hidden">';
-                        echo $content ?? '';
-                        echo '</div>';
-                    } else {
-                        echo $content ?? '';
-                    }
-                    ?>
+                    <?= $content ?? '' ?>
                     <?php
                     if ((isset($totalPages) && $totalPages > 1 && isset($page)) || (isset($total_paginas) && $total_paginas > 1 && isset($pagina_actual))) {
                         $p = $page ?? $pagina_actual;
