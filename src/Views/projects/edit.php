@@ -3,9 +3,7 @@ ob_start();
 ?>
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Editar Proyecto</h1>
-    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4"></div>
 
     <?php if (isset($_GET['error'])): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

@@ -3,11 +3,10 @@ INDEX: Array
     [REDIRECT_STATUS] => 200
     [HTTP_HOST] => comunidades_v3.test
     [HTTP_CONNECTION] => keep-alive
-    [HTTP_CACHE_CONTROL] => max-age=0
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/projects
+    [HTTP_REFERER] => http://comunidades_v3.test/financiers
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=h1o93mkd30erosqii0k31imu5d
@@ -28,24 +27,25 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 52821
-    [REDIRECT_URL] => /projects/create
+    [REMOTE_PORT] => 53991
+    [REDIRECT_URL] => /financiers/edit
+    [REDIRECT_QUERY_STRING] => id=1
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
-    [QUERY_STRING] => 
-    [REQUEST_URI] => /projects/create
+    [QUERY_STRING] => id=1
+    [REQUEST_URI] => /financiers/edit?id=1
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751667674.4606
-    [REQUEST_TIME] => 1751667674
+    [REQUEST_TIME_FLOAT] => 1751668997.0325
+    [REQUEST_TIME] => 1751668997
 )
 Array
 (
 )
-PATH: projects/create
+PATH: financiers/edit
 METHOD: GET
-URI: /projects/create
+URI: /financiers/edit?id=1
 POST: Array
 (
 )

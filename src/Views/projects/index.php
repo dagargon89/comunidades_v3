@@ -3,54 +3,6 @@ ob_start();
 ?>
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Proyectos</h1>
-    </div>
-
-    <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php
-            $message = '';
-            switch ($_GET['success']) {
-                case '1':
-                    $message = 'Proyecto creado exitosamente.';
-                    break;
-                case '2':
-                    $message = 'Proyecto actualizado exitosamente.';
-                    break;
-                case '3':
-                    $message = 'Proyecto eliminado exitosamente.';
-                    break;
-            }
-            echo $message;
-            ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php
-            $message = '';
-            switch ($_GET['error']) {
-                case 'delete_failed':
-                    $message = 'No se pudo eliminar el proyecto porque tiene objetivos específicos asociados.';
-                    break;
-                case 'invalid_id':
-                    $message = 'ID de proyecto inválido.';
-                    break;
-                case 'not_found':
-                    $message = 'Proyecto no encontrado.';
-                    break;
-                default:
-                    $message = 'Ha ocurrido un error.';
-            }
-            echo $message;
-            ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
     <?php
     $filters = [
         ['type' => 'text', 'name' => 'search', 'placeholder' => 'Buscar proyecto o financiador...', 'value' => htmlspecialchars($search ?? '')],

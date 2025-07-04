@@ -3,56 +3,7 @@ ob_start();
 ?>
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Financiadores</h1>
-    </div>
-
-    <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php
-            $message = '';
-            switch ($_GET['success']) {
-                case '1':
-                    $message = 'Financiador creado exitosamente.';
-                    break;
-                case '2':
-                    $message = 'Financiador actualizado exitosamente.';
-                    break;
-                case '3':
-                    $message = 'Financiador eliminado exitosamente.';
-                    break;
-            }
-            echo $message;
-            ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php
-            $message = '';
-            switch ($_GET['error']) {
-                case 'delete_failed':
-                    $message = 'No se pudo eliminar el financiador porque tiene proyectos asociados.';
-                    break;
-                case 'invalid_id':
-                    $message = 'ID de financiador inválido.';
-                    break;
-                case 'not_found':
-                    $message = 'Financiador no encontrado.';
-                    break;
-                default:
-                    $message = 'Ha ocurrido un error.';
-            }
-            echo $message;
-            ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
     <?php
-    // Configurar variables para el componente de filtros
     $filters = [
         ['type' => 'text', 'name' => 'search', 'placeholder' => 'Buscar financiador...', 'value' => htmlspecialchars($search ?? '')],
     ];
@@ -73,7 +24,6 @@ ob_start();
         ]
     ];
 
-    // Configurar variables para el componente de tabla
     $headers = ['ID', 'Nombre'];
     $fields = ['id', 'name'];
     $rows = $data;
