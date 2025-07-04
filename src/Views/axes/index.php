@@ -36,32 +36,48 @@ ob_start(); ?>
     include __DIR__ . '/../components/filter_bar.php';
     ?>
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <?php if (empty($axes)): ?>
-                    <tr>
-                        <td colspan="3" class="text-center py-8 text-gray-500">No hay ejes registrados.</td>
-                    </tr>
-                <?php else: ?>
-                    <?php foreach ($axes as $axis): ?>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($axis['id']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($axis['name']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                                <?php include __DIR__ . '/../components/action_buttons.php'; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+        <?php
+        $headers = ['ID', 'Nombre'];
+        $fields = ['id', 'name'];
+        $rows = $axes;
+        $actions_config = [
+            [
+                'type' => 'view',
+                'url' => function ($row) {
+                    return '/axes/view?id=' . $row['id'];
+                },
+                'title' => 'Ver',
+                'icon' => 'fa-eye text-blue-500',
+                'class' => 'btn-info',
+                'permission' => 'axis.view',
+            ],
+            [
+                'type' => 'edit',
+                'url' => function ($row) {
+                    return '/axes/edit?id=' . $row['id'];
+                },
+                'title' => 'Editar',
+                'icon' => 'fa-edit text-yellow-500',
+                'class' => 'btn-warning',
+                'permission' => 'axis.edit',
+            ],
+            [
+                'type' => 'delete',
+                'url' => function ($row) {
+                    return '/axes/delete?id=' . $row['id'];
+                },
+                'title' => 'Eliminar',
+                'icon' => 'fa-trash text-red-500',
+                'class' => 'btn-danger',
+                'permission' => 'axis.delete',
+                'onclick' => function ($row) {
+                    return "return confirm('¿Seguro que deseas eliminar este eje?')";
+                },
+            ],
+        ];
+        $custom_render = [];
+        include __DIR__ . '/../components/table.php';
+        ?>
     </div>
     <?php if (isset($totalPages) && $totalPages > 1): ?>
         <div class="flex justify-between items-center mt-4">

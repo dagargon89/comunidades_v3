@@ -38,66 +38,57 @@ ob_start(); ?>
     include __DIR__ . '/../components/filter_bar.php';
     ?>
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellidos</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <?php if (empty($usuarios)): ?>
-                    <tr>
-                        <td colspan="6" class="text-center py-8 text-gray-500">No se encontraron usuarios</td>
-                    </tr>
-                <?php else: ?>
-                    <?php foreach ($usuarios as $usuario): ?>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['first_name']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['last_name']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['email']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['username']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-left"> <?= htmlspecialchars($usuario['rol']) ?> </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-left">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $usuario['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                                    <?= $usuario['is_active'] ? 'Activo' : 'Inactivo' ?>
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex gap-2 text-left">
-                                <?php
-                                $actions = [];
-                                if (current_user() && current_user()->hasPermission('user.edit')) {
-                                    $actions[] = [
-                                        'type' => 'edit',
-                                        'url' => "users/edit?id={$usuario['id']}",
-                                        'permission' => 'user.edit',
-                                        'title' => 'Editar',
-                                        'class' => 'text-blue-600 hover:text-blue-900',
-                                    ];
-                                }
-                                if (current_user() && current_user()->hasPermission('user.delete')) {
-                                    $actions[] = [
-                                        'type' => 'delete',
-                                        'url' => "users/delete?id={$usuario['id']}",
-                                        'permission' => 'user.delete',
-                                        'title' => 'Eliminar',
-                                        'class' => 'text-red-600 hover:text-red-900',
-                                        'onclick' => "return confirm('¿Seguro que deseas eliminar este usuario?')",
-                                    ];
-                                }
-                                include __DIR__ . '/../components/action_buttons.php';
-                                ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+        <?php
+        $headers = ['Nombre', 'Apellidos', 'Email', 'Usuario', 'Rol', 'Estado'];
+        $fields = ['first_name', 'last_name', 'email', 'username', 'rol', 'is_active'];
+        $rows = $usuarios;
+        $actions_config = [
+            [
+                'type' => 'view',
+                'url' => function ($row) {
+                    return '/users/view?id=' . $row['id'];
+                },
+                'title' => 'Ver',
+                'icon' => 'fa-eye text-blue-500',
+                'class' => 'btn-info',
+                'permission' => 'user.view',
+            ],
+            [
+                'type' => 'edit',
+                'url' => function ($row) {
+                    return '/users/edit?id=' . $row['id'];
+                },
+                'title' => 'Editar',
+                'icon' => 'fa-edit text-yellow-500',
+                'class' => 'btn-warning',
+                'permission' => 'user.edit',
+            ],
+            [
+                'type' => 'delete',
+                'url' => function ($row) {
+                    return '/users/delete?id=' . $row['id'];
+                },
+                'title' => 'Eliminar',
+                'icon' => 'fa-trash text-red-500',
+                'class' => 'btn-danger',
+                'permission' => 'user.delete',
+                'onclick' => function ($row) {
+                    return "return confirm('¿Seguro que deseas eliminar este usuario?')";
+                },
+            ],
+        ];
+        $custom_render = [
+            'is_active' => function ($value, $row) {
+                $class = $value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                $text = $value ? 'Activo' : 'Inactivo';
+                return "<span class='px-2 inline-flex text-xs leading-5 font-semibold rounded-full $class'>$text</span>";
+            },
+            'rol' => function ($value, $row) {
+                return htmlspecialchars($value);
+            }
+        ];
+        include __DIR__ . '/../components/table.php';
+        ?>
     </div>
     <?php if ($total_paginas > 1): ?>
         <div class="flex justify-between items-center mt-4">

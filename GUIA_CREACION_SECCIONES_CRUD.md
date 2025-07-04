@@ -12,6 +12,7 @@
 8. [Paso 7: Verificación y Pruebas](#paso-7-verificación-y-pruebas)
 9. [Patrones y Convenciones](#patrones-y-convenciones)
 10. [Ejemplo Completo](#ejemplo-completo)
+11. [Uso obligatorio de componentes en todas las secciones CRUD](#uso-obligatorio-de-componentes-en-todas-las-secciones-crud)
 
 ---
 
@@ -1017,3 +1018,47 @@ Para crear una sección "Categorías":
 6. **Pruebas**: Verificar toda la funcionalidad
 
 Este patrón asegura consistencia en todo el sistema y facilita el mantenimiento.
+
+---
+
+## Uso obligatorio de componentes en todas las secciones CRUD
+
+Para mantener la consistencia visual y funcional, **todas las secciones CRUD deben usar SIEMPRE los siguientes componentes**:
+
+- `filter_bar.php` para filtros y botones de acción (como "Nuevo ...").
+- `table.php` para el listado principal.
+- El bloque de paginación estándar al final de la tabla.
+
+### Ejemplo de uso correcto:
+
+```php
+$filters = [
+    ['type' => 'text', 'name' => 'q', 'placeholder' => 'Buscar...', 'value' => htmlspecialchars($_GET['q'] ?? '')],
+];
+$buttons = [
+    [
+        'type' => 'submit',
+        'label' => 'Filtrar',
+        'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+        'icon' => 'fa-search'
+    ],
+    [
+        'type' => 'link',
+        'label' => 'Nuevo Elemento',
+        'href' => '/seccion/create',
+        'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900',
+        'icon' => 'fa-plus',
+        'title' => 'Crear nuevo'
+    ]
+];
+include __DIR__ . '/../components/filter_bar.php';
+
+$headers = [...];
+$fields = [...];
+$rows = ...;
+$actions_config = [...];
+$custom_render = [...];
+include __DIR__ . '/../components/table.php';
+```
+
+**Nunca** generes los filtros, botones o tablas manualmente en la vista. Usa siempre los componentes para asegurar uniformidad y facilidad de mantenimiento.
