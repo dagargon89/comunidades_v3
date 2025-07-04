@@ -53,3 +53,21 @@ $router->post('components/store', 'ComponentController@store');
 $router->get('components/edit', 'ComponentController@edit');
 $router->post('components/update', 'ComponentController@update');
 $router->get('components/delete', 'ComponentController@delete');
+
+// Organizaciones (organizations)
+$router->get('organizations', 'OrganizationController@index');
+$router->get('organizations/view', 'OrganizationController@view');
+$router->get('organizations/create', 'OrganizationController@create');
+$router->post('organizations/store', 'OrganizationController@store');
+$router->get('organizations/edit', 'OrganizationController@edit');
+$router->post('organizations/update', 'OrganizationController@update');
+$router->get('organizations/delete', 'OrganizationController@delete');
+
+// Metas (goals)
+$router->get('goals', 'GoalController@index');
+$router->get('goals/view', 'GoalController@view');
+$router->get('goals/create', 'GoalController@create');
+$router->post('goals/store', 'GoalController@store');
+$router->get('goals/edit', 'GoalController@edit');
+$router->post('goals/update', 'GoalController@update');
+$router->get('goals/delete', 'GoalController@delete');

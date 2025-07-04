@@ -151,6 +151,24 @@ $routes = [
     'components/update' => ['controller' => 'ComponentController', 'action' => 'update'],
     'components/delete' => ['controller' => 'ComponentController', 'action' => 'delete'],
     'components/view' => ['controller' => 'ComponentController', 'action' => 'view'],
+
+    // Rutas de organizaciones (organizations)
+    'organizations' => ['controller' => 'OrganizationController', 'action' => 'index'],
+    'organizations/create' => ['controller' => 'OrganizationController', 'action' => 'create'],
+    'organizations/store' => ['controller' => 'OrganizationController', 'action' => 'store'],
+    'organizations/edit' => ['controller' => 'OrganizationController', 'action' => 'edit'],
+    'organizations/update' => ['controller' => 'OrganizationController', 'action' => 'update'],
+    'organizations/delete' => ['controller' => 'OrganizationController', 'action' => 'delete'],
+    'organizations/view' => ['controller' => 'OrganizationController', 'action' => 'view'],
+
+    // Rutas de metas (goals)
+    'goals' => ['controller' => 'GoalController', 'action' => 'index'],
+    'goals/create' => ['controller' => 'GoalController', 'action' => 'create'],
+    'goals/store' => ['controller' => 'GoalController', 'action' => 'store'],
+    'goals/edit' => ['controller' => 'GoalController', 'action' => 'edit'],
+    'goals/update' => ['controller' => 'GoalController', 'action' => 'update'],
+    'goals/delete' => ['controller' => 'GoalController', 'action' => 'delete'],
+    'goals/view' => ['controller' => 'GoalController', 'action' => 'view'],
 ];
 
 // Verificar si la ruta existe
