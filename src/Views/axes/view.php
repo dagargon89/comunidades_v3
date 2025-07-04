@@ -5,7 +5,7 @@ ob_start();
 ?>
 <div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
     <h2 class="text-2xl font-bold mb-6">Detalle del Eje</h2>
-    <?php include __DIR__ . '/../components/flash.php'; ?>
+    <?php include __DIR__ . '/../ui_components/flash.php'; ?>
     <div class="mb-4">
         <strong>ID:</strong> <?= htmlspecialchars($axis['id']) ?><br>
         <strong>Nombre:</strong> <?= htmlspecialchars($axis['name']) ?><br>

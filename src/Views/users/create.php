@@ -18,6 +18,6 @@ $buttons = [
     ['type' => 'link', 'label' => 'Cancelar', 'href' => '/users', 'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400'],
 ];
 ob_start();
-include __DIR__ . '/../components/form.php';
+include __DIR__ . '/../ui_components/form.php';
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';

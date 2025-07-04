@@ -13,13 +13,13 @@
             <!-- Contenido principal -->
             <main class="flex-1 p-8 transition-colors duration-300" style="background: var(--color-bg);" id="main-content">
                 <div class="flex flex-col gap-6 w-[90%] mx-auto">
-                    <?php include __DIR__ . '/../components/flash.php'; ?>
+                    <?php include __DIR__ . '/../ui_components/flash.php'; ?>
                     <?php if (isset($title)): ?>
                         <h1 class="text-2xl font-bold mb-6"><?= htmlspecialchars($title) ?></h1>
                     <?php endif; ?>
                     <?php
                     if (isset($filters) && isset($buttons)) {
-                        include __DIR__ . '/../components/filter_bar.php';
+                        include __DIR__ . '/../ui_components/filter_bar.php';
                     }
                     ?>
                     <?= $content ?? '' ?>

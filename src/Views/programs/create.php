@@ -12,6 +12,6 @@ $buttons = [
     ['type' => 'link', 'label' => 'Cancelar', 'href' => '/programs', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
 ];
 ob_start();
-include __DIR__ . '/../components/form.php';
+include __DIR__ . '/../ui_components/form.php';
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';

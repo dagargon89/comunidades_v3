@@ -72,7 +72,7 @@ $custom_render = [
     }
 ];
 ob_start();
-include __DIR__ . '/../components/table.php';
+include __DIR__ . '/../ui_components/table.php';
 $content = ob_get_clean();
 $page = $pagina_actual;
 $totalPages = $total_paginas;

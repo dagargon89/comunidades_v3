@@ -28,7 +28,7 @@ ob_start();
                 'text' => $usuario->isActive() ? 'Activo' : 'Inactivo',
                 'color' => $usuario->isActive() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800',
             ];
-            include __DIR__ . '/../components/badge.php';
+            include __DIR__ . '/../ui_components/badge.php';
             ?>
         </div>
         <div>
@@ -48,7 +48,7 @@ ob_start();
             'href' => '/users',
             'class' => 'btn-secondary bg-gray-300 text-gray-800 hover:bg-gray-400'
         ];
-        include __DIR__ . '/../components/button.php';
+        include __DIR__ . '/../ui_components/button.php';
         ?>
         <?php if (isset($_SESSION['user']) && isset($_SESSION['user']['rol']) && $_SESSION['user']['rol'] === 'admin'): ?>
             <?php
@@ -59,7 +59,7 @@ ob_start();
                 'class' => 'btn-secondary px-4 py-2',
                 'icon' => 'fa-edit'
             ];
-            include __DIR__ . '/../components/button.php';
+            include __DIR__ . '/../ui_components/button.php';
 
             $btn = [
                 'type' => 'link',
@@ -69,7 +69,7 @@ ob_start();
                 'icon' => 'fa-trash',
                 'attrs' => 'onclick="return confirm(\'¿Seguro que deseas eliminar este usuario?\');"'
             ];
-            include __DIR__ . '/../components/button.php';
+            include __DIR__ . '/../ui_components/button.php';
 
             if ($usuario->isActive()):
                 $btn = [
@@ -79,7 +79,7 @@ ob_start();
                     'class' => 'btn-secondary bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2',
                     'icon' => 'fa-ban'
                 ];
-                include __DIR__ . '/../components/button.php';
+                include __DIR__ . '/../ui_components/button.php';
             else:
                 $btn = [
                     'type' => 'link',
@@ -88,7 +88,7 @@ ob_start();
                     'class' => 'btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2',
                     'icon' => 'fa-unlock'
                 ];
-                include __DIR__ . '/../components/button.php';
+                include __DIR__ . '/../ui_components/button.php';
 
                 $btn = [
                     'type' => 'link',
@@ -97,7 +97,7 @@ ob_start();
                     'class' => 'btn-secondary bg-green-600 text-white hover:bg-green-700 px-4 py-2',
                     'icon' => 'fa-undo'
                 ];
-                include __DIR__ . '/../components/button.php';
+                include __DIR__ . '/../ui_components/button.php';
             endif;
 
             $btn = [
@@ -107,7 +107,7 @@ ob_start();
                 'class' => 'btn-secondary bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2',
                 'icon' => 'fa-key'
             ];
-            include __DIR__ . '/../components/button.php';
+            include __DIR__ . '/../ui_components/button.php';
             ?>
         <?php endif; ?>
         <?php
@@ -118,7 +118,7 @@ ob_start();
             'class' => 'btn-secondary bg-blue-600 text-white hover:bg-blue-700 px-4 py-2',
             'icon' => 'fa-envelope'
         ];
-        include __DIR__ . '/../components/button.php';
+        include __DIR__ . '/../ui_components/button.php';
         ?>
     </div>
 </div>
