@@ -19,8 +19,8 @@ $buttons = [
         'title' => 'Crear nuevo eje'
     ]
 ];
-$headers = ['ID', 'Nombre', 'Acciones'];
-$fields = ['id', 'name', 'actions'];
+$headers = ['ID', 'Nombre'];
+$fields = ['id', 'name'];
 $rows = $axes;
 $actions_config = [
     [

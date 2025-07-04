@@ -19,8 +19,8 @@ $buttons = [
         'title' => 'Crear nuevo programa'
     ]
 ];
-$headers = ['ID', 'Nombre', 'Eje', 'Acciones'];
-$fields = ['id', 'name', 'axis_name', 'actions'];
+$headers = ['ID', 'Nombre', 'Eje'];
+$fields = ['id', 'name', 'axis_name'];
 $rows = $programs;
 $actions_config = [
     [

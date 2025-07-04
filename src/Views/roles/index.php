@@ -19,8 +19,8 @@ $buttons = [
         'title' => 'Crear nuevo rol'
     ]
 ];
-$headers = ['Nombre', 'Descripción', 'Acciones'];
-$fields = ['name', 'description', 'actions'];
+$headers = ['Nombre', 'Descripción'];
+$fields = ['name', 'description'];
 $rows = $roles;
 $actions_config = [
     [

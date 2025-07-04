@@ -19,8 +19,8 @@ $buttons = [
         'title' => 'Crear nueva'
     ]
 ];
-$headers = ['ID', 'Nombre', 'Programa', 'Acciones'];
-$fields = ['id', 'name', 'program_name', 'actions'];
+$headers = ['ID', 'Nombre', 'Programa'];
+$fields = ['id', 'name', 'program_name'];
 $rows = $actionLines;
 $actions_config = [
     [
