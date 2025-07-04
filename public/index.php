@@ -142,6 +142,15 @@ $routes = [
     'action_lines/update' => ['controller' => 'ActionLineController', 'action' => 'update'],
     'action_lines/delete' => ['controller' => 'ActionLineController', 'action' => 'delete'],
     'action_lines/view' => ['controller' => 'ActionLineController', 'action' => 'view'],
+
+    // Rutas de componentes (components)
+    'components' => ['controller' => 'ComponentController', 'action' => 'index'],
+    'components/create' => ['controller' => 'ComponentController', 'action' => 'create'],
+    'components/store' => ['controller' => 'ComponentController', 'action' => 'store'],
+    'components/edit' => ['controller' => 'ComponentController', 'action' => 'edit'],
+    'components/update' => ['controller' => 'ComponentController', 'action' => 'update'],
+    'components/delete' => ['controller' => 'ComponentController', 'action' => 'delete'],
+    'components/view' => ['controller' => 'ComponentController', 'action' => 'view'],
 ];
 
 // Verificar si la ruta existe

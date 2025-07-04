@@ -44,3 +44,12 @@ $router->post('action_lines/store', 'ActionLineController@store');
 $router->get('action_lines/edit', 'ActionLineController@edit');
 $router->post('action_lines/update', 'ActionLineController@update');
 $router->get('action_lines/delete', 'ActionLineController@delete');
+
+// Componentes (components)
+$router->get('components', 'ComponentController@index');
+$router->get('components/view', 'ComponentController@view');
+$router->get('components/create', 'ComponentController@create');
+$router->post('components/store', 'ComponentController@store');
+$router->get('components/edit', 'ComponentController@edit');
+$router->post('components/update', 'ComponentController@update');
+$router->get('components/delete', 'ComponentController@delete');
