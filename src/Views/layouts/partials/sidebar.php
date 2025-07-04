@@ -38,6 +38,7 @@ function is_active($route)
             <?php endif; ?>
             <li><a href="/programs" class="<?= is_active('/programs') ? 'active' : '' ?>"><i class="fas fa-project-diagram"></i> Programas</a></li>
             <li><a href="#" class="<?= is_active('/catalogos') ? 'active' : '' ?>"><i class="fas fa-list"></i> Otros Catálogos</a></li>
+            <li><a href="/action_lines" class="<?= is_active('/action_lines') ? 'active' : '' ?>"><i class="fas fa-stream"></i> Líneas de acción</a></li>
         </ul>
         <div class="separator"></div>
     </nav>

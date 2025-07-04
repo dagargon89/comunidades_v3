@@ -133,6 +133,15 @@ $routes = [
     'api/users/show' => ['controller' => 'UserController', 'action' => 'show'],
     'api/users/update' => ['controller' => 'UserController', 'action' => 'update'],
     'api/users/destroy' => ['controller' => 'UserController', 'action' => 'destroy'],
+
+    // Rutas de líneas de acción (action_lines)
+    'action_lines' => ['controller' => 'ActionLineController', 'action' => 'index'],
+    'action_lines/create' => ['controller' => 'ActionLineController', 'action' => 'create'],
+    'action_lines/store' => ['controller' => 'ActionLineController', 'action' => 'store'],
+    'action_lines/edit' => ['controller' => 'ActionLineController', 'action' => 'edit'],
+    'action_lines/update' => ['controller' => 'ActionLineController', 'action' => 'update'],
+    'action_lines/delete' => ['controller' => 'ActionLineController', 'action' => 'delete'],
+    'action_lines/view' => ['controller' => 'ActionLineController', 'action' => 'view'],
 ];
 
 // Verificar si la ruta existe

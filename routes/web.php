@@ -35,3 +35,12 @@ $router->post('programs/store', 'ProgramController@store');
 $router->get('programs/edit', 'ProgramController@edit');
 $router->post('programs/update', 'ProgramController@update');
 $router->get('programs/delete', 'ProgramController@delete');
+
+// Líneas de acción (action_lines)
+$router->get('action_lines', 'ActionLineController@index');
+$router->get('action_lines/view', 'ActionLineController@view');
+$router->get('action_lines/create', 'ActionLineController@create');
+$router->post('action_lines/store', 'ActionLineController@store');
+$router->get('action_lines/edit', 'ActionLineController@edit');
+$router->post('action_lines/update', 'ActionLineController@update');
+$router->get('action_lines/delete', 'ActionLineController@delete');
