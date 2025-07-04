@@ -2,7 +2,7 @@
 
 namespace Src\Controllers;
 
-use Models\Axis;
+use Src\Models\Axis;
 
 class AxisController
 {

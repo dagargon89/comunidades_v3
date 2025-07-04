@@ -36,6 +36,7 @@ function is_active($route)
             <?php if (current_user() && current_user()->hasPermission('axis.view')): ?>
                 <li><a href="/axes" class="<?= is_active('/axes') ? 'active' : '' ?>"><i class="fas fa-chart-line"></i> Ejes</a></li>
             <?php endif; ?>
+            <li><a href="/programs" class="<?= is_active('/programs') ? 'active' : '' ?>"><i class="fas fa-project-diagram"></i> Programas</a></li>
             <li><a href="#" class="<?= is_active('/catalogos') ? 'active' : '' ?>"><i class="fas fa-list"></i> Otros Catálogos</a></li>
         </ul>
         <div class="separator"></div>

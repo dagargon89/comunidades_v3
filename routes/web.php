@@ -26,3 +26,12 @@ $router->post('axes/store', 'AxisController@store');
 $router->get('axes/edit', 'AxisController@edit');
 $router->post('axes/update', 'AxisController@update');
 $router->get('axes/delete', 'AxisController@delete');
+
+// Programas (Program)
+$router->get('programs', 'ProgramController@index');
+$router->get('programs/view', 'ProgramController@view');
+$router->get('programs/create', 'ProgramController@create');
+$router->post('programs/store', 'ProgramController@store');
+$router->get('programs/edit', 'ProgramController@edit');
+$router->post('programs/update', 'ProgramController@update');
+$router->get('programs/delete', 'ProgramController@delete');

@@ -89,6 +89,15 @@ $routes = [
     'axes/delete' => ['controller' => 'AxisController', 'action' => 'delete'],
     'axes/view' => ['controller' => 'AxisController', 'action' => 'view'],
 
+    // Rutas de programas (programs)
+    'programs' => ['controller' => 'ProgramController', 'action' => 'index'],
+    'programs/create' => ['controller' => 'ProgramController', 'action' => 'create'],
+    'programs/store' => ['controller' => 'ProgramController', 'action' => 'store'],
+    'programs/edit' => ['controller' => 'ProgramController', 'action' => 'edit'],
+    'programs/update' => ['controller' => 'ProgramController', 'action' => 'update'],
+    'programs/delete' => ['controller' => 'ProgramController', 'action' => 'delete'],
+    'programs/view' => ['controller' => 'ProgramController', 'action' => 'view'],
+
     // Rutas de roles
     'roles' => ['controller' => 'RoleController', 'action' => 'index'],
     'roles/create' => ['controller' => 'RoleController', 'action' => 'create'],

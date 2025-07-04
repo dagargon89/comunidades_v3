@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace Src\Models;
 
 use PDO;
 
@@ -16,6 +16,13 @@ class Axis
         $stmt = $this->db->prepare('SELECT * FROM axes ORDER BY id DESC LIMIT :limit OFFSET :offset');
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAll()
+    {
+        $stmt = $this->db->prepare('SELECT * FROM axes ORDER BY name ASC');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
