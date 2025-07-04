@@ -15,6 +15,7 @@
 11. [Uso obligatorio de componentes en todas las secciones CRUD](#uso-obligatorio-de-componentes-en-todas-las-secciones-crud)
 12. [Lógica de filtrado en el backend (¡Obligatorio!)](#lógica-de-filtrado-en-el-backend-¡obligatorio!)
 13. [Uso obligatorio del componente de formulario en CRUD](#uso-obligatorio-del-componente-de-formulario-en-crud)
+14. [Eliminación de columnas de acciones duplicadas (¡Obligatorio!)](#eliminación-de-columnas-de-acciones-duplicadas-¡obligatorio!)
 
 ---
 
@@ -1126,3 +1127,76 @@ include __DIR__ . '/../components/form.php';
 ```
 
 **Nunca** escribas el formulario manualmente en la vista. Usa siempre el componente para mantener la coherencia visual y funcional.
+
+---
+
+## Eliminación de columnas de acciones duplicadas (¡Obligatorio!)
+
+**IMPORTANTE**: El componente `table.php` ya maneja automáticamente la columna de acciones cuando se proporciona `$actions_config`. Por lo tanto:
+
+### ❌ INCORRECTO - No hacer esto:
+
+```php
+$headers = ['ID', 'Nombre', 'Email', 'Acciones'];  // ❌ No incluir 'Acciones'
+$fields = ['id', 'name', 'email', 'actions'];      // ❌ No incluir 'actions'
+```
+
+### ✅ CORRECTO - Hacer esto:
+
+```php
+$headers = ['ID', 'Nombre', 'Email'];              // ✅ Solo los encabezados de datos
+$fields = ['id', 'name', 'email'];                 // ✅ Solo los campos de datos
+$actions_config = [
+    [
+        'type' => 'edit',
+        'url' => function ($row) { return '/seccion/edit?id=' . $row['id']; },
+        'title' => 'Editar',
+        'icon' => 'fa-edit text-yellow-500',
+        'class' => 'btn-warning',
+    ],
+    // ... más acciones
+];
+```
+
+### ¿Por qué es importante?
+
+1. **Evita duplicación**: Si incluyes 'Acciones' en `$headers` y `$fields`, aparecerán dos columnas de acciones (una vacía y otra con botones).
+2. **Consistencia visual**: El componente `table.php` agrega automáticamente la columna de acciones con el estilo correcto.
+3. **Mantenimiento**: Si necesitas cambiar el comportamiento de las acciones, solo modificas el componente, no cada vista.
+
+### Verificación rápida:
+
+Antes de crear una nueva vista CRUD, asegúrate de que:
+
+- `$headers` solo contenga encabezados de datos reales
+- `$fields` solo contenga campos de datos reales
+- `$actions_config` esté definido para las acciones
+- No haya referencias a 'Acciones' o 'actions' en los arrays
+
+**Ejemplo de vista correcta:**
+
+```php
+$headers = ['ID', 'Nombre', 'Descripción'];
+$fields = ['id', 'name', 'description'];
+$rows = $data;
+$actions_config = [
+    [
+        'type' => 'edit',
+        'url' => function ($row) { return '/seccion/edit?id=' . $row['id']; },
+        'title' => 'Editar',
+        'icon' => 'fa-edit text-yellow-500',
+        'class' => 'btn-warning',
+    ],
+    [
+        'type' => 'delete',
+        'url' => function ($row) { return '/seccion/delete?id=' . $row['id']; },
+        'title' => 'Eliminar',
+        'icon' => 'fa-trash text-red-500',
+        'class' => 'btn-danger',
+        'onclick' => function ($row) { return "return confirm('¿Seguro?')"; },
+    ],
+];
+include __DIR__ . '/../components/table.php';
+```
+
+Esta regla es **obligatoria** para todas las secciones CRUD existentes y futuras.
