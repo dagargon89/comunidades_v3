@@ -122,4 +122,20 @@ class Program
         $stmt->execute([$axisId]);
         return $stmt->fetchAll();
     }
+
+    public function search($q, $perPage = 10, $offset = 0)
+    {
+        $whereClause = "WHERE p.name LIKE ? OR a.name LIKE ?";
+        $params = ["%$q%", "%$q%", $perPage, $offset];
+        $stmt = $this->db->prepare("
+            SELECT p.*, a.name as axis_name
+            FROM mydb.Program p
+            LEFT JOIN project_management.axes a ON p.axes_id = a.id
+            $whereClause
+            ORDER BY p.name ASC
+            LIMIT ? OFFSET ?
+        ");
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
 }

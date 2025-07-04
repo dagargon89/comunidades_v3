@@ -36,4 +36,10 @@ class Permission
     {
         Database::query("DELETE FROM permissions WHERE id = ?", [$id]);
     }
+
+    public static function search($q)
+    {
+        $q = "%$q%";
+        return Database::fetchAll("SELECT * FROM permissions WHERE name LIKE ? OR description LIKE ? ORDER BY name", [$q, $q]);
+    }
 }

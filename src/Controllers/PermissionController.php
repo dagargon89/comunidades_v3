@@ -6,7 +6,12 @@ class PermissionController
 {
     public function index()
     {
-        $permissions = \Models\Permission::getAll();
+        $q = $_GET['q'] ?? '';
+        if ($q !== '') {
+            $permissions = \Models\Permission::search($q);
+        } else {
+            $permissions = \Models\Permission::getAll();
+        }
         require __DIR__ . '/../Views/permissions/index.php';
     }
 

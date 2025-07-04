@@ -6,7 +6,12 @@ class RoleController
 {
     public function index()
     {
-        $roles = \Models\Role::getAll();
+        $q = $_GET['q'] ?? '';
+        if ($q !== '') {
+            $roles = \Models\Role::search($q);
+        } else {
+            $roles = \Models\Role::getAll();
+        }
         require __DIR__ . '/../Views/roles/index.php';
     }
 

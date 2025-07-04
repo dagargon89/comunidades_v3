@@ -23,12 +23,17 @@ class ProgramController
         // Obtener parámetros de paginación
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $perPage = isset($_GET['per_page']) ? (int)$_GET['per_page'] : 10;
-        $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $search = isset($_GET['q']) ? $_GET['q'] : '';
 
         // Obtener datos paginados
         $offset = ($page - 1) * $perPage;
-        $programs = $programModel->getAllPaginated($perPage, $offset, $search);
-        $total = $programModel->getTotalCount($search);
+        if ($search !== '') {
+            $programs = $programModel->search($search, $perPage, $offset);
+            $total = $programModel->getTotalCount($search);
+        } else {
+            $programs = $programModel->getAllPaginated($perPage, $offset);
+            $total = $programModel->getTotalCount();
+        }
         $totalPages = ceil($total / $perPage);
 
         // Obtener ejes para el formulario

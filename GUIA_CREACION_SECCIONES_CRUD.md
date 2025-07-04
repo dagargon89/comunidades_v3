@@ -13,6 +13,7 @@
 9. [Patrones y Convenciones](#patrones-y-convenciones)
 10. [Ejemplo Completo](#ejemplo-completo)
 11. [Uso obligatorio de componentes en todas las secciones CRUD](#uso-obligatorio-de-componentes-en-todas-las-secciones-crud)
+12. [Lógica de filtrado en el backend (¡Obligatorio!)](#lógica-de-filtrado-en-el-backend-¡obligatorio!)
 
 ---
 
@@ -1062,3 +1063,37 @@ include __DIR__ . '/../components/table.php';
 ```
 
 **Nunca** generes los filtros, botones o tablas manualmente en la vista. Usa siempre los componentes para asegurar uniformidad y facilidad de mantenimiento.
+
+---
+
+## Lógica de filtrado en el backend (¡Obligatorio!)
+
+Siempre que una sección CRUD tenga filtros en la vista (por ejemplo, el filtro de búsqueda), el controlador debe:
+
+1. Leer el parámetro de filtro (por ejemplo, `q` para búsqueda).
+2. Si el filtro está presente, llamar a un método `search($q)` en el modelo para obtener solo los resultados filtrados.
+3. Si no hay filtro, obtener todos los datos normalmente.
+4. Pasar los resultados filtrados a la vista.
+
+**Ejemplo en el controlador:**
+
+```php
+$q = $_GET['q'] ?? '';
+if ($q !== '') {
+    $items = Modelo::search($q);
+} else {
+    $items = Modelo::getAll();
+}
+```
+
+**Ejemplo en el modelo:**
+
+```php
+public static function search($q)
+{
+    $q = "%$q%";
+    return Database::fetchAll("SELECT * FROM tabla WHERE campo LIKE ? ORDER BY campo", [$q]);
+}
+```
+
+**Nunca** dejes el filtro solo en el frontend. El backend debe filtrar los datos para que el filtro funcione correctamente.

@@ -33,4 +33,10 @@ class Role
             }
         }
     }
+
+    public static function search($q)
+    {
+        $q = "%$q%";
+        return Database::fetchAll("SELECT * FROM roles WHERE name LIKE ? OR description LIKE ? ORDER BY name", [$q, $q]);
+    }
 }
