@@ -71,3 +71,30 @@ $router->post('goals/store', 'GoalController@store');
 $router->get('goals/edit', 'GoalController@edit');
 $router->post('goals/update', 'GoalController@update');
 $router->get('goals/delete', 'GoalController@delete');
+
+// Financiadores (financiers)
+$router->get('financiers', 'FinancierController@index');
+$router->get('financiers/view', 'FinancierController@view');
+$router->get('financiers/create', 'FinancierController@create');
+$router->post('financiers/store', 'FinancierController@store');
+$router->get('financiers/edit', 'FinancierController@edit');
+$router->post('financiers/update', 'FinancierController@update');
+$router->get('financiers/delete', 'FinancierController@delete');
+
+// Proyectos (projects)
+$router->get('projects', 'ProjectController@index');
+$router->get('projects/view', 'ProjectController@view');
+$router->get('projects/create', 'ProjectController@create');
+$router->post('projects/store', 'ProjectController@store');
+$router->get('projects/edit', 'ProjectController@edit');
+$router->post('projects/update', 'ProjectController@update');
+$router->get('projects/delete', 'ProjectController@delete');
+
+// Objetivos específicos (specific_objectives)
+$router->get('specific_objectives', 'SpecificObjectiveController@index');
+$router->get('specific_objectives/view', 'SpecificObjectiveController@view');
+$router->get('specific_objectives/create', 'SpecificObjectiveController@create');
+$router->post('specific_objectives/store', 'SpecificObjectiveController@store');
+$router->get('specific_objectives/edit', 'SpecificObjectiveController@edit');
+$router->post('specific_objectives/update', 'SpecificObjectiveController@update');
+$router->get('specific_objectives/delete', 'SpecificObjectiveController@delete');

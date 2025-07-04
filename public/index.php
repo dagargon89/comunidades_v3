@@ -169,6 +169,33 @@ $routes = [
     'goals/update' => ['controller' => 'GoalController', 'action' => 'update'],
     'goals/delete' => ['controller' => 'GoalController', 'action' => 'delete'],
     'goals/view' => ['controller' => 'GoalController', 'action' => 'view'],
+
+    // Rutas de financiadores (financiers)
+    'financiers' => ['controller' => 'FinancierController', 'action' => 'index'],
+    'financiers/create' => ['controller' => 'FinancierController', 'action' => 'create'],
+    'financiers/store' => ['controller' => 'FinancierController', 'action' => 'store'],
+    'financiers/edit' => ['controller' => 'FinancierController', 'action' => 'edit'],
+    'financiers/update' => ['controller' => 'FinancierController', 'action' => 'update'],
+    'financiers/delete' => ['controller' => 'FinancierController', 'action' => 'delete'],
+    'financiers/view' => ['controller' => 'FinancierController', 'action' => 'view'],
+
+    // Rutas de proyectos (projects)
+    'projects' => ['controller' => 'ProjectController', 'action' => 'index'],
+    'projects/create' => ['controller' => 'ProjectController', 'action' => 'create'],
+    'projects/store' => ['controller' => 'ProjectController', 'action' => 'store'],
+    'projects/edit' => ['controller' => 'ProjectController', 'action' => 'edit'],
+    'projects/update' => ['controller' => 'ProjectController', 'action' => 'update'],
+    'projects/delete' => ['controller' => 'ProjectController', 'action' => 'delete'],
+    'projects/view' => ['controller' => 'ProjectController', 'action' => 'view'],
+
+    // Rutas de objetivos específicos (specific_objectives)
+    'specific_objectives' => ['controller' => 'SpecificObjectiveController', 'action' => 'index'],
+    'specific_objectives/create' => ['controller' => 'SpecificObjectiveController', 'action' => 'create'],
+    'specific_objectives/store' => ['controller' => 'SpecificObjectiveController', 'action' => 'store'],
+    'specific_objectives/edit' => ['controller' => 'SpecificObjectiveController', 'action' => 'edit'],
+    'specific_objectives/update' => ['controller' => 'SpecificObjectiveController', 'action' => 'update'],
+    'specific_objectives/delete' => ['controller' => 'SpecificObjectiveController', 'action' => 'delete'],
+    'specific_objectives/view' => ['controller' => 'SpecificObjectiveController', 'action' => 'view'],
 ];
 
 // Verificar si la ruta existe
