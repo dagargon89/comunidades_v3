@@ -1,70 +1,28 @@
 <?php
+$title = 'Editar Programa';
 ob_start();
+$fields = [
+    ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $program['id']],
+    ['name' => 'name', 'label' => 'Nombre del Programa', 'type' => 'text', 'value' => $program['name'], 'required' => true],
+    ['name' => 'axes_id', 'label' => 'Eje', 'type' => 'select', 'options' => array_column($axes, 'name', 'id'), 'value' => $program['axes_id'], 'required' => true],
+];
+$action = '/programs/update';
+$method = 'post';
+$buttons = [
+    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/programs', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
+];
 ?>
-
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Editar Programa</h1>
-        <a href="/programs" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Volver
-        </a>
-    </div>
-
+<div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
+    <h2 class="text-2xl font-bold mb-6">Editar Programa</h2>
     <?php if (isset($_GET['error'])): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             Ha ocurrido un error al actualizar el programa. Por favor, inténtelo de nuevo.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>
-
-    <div class="card shadow">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Información del Programa</h6>
-        </div>
-        <div class="card-body">
-            <form action="/programs/update" method="POST">
-                <input type="hidden" name="id" value="<?php echo $program['id']; ?>">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nombre del Programa *</label>
-                            <input type="text" class="form-control" id="name" name="name" required
-                                value="<?php echo htmlspecialchars($program['name']); ?>">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="axes_id" class="form-label">Eje *</label>
-                            <select class="form-select" id="axes_id" name="axes_id" required>
-                                <option value="">Seleccione un eje</option>
-                                <?php foreach ($axes as $axis): ?>
-                                    <option value="<?php echo $axis['id']; ?>"
-                                        <?php echo ($program['axes_id'] == $axis['id']) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($axis['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-end gap-2">
-                            <a href="/programs" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Actualizar Programa
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <?php include __DIR__ . '/../components/form.php'; ?>
 </div>
-
-<?php
-$content = ob_get_clean();
-include __DIR__ . '/../layouts/app.php';
+<?php $content = ob_get_clean();
+require_once __DIR__ . '/../layouts/app.php';
 ?>

@@ -1,22 +1,21 @@
 <?php
+$title = 'Editar Eje';
 ob_start();
-// ... existing code ...
+$fields = [
+    ['name' => 'id', 'label' => '', 'type' => 'hidden', 'value' => $axis['id']],
+    ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => $axis['name'], 'required' => true],
+];
+$action = '/axes/update';
+$method = 'post';
+$buttons = [
+    ['type' => 'submit', 'label' => 'Actualizar', 'class' => 'bg-fuchsia-800 text-white hover:bg-fuchsia-900'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/axes', 'class' => 'bg-gray-200 text-gray-800 hover:bg-gray-300'],
+];
 ?>
-<div class="w-[90%] max-w-full mx-auto bg-white rounded shadow p-6 mt-8">
-    <h1 class="text-2xl font-bold mb-4">Editar Eje</h1>
+<div class="max-w-xl mx-auto mt-8 bg-white rounded-xl shadow p-8">
+    <h2 class="text-2xl font-bold mb-6">Editar Eje</h2>
     <?php include __DIR__ . '/../components/flash.php'; ?>
-    <form action="/axes/update" method="POST" class="space-y-4">
-        <input type="hidden" name="id" value="<?= htmlspecialchars($axis['id']) ?>">
-        <div>
-            <label for="name" class="block font-semibold">Nombre</label>
-            <input type="text" name="name" id="name" class="input w-full" required maxlength="500" value="<?= htmlspecialchars($axis['name']) ?>">
-        </div>
-        <div class="flex justify-end">
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-            <a href="/axes" class="btn btn-secondary ml-2">Cancelar</a>
-        </div>
-    </form>
+    <?php include __DIR__ . '/../components/form.php'; ?>
 </div>
-<?php
-$content = ob_get_clean();
+<?php $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/app.php';

@@ -14,6 +14,7 @@
 10. [Ejemplo Completo](#ejemplo-completo)
 11. [Uso obligatorio de componentes en todas las secciones CRUD](#uso-obligatorio-de-componentes-en-todas-las-secciones-crud)
 12. [Lógica de filtrado en el backend (¡Obligatorio!)](#lógica-de-filtrado-en-el-backend-¡obligatorio!)
+13. [Uso obligatorio del componente de formulario en CRUD](#uso-obligatorio-del-componente-de-formulario-en-crud)
 
 ---
 
@@ -1097,3 +1098,31 @@ public static function search($q)
 ```
 
 **Nunca** dejes el filtro solo en el frontend. El backend debe filtrar los datos para que el filtro funcione correctamente.
+
+---
+
+## Uso obligatorio del componente de formulario en CRUD
+
+Todos los formularios de creación **y edición** deben usar el componente `form.php` para asegurar uniformidad y facilidad de mantenimiento.
+
+- Define un array `$fields` con la estructura de los campos.
+- Define `$action`, `$method` y `$buttons`.
+- Incluye el componente `form.php` en la vista.
+
+**Ejemplo:**
+
+```php
+$fields = [
+    ['name' => 'name', 'label' => 'Nombre', 'type' => 'text', 'value' => '', 'required' => true],
+    ['name' => 'tipo', 'label' => 'Tipo', 'type' => 'select', 'options' => ['A' => 'Tipo A', 'B' => 'Tipo B'], 'value' => 'A'],
+];
+$action = '/ruta/store';
+$method = 'post';
+$buttons = [
+    ['type' => 'submit', 'label' => 'Guardar', 'class' => 'btn-primary'],
+    ['type' => 'link', 'label' => 'Cancelar', 'href' => '/ruta', 'class' => 'btn-secondary'],
+];
+include __DIR__ . '/../components/form.php';
+```
+
+**Nunca** escribas el formulario manualmente en la vista. Usa siempre el componente para mantener la coherencia visual y funcional.
