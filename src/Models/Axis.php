@@ -38,8 +38,8 @@ class Axis
     }
     public function search($search, $limit = 20, $offset = 0)
     {
-        $stmt = $this->db->prepare('SELECT * FROM axes WHERE name LIKE ? ORDER BY id DESC LIMIT :limit OFFSET :offset');
-        $stmt->bindValue(1, "%$search%", PDO::PARAM_STR);
+        $stmt = $this->db->prepare('SELECT * FROM axes WHERE name LIKE :search ORDER BY id DESC LIMIT :limit OFFSET :offset');
+        $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();

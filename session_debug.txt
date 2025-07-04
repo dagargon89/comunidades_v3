@@ -6,7 +6,7 @@ INDEX: Array
     [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
     [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
     [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    [HTTP_REFERER] => http://comunidades_v3.test/programs
+    [HTTP_REFERER] => http://comunidades_v3.test/programs?q=x
     [HTTP_ACCEPT_ENCODING] => gzip, deflate
     [HTTP_ACCEPT_LANGUAGE] => es-MX,es-419;q=0.9,es;q=0.8,en;q=0.7
     [HTTP_COOKIE] => PHPSESSID=dfd91khvop8uejb0kvusbf1fck
@@ -27,24 +27,26 @@ INDEX: Array
     [CONTEXT_DOCUMENT_ROOT] => C:/laragon/www/comunidades_v3/public
     [SERVER_ADMIN] => admin@example.com
     [SCRIPT_FILENAME] => C:/laragon/www/comunidades_v3/public/index.php
-    [REMOTE_PORT] => 55931
-    [REDIRECT_URL] => /programs/create
+    [REMOTE_PORT] => 56414
+    [REDIRECT_URL] => /axes
     [GATEWAY_INTERFACE] => CGI/1.1
     [SERVER_PROTOCOL] => HTTP/1.1
     [REQUEST_METHOD] => GET
     [QUERY_STRING] => 
-    [REQUEST_URI] => /programs/create
+    [REQUEST_URI] => /axes
     [SCRIPT_NAME] => /index.php
     [PHP_SELF] => /index.php
-    [REQUEST_TIME_FLOAT] => 1751648618.7414
-    [REQUEST_TIME] => 1751648618
+    [REQUEST_TIME_FLOAT] => 1751649268.2833
+    [REQUEST_TIME] => 1751649268
 )
 Array
 (
 )
-PATH: programs/create
+PATH: axes
 METHOD: GET
-URI: /programs/create
+URI: /axes
 POST: Array
 (
 )
+[DEBUG AXES] path: axes
+[DEBUG AXES] Ruta NO encontrada en routes: axes
