@@ -1,5 +1,11 @@
 # Guía Completa para Crear Nuevas Secciones CRUD
 
+## Cambios importantes (2024-07)
+
+- **No agregar títulos grandes (`<h1>`) en las vistas CRUD** (`index.php`, `create.php`, `edit.php`). El diseño debe ser limpio y los encabezados visuales se gestionan desde el layout o los componentes.
+- **No incluir bloques de mensajes flash (éxito/error) en las vistas CRUD**. Los mensajes flash deben ser gestionados únicamente desde el layout principal (`app.php`).
+- **Solo debe haber tabla y formularios en las vistas**. Si se requiere un título, debe ser discreto y gestionado por el layout o el componente de tabla.
+
 ## Índice
 
 1. [Análisis Previo](#análisis-previo)
