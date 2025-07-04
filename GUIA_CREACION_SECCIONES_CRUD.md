@@ -17,6 +17,21 @@
 13. [Uso obligatorio del componente de formulario en CRUD](#uso-obligatorio-del-componente-de-formulario-en-crud)
 14. [Eliminación de columnas de acciones duplicadas (¡Obligatorio!)](#eliminación-de-columnas-de-acciones-duplicadas-¡obligatorio!)
 
+## Nota importante sobre organización de carpetas (nueva convención)
+
+A partir de la refactorización:
+
+- **Componentes reutilizables de UI** (como table, form, button, etc.) deben estar en la carpeta:
+  - `src/Views/ui_components/`
+- **Vistas del CRUD de la entidad Componentes** deben estar en:
+  - `src/Views/components/`
+
+Esto evita confusiones y errores, ya que "components" puede referirse tanto a la entidad de negocio como a los elementos visuales reutilizables. **Sigue este patrón para todas las nuevas secciones y componentes.**
+
+## Nota sobre la barra de filtros
+
+La barra de filtros (`filter_bar.php`) ya está incluida automáticamente en el layout principal (`app.php`). **No debes incluirla manualmente en cada archivo index.php de los listados CRUD**. Solo define las variables `$filters` y `$buttons` en la vista y el layout se encargará de renderizar la barra de filtros.
+
 ---
 
 ## Análisis Previo
