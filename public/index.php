@@ -17,11 +17,6 @@ $path = str_replace($base_path, '', $request_uri);
 $path = parse_url($path, PHP_URL_PATH);
 $path = trim($path, '/');
 
-// Si el path está vacío y estamos en la carpeta public, usar 'login' como default
-if (empty($path) && strpos($_SERVER['SCRIPT_NAME'], '/public/') !== false) {
-    $path = 'login';
-}
-
 // Log para depuración de rutas
 file_put_contents(__DIR__ . '/../session_debug.txt', "PATH: $path\nMETHOD: {$_SERVER['REQUEST_METHOD']}\nURI: $request_uri\nPOST: " . print_r($_POST, true), FILE_APPEND);
 
